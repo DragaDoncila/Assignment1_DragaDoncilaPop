@@ -1,6 +1,7 @@
 /**Practising parsing an XML plist file
  * Created by Draga on 23/08/2016.
  */
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,7 +29,12 @@ public class practice2 {
 //         made list of all the nodes in the document with the tag dict
             NodeList deckList = properties.getElementsByTagName("dict");
 
+
             for (int i = 1; i < deckList.getLength(); ++i) {
+
+                ArrayList keyArray = new ArrayList();
+                ArrayList valArray = new ArrayList();
+
                 Node cardNode = deckList.item(i);
                 if (cardNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element card = (Element) cardNode;
@@ -37,33 +43,52 @@ public class practice2 {
                     for (int j = 0; j < allAttributes.getLength(); ++j) {
 
                         Node attributeNode = allAttributes.item(j);
-//                        NodeList childNodes = card.getChildNodes();
                         if (attributeNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element attribute = (Element) attributeNode;
-                            System.out.println(attribute.getTextContent());
-//                            for (int k = 0; k < childNodes.getLength(); k++){
-//                                Node attributeValNode = childNodes.item(k);
-//                                if (attributeValNode.getNodeName().equals("string")){
-//                                    System.out.println("You're a child   " + attributeValNode.getTextContent());
-//                                }
+                            String attributeText = attribute.getTextContent().toLowerCase();
+                            if (attributeText.equals("play") || attributeText.equals("trump") || attributeText.equals("rule")){
+
+                            }
+                            else{
+
+                                keyArray.add(attributeText);
+                            }
 
                         }
 
 
                     }
-                    System.out.println("***********This is the end of your keys******************");
+                    System.out.println(keyArray);
+//                    System.out.println("***********This is the end of your keys******************");
                     NodeList childNodes = card.getChildNodes();
                     for (int j = 0; j < childNodes.getLength(); j++) {
                         Node attributeValNode = childNodes.item(j);
-                        if (attributeValNode.getNodeName().equals("array")){
-                            System.out.println("You've found the array");
+                        String attributeValName = attributeValNode.getNodeName();
+                        if (attributeValName.equals("array")){
+                            ArrayList occurrenceArray = new ArrayList();
+                            NodeList arrayStrings = attributeValNode.getChildNodes();
+                            for (int k = 0; k < arrayStrings.getLength(); ++k){
+                                Node stringNode = arrayStrings.item(k);
+                                if (stringNode.getNodeType() == Node.ELEMENT_NODE && stringNode.getNodeName().equals("string")){
+                                    Element occurrenceString = (Element) stringNode;
+
+                                    String occurrenceText = occurrenceString.getTextContent();
+                                    occurrenceArray.add(occurrenceText);
+                                }
+                            }
+                            valArray.add(occurrenceArray);
                         }
-                        else if (attributeValNode.getNodeName().equals("string")) {
-                            System.out.println(attributeValNode.getTextContent());
-
-
+                        else if (attributeValName.equals("string")) {
+                            valArray.add(attributeValNode.getTextContent());
+                        }
+                        else if (attributeValName.equals("key")){
+                            String keyText = attributeValNode.getTextContent();
+                            if (keyText.equals("play") || keyText.equals("trump") || keyText.equals("rule")){
+                                valArray.add(attributeValNode.getTextContent());
+                            }
                         }
                     }
+                    System.out.println(valArray);
                     System.out.println("------------------------------------------------------");
                 }
             }
