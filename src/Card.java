@@ -48,4 +48,10 @@ public class Card {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    @Override
+    public String toString(){
+        String displayString = title + "\n" + "---------------------------------------------------------------------\n";
+        return displayString;
+    }
 }

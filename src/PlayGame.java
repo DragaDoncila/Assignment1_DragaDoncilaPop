@@ -25,7 +25,7 @@ public class PlayGame {
             if (userChoice.equals("I")) {
                 System.out.println("Instructions");
             } else {
-                startnewgame(userName);
+                Game superTrumpsGame = startnewgame(userName);
 
             }
             System.out.printf(MENU);
@@ -33,7 +33,7 @@ public class PlayGame {
         }
     }
 
-    private static void startnewgame(String userName) {
+    private static Game startnewgame(String userName) {
         int numPlayers = getValidNumPlayers();
         Game superTrumpsGame = new Game(numPlayers, userName);
         String dealerName = superTrumpsGame.selectDealer();
@@ -43,8 +43,9 @@ public class PlayGame {
         System.out.println(userName + "! Your hand has been dealt!");
         for (Card card:
              userHand) {
-            System.out.println(card.getTitle());
+            System.out.println(card.toString());
         }
+        return superTrumpsGame;
     }
 
     private static int getValidNumPlayers() {

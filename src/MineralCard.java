@@ -28,6 +28,20 @@ public class MineralCard extends Card{
         this.economicValue = (String) attributes.get(12);
     }
 
+    @Override
+    public String toString(){
+        String displayString = super.toString();
+        displayString += String.format("%-40s%-20s%-20s%-40s", "Chemistry", "Classification", "Crystal System", "Occurrence");
+        displayString += "\n";
+        displayString += String.format("%-40s%-20s%-20s-%40s", chemistry, classification, crystalSystem, occurrence);
+        displayString += "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n" ;
+        displayString += String.format("%-20s%-20s%-20s%-20s%-20s", "Hardness", "Specific Gravity", "Cleavage", "Abundance", "Value");
+        displayString += "\n";
+        displayString += String.format("%-20s%-20s%-20s%-20s%-20s", hardness, specificGravity, cleavage, crustalAbundance, economicValue);
+        displayString += "\n";
+        return displayString;
+    }
+
     public String getChemistry() {
         return chemistry;
     }
