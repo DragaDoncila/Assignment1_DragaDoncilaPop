@@ -17,4 +17,8 @@ public class Player {
         this.name = name;
 
     }
+
+    public ArrayList<Card> getCurrentHand() {
+        return currentHand;
+    }
 }

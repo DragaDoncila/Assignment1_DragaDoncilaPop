@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**Class handles playing a MineralSupertrump game from start to finish
@@ -15,13 +16,16 @@ public class PlayGame {
     public static void main(String[] args) {
         System.out.println("Welcome to Mineral Supertrumps!");
         Scanner input = new Scanner(System.in);
+        System.out.printf("What is your name? >>> ");
+//        TODO: error check non blank username
+        String userName = input.nextLine();
         System.out.printf(MENU);
         String userChoice = input.nextLine().toUpperCase();
         while (!userChoice.equals("Q")) {
             if (userChoice.equals("I")) {
                 System.out.println("Instructions");
             } else {
-                startnewgame();
+                startnewgame(userName);
 
             }
             System.out.printf(MENU);
@@ -29,11 +33,18 @@ public class PlayGame {
         }
     }
 
-    private static void startnewgame() {
+    private static void startnewgame(String userName) {
         int numPlayers = getValidNumPlayers();
-        Game superTrumpsGame = new Game(numPlayers);
+        Game superTrumpsGame = new Game(numPlayers, userName);
         String dealerName = superTrumpsGame.selectDealer();
         System.out.println("Dealer has been selected! " + dealerName + " is dealing today.");
+        superTrumpsGame.dealInitialHands();
+        ArrayList<Card> userHand = superTrumpsGame.getPlayers()[0].getCurrentHand();
+        System.out.println(userName + "! Your hand has been dealt!");
+        for (Card card:
+             userHand) {
+            System.out.println(card.getTitle());
+        }
     }
 
     private static int getValidNumPlayers() {

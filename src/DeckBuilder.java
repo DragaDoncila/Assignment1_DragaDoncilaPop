@@ -17,9 +17,12 @@ import java.util.ArrayList;
 
 
 public class DeckBuilder {
-    public static void main(String[] args) {
+    static final String FILENAME = "MstCards_151021.plist";
+
+    static Deck buildDeck(){
+        Deck superTrumpsDeck = new Deck();
 //        Open the plist file as a file
-        File cardsFile = new File("MstCards_151021.plist");
+        File cardsFile = new File(FILENAME);
 //        making a doc builder to help parse the XML into a DOM
         DocumentBuilderFactory factoryBuilder = DocumentBuilderFactory.newInstance();
         try {
@@ -27,7 +30,6 @@ public class DeckBuilder {
             Document properties = docBuild.parse(cardsFile);
             properties.getDocumentElement().normalize();
 
-            Deck superTrumpsDeck = new Deck();
 //         made list of all the nodes in the document with the tag dict. These are all the cards, each list element is 1 card.
             NodeList deckList = properties.getElementsByTagName("dict");
 
@@ -83,8 +85,6 @@ public class DeckBuilder {
                 }
             }
 
-            superTrumpsDeck.displayDeck();
-
 
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -94,6 +94,7 @@ public class DeckBuilder {
             e.printStackTrace();
         }
 
+        return superTrumpsDeck;
     }
 
 }
