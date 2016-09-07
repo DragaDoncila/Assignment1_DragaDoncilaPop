@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**Class handles the attributes and associated methods required for the playing of a Mineral Supertrumps game.
@@ -10,6 +11,7 @@ public class Game {
     int numPlayers;
     Player[] players;
     Player dealer;
+    Player currentPlayer;
     Deck superTrumpsDeck;
 
 
@@ -19,7 +21,7 @@ public class Game {
         players = new Player[numPlayers];
         players[0] = new Player(0, userName);
         for (int i=1; i < players.length; ++i){
-            players[i] = new Player(i, BOTNAMES[i]);
+            players[i] = new Player(i, BOTNAMES[i-1]);
         }
     }
 
@@ -27,6 +29,7 @@ public class Game {
         Random rand = new Random();
         int dealerID = rand.nextInt(numPlayers);
         this.dealer = players[dealerID];
+        this.currentPlayer = players[dealerID];
         return dealer.getName();
     }
 
@@ -47,5 +50,18 @@ public class Game {
 
     public Player[] getPlayers() {
         return players;
+    }
+
+    public String getNextPlayer() {
+        int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
+//        if the id of the current player is last in the list
+        if (currentPlayerID == numPlayers - 1) {
+
+            currentPlayer = players[0];
+        }
+        else {
+            currentPlayer = players[currentPlayerID + 1];
+        }
+        return currentPlayer.getName();
     }
 }

@@ -51,7 +51,9 @@ public class Card {
 
     @Override
     public String toString(){
-        String displayString = title + "\n" + "---------------------------------------------------------------------\n";
+        String displayString = "---------------------------------------------------------------------\n" +
+                title +
+                "\n" + "---------------------------------------------------------------------\n";
         return displayString;
     }
 }

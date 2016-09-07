@@ -26,6 +26,8 @@ public class PlayGame {
                 System.out.println("Instructions");
             } else {
                 Game superTrumpsGame = startnewgame(userName);
+                System.out.println("Ready to play, " + userName);
+                System.out.println("Let's go! It's " + superTrumpsGame.getNextPlayer() + "'s turn.");
 
             }
             System.out.printf(MENU);
