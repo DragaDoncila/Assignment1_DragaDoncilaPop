@@ -56,9 +56,10 @@ public class Game {
         int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
 //        if the id of the current player is last in the list
         if (currentPlayerID == numPlayers - 1) {
-
+//            start at the beginning again
             currentPlayer = players[0];
         }
+//        otherwise, next player is the next in the list
         else {
             currentPlayer = players[currentPlayerID + 1];
         }
