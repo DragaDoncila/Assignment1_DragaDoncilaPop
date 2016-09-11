@@ -6,6 +6,8 @@ import java.util.Random;
  * Created by Draga on 6/09/2016.
  */
 public class Game {
+    enum trumpCategories{HARDNESS, SPECIFIC_GRAVITY, CLEAVAGE, CRUSTAL_ABUNDANCE, ECONOMIC_VALUE}
+
     final String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
     final int CARDS_TO_A_HAND = 8;
     int numPlayers;
@@ -14,6 +16,7 @@ public class Game {
     Player currentPlayer;
     Deck superTrumpsDeck;
     Card lastPlayedCard;
+
 
     public int incrementCountRounds() {
         ++this.countRounds;

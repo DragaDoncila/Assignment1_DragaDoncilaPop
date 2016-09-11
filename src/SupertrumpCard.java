@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class SupertrumpCard extends Card{
     String subtitle;
 
-    public SupertrumpCard(ArrayList attributes){
+    public SupertrumpCard(ArrayList<String> attributes){
         super(attributes);
-        this.subtitle = attributes.get(4).toString();
+        this.subtitle = attributes.get(4);
     }
 }

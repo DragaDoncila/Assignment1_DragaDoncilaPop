@@ -19,10 +19,10 @@ public class Card {
         this.cardType = cardType;
     }
 
-    public Card(ArrayList attributes){
-        this.filename = attributes.get(0).toString();
-        this.imagename = attributes.get(1).toString();
-        String cardTypeStr = attributes.get(2).toString();
+    public Card(ArrayList<String> attributes){
+        this.filename = attributes.get(0);
+        this.imagename = attributes.get(1);
+        String cardTypeStr = attributes.get(2);
         if (cardTypeStr.equals("play")){
             this.cardType = cardTypes.PLAY;
         }

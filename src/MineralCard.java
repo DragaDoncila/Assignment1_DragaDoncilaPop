@@ -5,7 +5,6 @@ import java.util.ArrayList;
  */
 public class MineralCard extends Card{
 
-
     String chemistry;
     String classification;
     String crystalSystem;
@@ -16,17 +15,17 @@ public class MineralCard extends Card{
     String crustalAbundance;
     String economicValue;
 
-    public MineralCard(ArrayList attributes) {
+    public MineralCard(ArrayList<String> attributes) {
         super(attributes);
-        this.chemistry = (String) attributes.get(4);
-        this.classification = (String) attributes.get(5);
-        this.crystalSystem = (String) attributes.get(6);
-        this.occurrence = attributes.get(7).toString();
-        this.hardness = attributes.get(8).toString();
-        this.specificGravity = attributes.get(9).toString();
-        this.cleavage = (String) attributes.get(10);
-        this.crustalAbundance = (String) attributes.get(11);
-        this.economicValue = (String) attributes.get(12);
+        this.chemistry = attributes.get(4);
+        this.classification = attributes.get(5);
+        this.crystalSystem = attributes.get(6);
+        this.occurrence = attributes.get(7);
+        this.hardness = attributes.get(8);
+        this.specificGravity = attributes.get(9);
+        this.cleavage = attributes.get(10);
+        this.crustalAbundance = attributes.get(11);
+        this.economicValue = attributes.get(12);
     }
 
     @Override
