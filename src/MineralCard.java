@@ -5,6 +5,7 @@ import java.util.ArrayList;
  */
 public class MineralCard extends Card{
 
+
     String chemistry;
     String classification;
     String crystalSystem;
@@ -76,5 +77,9 @@ public class MineralCard extends Card{
 
     public String getEconomicValue() {
         return economicValue;
+    }
+
+    public boolean canPlayOn(Card lastPlayedCard){
+        return false;
     }
 }

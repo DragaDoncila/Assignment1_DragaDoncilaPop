@@ -21,4 +21,23 @@ public class Player {
     public ArrayList<Card> getCurrentHand() {
         return currentHand;
     }
+
+    public Card chooseCardToPlay(int countRounds, Card lastPlayedCard) {
+        ArrayList<Card> playableCards = new ArrayList<>();
+        for (Card card:
+             currentHand) {
+            if (countRounds == 1) {
+                playableCards.add(card);
+            }
+            else {
+                if (card.canPlayOn(lastPlayedCard)) {
+
+                }
+
+            }
+
+        }
+
+        return null;
+    }
 }

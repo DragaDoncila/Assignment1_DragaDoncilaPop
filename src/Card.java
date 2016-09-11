@@ -4,23 +4,31 @@ import java.util.ArrayList;
  * Created by Draga on 6/09/2016.
  */
 public class Card {
+
+    enum cardTypes{PLAY, TRUMP}
     String filename;
     String imagename;
-    String cardType;
+    cardTypes cardType;
     String title;
 
-    public String getCardType() {
+    public cardTypes getCardType() {
         return cardType;
     }
 
-    public void setCardType(String cardType) {
+    public void setCardType(cardTypes cardType) {
         this.cardType = cardType;
     }
 
     public Card(ArrayList attributes){
         this.filename = attributes.get(0).toString();
         this.imagename = attributes.get(1).toString();
-        this.cardType = attributes.get(2).toString();
+        String cardTypeStr = attributes.get(2).toString();
+        if (cardTypeStr.equals("play")){
+            this.cardType = cardTypes.PLAY;
+        }
+        else{
+            this.cardType = cardTypes.TRUMP;
+        }
         this.title = attributes.get(3).toString();
 
     }
@@ -56,4 +64,14 @@ public class Card {
                 "\n" + "---------------------------------------------------------------------\n";
         return displayString;
     }
+
+    public boolean canPlayOn(Card lastPlayedCard) {
+        if (cardType.equals(cardTypes.TRUMP)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

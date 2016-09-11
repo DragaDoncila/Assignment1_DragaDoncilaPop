@@ -34,7 +34,7 @@ public class DeckBuilder {
             NodeList deckList = properties.getElementsByTagName("dict");
 
             for (int i = 1; i <= 60; ++i) {
-                ArrayList valArray = new ArrayList();
+                ArrayList<String> valArray = new ArrayList();
 //          Accessing just one card at a time. Checking that the node is an element node, and typecasting.
                 Node cardNode = deckList.item(i);
                 if (cardNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -57,7 +57,7 @@ public class DeckBuilder {
                                     occurrenceArray.add(occurrenceText);
                                 }
                             }
-                            valArray.add(occurrenceArray);
+                            valArray.add(occurrenceArray.toString());
                         }
                         else if (attributeValName.equals("string")) {
                             valArray.add(attributeValNode.getTextContent());
@@ -73,12 +73,11 @@ public class DeckBuilder {
 //                    System.out.println(valArray.get(7).toString());
 //                    System.out.println("------------------------------------------------------");
                     if (i <= 54){
-
-                        MineralCard tempCard = new MineralCard(valArray);
+                        Card tempCard = new MineralCard(valArray);
                         superTrumpsDeck.addCard(tempCard);
                     }
                     else {
-                        SupertrumpCard tempCard = new SupertrumpCard(valArray);
+                        Card tempCard = new SupertrumpCard(valArray);
                         superTrumpsDeck.addCard(tempCard);
                     }
 

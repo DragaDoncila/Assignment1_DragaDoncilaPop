@@ -27,7 +27,12 @@ public class PlayGame {
             } else {
                 Game superTrumpsGame = startnewgame(userName);
                 System.out.println("Ready to play, " + userName);
-                System.out.println("Let's go! It's " + superTrumpsGame.getNextPlayer() + "'s turn.");
+                Player playerUp = superTrumpsGame.getNextPlayer();
+                System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
+                while (superTrumpsGame.checkIfWon() == false){
+                    System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
+                    superTrumpsGame.playTurn();
+                }
 
             }
             System.out.printf(MENU);
@@ -43,6 +48,7 @@ public class PlayGame {
         superTrumpsGame.dealInitialHands();
         ArrayList<Card> userHand = superTrumpsGame.getPlayers()[0].getCurrentHand();
         System.out.println(userName + "! Your hand has been dealt!");
+//      TODO: Move this to a method of deck or hand.
         for (Card card:
              userHand) {
             System.out.println(card.toString());

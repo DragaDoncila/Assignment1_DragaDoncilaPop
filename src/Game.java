@@ -13,6 +13,14 @@ public class Game {
     Player dealer;
     Player currentPlayer;
     Deck superTrumpsDeck;
+    Card lastPlayedCard;
+
+    public int incrementCountRounds() {
+        ++this.countRounds;
+        return countRounds;
+    }
+
+    int countRounds;
 
 
     Game(int numPlayers, String userName) {
@@ -23,6 +31,7 @@ public class Game {
         for (int i=1; i < players.length; ++i){
             players[i] = new Player(i, BOTNAMES[i-1]);
         }
+        countRounds = 0;
     }
 
     public String selectDealer() {
@@ -52,10 +61,10 @@ public class Game {
         return players;
     }
 
-    public String getNextPlayer() {
+    public Player getNextPlayer() {
         int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
 //        if the id of the current player is last in the list
-        if (currentPlayerID == numPlayers - 1) {
+        if (currentPlayerID == players.length - 1) {
 //            start at the beginning again
             currentPlayer = players[0];
         }
@@ -63,6 +72,29 @@ public class Game {
         else {
             currentPlayer = players[currentPlayerID + 1];
         }
-        return currentPlayer.getName();
+        return currentPlayer;
+    }
+
+    public boolean checkIfWon() {
+        boolean isWon = false;
+        for (Player player:
+             players) {
+            if(player.getCurrentHand().size() == 0){
+                isWon = true;
+            }
+        }
+        return isWon;
+    }
+
+    public void playTurn() {
+        currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard());
+    }
+
+    public int getCountRounds() {
+        return countRounds;
+    }
+
+    public Card getLastPlayedCard() {
+        return lastPlayedCard;
     }
 }
