@@ -70,8 +70,8 @@ public class MineralCard extends Card{
         return occurrence;
     }
 
-    public double getHardness() {
-        return hardness.getHardnessVal();
+    public Hardness getHardness() {
+        return hardness;
     }
 
     public String getSpecificGravity() {
@@ -90,8 +90,26 @@ public class MineralCard extends Card{
         return economicValue;
     }
 
-//    public boolean canPlayOn(Card lastPlayedCard, TrumpCategory currentCategory){
-//        lastPlayedCard.getCategory(currentCategory).
-//        return false;
-//    }
-}
+    @Override
+    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump currentCategory){
+        MineralCard otherCard = (MineralCard) lastPlayedCard;
+        switch (currentCategory.category){
+            case HARDNESS:
+                Hardness myHardness = this.getHardness();
+                Hardness otherHardness = otherCard.getHardness();
+                if (myHardness.isHigherThan(otherHardness)){
+                return true;
+                }
+            case SPECIFIC_GRAVITY:
+                break;
+            case CLEAVAGE:
+                break;
+            case CRUSTAL_ABUNDANCE:
+                break;
+            case ECONOMIC_VALUE:
+                break;
+        }
+        return false;
+    }
+    }
+

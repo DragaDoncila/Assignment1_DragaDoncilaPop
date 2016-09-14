@@ -10,4 +10,9 @@ public class SupertrumpCard extends Card{
         super(attributes);
         this.subtitle = attributes.get(4);
     }
+
+    @Override
+    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump currentCategory){
+        return true;
+    }
 }

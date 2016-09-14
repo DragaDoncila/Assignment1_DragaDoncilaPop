@@ -3,10 +3,9 @@ import java.util.ArrayList;
 /**Class designed to handle generic card objects.
  * Created by Draga on 6/09/2016.
  */
-public class Card {
+public abstract class Card {
 
     enum CardTypes {PLAY, TRUMP}
-    enum hardnessSeq{}
     String filename;
     String imagename;
     CardTypes cardType;
@@ -66,13 +65,6 @@ public class Card {
         return displayString;
     }
 
-    public boolean canPlayOn(Card lastPlayedCard) {
-        if (cardType.equals(CardTypes.TRUMP)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    public abstract boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump currentCategory);
 
 }

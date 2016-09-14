@@ -6,7 +6,6 @@ import java.util.Random;
  * Created by Draga on 6/09/2016.
  */
 public class Game {
-    enum TrumpCategories{HARDNESS, SPECIFIC_GRAVITY, CLEAVAGE, CRUSTAL_ABUNDANCE, ECONOMIC_VALUE}
 
     final String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
     final int CARDS_TO_A_HAND = 8;
@@ -15,7 +14,9 @@ public class Game {
     Player dealer;
     Player currentPlayer;
     Deck superTrumpsDeck;
+    Trump currentCategory;
     Card lastPlayedCard;
+
 
 
 
@@ -90,9 +91,9 @@ public class Game {
         return isWon;
     }
 
-//    public void playTurn() {
-//        currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard());
-//    }
+    public void playTurn() {
+        currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard(), this.currentCategory);
+    }
 
     public int getCountRounds() {
         return countRounds;

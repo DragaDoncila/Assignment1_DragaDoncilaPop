@@ -73,11 +73,11 @@ public class DeckBuilder {
 //                    System.out.println(valArray.get(7).toString());
 //                    System.out.println("------------------------------------------------------");
                     if (i <= 54){
-                        Card tempCard = new MineralCard(valArray);
+                        MineralCard tempCard = new MineralCard(valArray);
                         superTrumpsDeck.addCard(tempCard);
                     }
                     else {
-                        Card tempCard = new SupertrumpCard(valArray);
+                        SupertrumpCard tempCard = new SupertrumpCard(valArray);
                         superTrumpsDeck.addCard(tempCard);
                     }
 

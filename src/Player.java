@@ -22,22 +22,19 @@ public class Player {
         return currentHand;
     }
 
-//    public Card chooseCardToPlay(int countRounds, Card lastPlayedCard, TrumpCategory currentCategory) {
-//        ArrayList<Card> playableCards = new ArrayList<>();
-//        for (Card card:
-//             currentHand) {
-//            if (countRounds == 1) {
-//                playableCards.add(card);
-//            }
-//            else {
-//                if (card.canPlayOn(lastPlayedCard, currentCategory)) {
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//        return null;
-//    }
+    public Card chooseCardToPlay(int countRounds, Card lastPlayedCard, Trump currentCategory) {
+        ArrayList<Card> playableCards = new ArrayList<>();
+        for (Card card:
+             currentHand) {
+            if (countRounds == 1) {
+                playableCards.add(card);
+            }
+            else if (card.canPlayOn(countRounds, lastPlayedCard, currentCategory)){
+                playableCards.add(card);
+            }
+
+        }
+
+        return null;
+    }
 }
