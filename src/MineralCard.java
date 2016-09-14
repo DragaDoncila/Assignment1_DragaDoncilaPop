@@ -5,7 +5,10 @@ import java.util.ArrayList;
  */
 public class MineralCard extends Card{
 
-    enum AbundanceScale{ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
+    public void setCrustalAbundance(String crustalAbundance) {
+        this.crustalAbundance = new CrustalAbundance(crustalAbundance);
+    }
+
     enum EconomicValue{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
 
     String chemistry;
@@ -15,7 +18,7 @@ public class MineralCard extends Card{
     Hardness hardness;
     SpecificGravity specificGravity;
     Cleavage cleavage;
-    String crustalAbundance;
+    CrustalAbundance crustalAbundance;
     String economicValue;
 
     public MineralCard(ArrayList<String> attributes) {
@@ -28,7 +31,7 @@ public class MineralCard extends Card{
         setHardness(attributes.get(8));
         setSpecificGravity(attributes.get(9));
         setCleavage(attributes.get(10));
-        this.crustalAbundance = attributes.get(11);
+        setCrustalAbundance(attributes.get(11));
         this.economicValue = attributes.get(12);
     }
 
@@ -88,7 +91,7 @@ public class MineralCard extends Card{
         return cleavage;
     }
 
-    public String getCrustalAbundance() {
+    public CrustalAbundance getCrustalAbundance() {
         return crustalAbundance;
     }
 
@@ -119,7 +122,11 @@ public class MineralCard extends Card{
                     return true;
                 }
             case CRUSTAL_ABUNDANCE:
-                break;
+                CrustalAbundance myCrustalAbundance = this.getCrustalAbundance();
+                CrustalAbundance otherCrustalAbundance = otherCard.getCrustalAbundance();
+                if (myCrustalAbundance.isHigherThan(otherCrustalAbundance)){
+                    return true;
+                }
             case ECONOMIC_VALUE:
                 break;
         }
