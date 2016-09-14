@@ -16,7 +16,7 @@ public class MineralCard extends Card{
     String crystalSystem;
     String occurrence;
     Hardness hardness;
-    String specificGravity;
+    SpecificGravity specificGravity;
     String cleavage;
     String crustalAbundance;
     String economicValue;
@@ -29,7 +29,7 @@ public class MineralCard extends Card{
         this.crystalSystem = attributes.get(6);
         this.occurrence = attributes.get(7);
         setHardness(attributes.get(8));
-        this.specificGravity = attributes.get(9);
+        setSpecificGravity(attributes.get(9));
         this.cleavage = attributes.get(10);
         this.crustalAbundance = attributes.get(11);
         this.economicValue = attributes.get(12);
@@ -38,6 +38,10 @@ public class MineralCard extends Card{
 
     public void setHardness(String hardness) {
         this.hardness = new Hardness(hardness);
+    }
+
+    public void setSpecificGravity(String specificGravity) {
+        this.specificGravity = new SpecificGravity(specificGravity);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class MineralCard extends Card{
         return hardness;
     }
 
-    public String getSpecificGravity() {
+    public SpecificGravity getSpecificGravity() {
         return specificGravity;
     }
 
@@ -98,7 +102,7 @@ public class MineralCard extends Card{
                 Hardness myHardness = this.getHardness();
                 Hardness otherHardness = otherCard.getHardness();
                 if (myHardness.isHigherThan(otherHardness)){
-                return true;
+                    return true;
                 }
             case SPECIFIC_GRAVITY:
                 break;
