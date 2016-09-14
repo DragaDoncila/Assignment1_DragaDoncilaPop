@@ -5,9 +5,6 @@ import java.util.ArrayList;
  */
 public class MineralCard extends Card{
 
-    public void setCrustalAbundance(String crustalAbundance) {
-        this.crustalAbundance = new CrustalAbundance(crustalAbundance);
-    }
 
     String chemistry;
     String classification;
@@ -48,6 +45,10 @@ public class MineralCard extends Card{
 
     public void setCleavage(String cleavage) {
         this.cleavage = new Cleavage(cleavage);
+    }
+
+    public void setCrustalAbundance(String crustalAbundance) {
+        this.crustalAbundance = new CrustalAbundance(crustalAbundance);
     }
 
 
@@ -102,41 +103,46 @@ public class MineralCard extends Card{
     }
 
     @Override
-    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump currentCategory){
+    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory){
+        boolean canPlayOn = false;
         MineralCard otherCard = (MineralCard) lastPlayedCard;
-        switch (currentCategory.category){
+        switch (currentCategory){
             case HARDNESS:
                 Hardness myHardness = this.getHardness();
                 Hardness otherHardness = otherCard.getHardness();
                 if (myHardness.isHigherThan(otherHardness)){
-                    return true;
+                    canPlayOn =  true;
                 }
+                break;
             case SPECIFIC_GRAVITY:
                 SpecificGravity myGravity = this.getSpecificGravity();
                 SpecificGravity otherGravity = otherCard.getSpecificGravity();
                 if (myGravity.isHigherThan(otherGravity)){
-                    return true;
+                    canPlayOn = true;
                 }
+                break;
             case CLEAVAGE:
                 Cleavage myCleavage = this.getCleavage();
                 Cleavage otherCleavage = otherCard.getCleavage();
                 if (myCleavage.isHigherThan(otherCleavage)){
-                    return true;
+                    canPlayOn =  true;
                 }
+                break;
             case CRUSTAL_ABUNDANCE:
                 CrustalAbundance myCrustalAbundance = this.getCrustalAbundance();
                 CrustalAbundance otherCrustalAbundance = otherCard.getCrustalAbundance();
                 if (myCrustalAbundance.isHigherThan(otherCrustalAbundance)){
-                    return true;
+                    canPlayOn = true;
                 }
+                break;
             case ECONOMIC_VALUE:
                 EconomicValue myEconomicValue = this.getEconomicValue();
                 EconomicValue otherEconomicValue = otherCard.getEconomicValue();
                 if (myEconomicValue.isHigherThan(otherEconomicValue)){
-                    return true;
+                    canPlayOn = true;
                 }
         }
-        return false;
+        return canPlayOn;
     }
     }
 

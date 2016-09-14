@@ -65,6 +65,6 @@ public abstract class Card {
         return displayString;
     }
 
-    public abstract boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump currentCategory);
+    public abstract boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory);
 
 }

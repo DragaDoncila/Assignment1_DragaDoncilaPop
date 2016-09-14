@@ -33,4 +33,8 @@ public class Deck {
         }
         return hand;
     }
+
+    public Card getCard(int i) {
+        return this.cards.get(i);
+    }
 }

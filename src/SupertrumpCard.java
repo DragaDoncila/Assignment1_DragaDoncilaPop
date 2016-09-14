@@ -12,7 +12,7 @@ public class SupertrumpCard extends Card{
     }
 
     @Override
-    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump currentCategory){
+    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory){
         return true;
     }
 }

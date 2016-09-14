@@ -22,11 +22,12 @@ public class Player {
         return currentHand;
     }
 
-    public Card chooseCardToPlay(int countRounds, Card lastPlayedCard, Trump currentCategory) {
+    public Card chooseCardToPlay(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
         ArrayList<Card> playableCards = new ArrayList<>();
         for (Card card:
              currentHand) {
-            if (countRounds == 1) {
+//            CHANGE TO 1!!!
+            if (countRounds == 0) {
                 playableCards.add(card);
             }
             else if (card.canPlayOn(countRounds, lastPlayedCard, currentCategory)){
@@ -34,7 +35,11 @@ public class Player {
             }
 
         }
+        for (Card card:
+             playableCards) {
+            System.out.println(card.getTitle());
+        }
 
-        return null;
+        return playableCards.get(0);
     }
 }

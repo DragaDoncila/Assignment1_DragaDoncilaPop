@@ -14,7 +14,7 @@ public class Game {
     Player dealer;
     Player currentPlayer;
     Deck superTrumpsDeck;
-    Trump currentCategory;
+    Trump.TrumpCategories currentCategory;
     Card lastPlayedCard;
 
 
@@ -37,6 +37,8 @@ public class Game {
             players[i] = new Player(i, BOTNAMES[i-1]);
         }
         countRounds = 0;
+        this.lastPlayedCard = superTrumpsDeck.getCard(0);
+
     }
 
     public String selectDealer() {
@@ -92,6 +94,8 @@ public class Game {
     }
 
     public void playTurn() {
+        this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
+        System.out.println(lastPlayedCard.getTitle());
         currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard(), this.currentCategory);
     }
 

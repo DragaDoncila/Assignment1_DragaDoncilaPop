@@ -29,9 +29,15 @@ public class PlayGame {
                 System.out.println("Ready to play, " + userName);
                 Player playerUp = superTrumpsGame.getNextPlayer();
                 System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
+                //TODO: Delete this
+                for (Card card :
+                        playerUp.getCurrentHand()) {
+                    System.out.println(card.getTitle());
+                }
                 while (superTrumpsGame.checkIfWon() == false){
                     System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
-//                    superTrumpsGame.playTurn();
+                    superTrumpsGame.playTurn();
+                    break;
                 }
 
             }
@@ -51,7 +57,7 @@ public class PlayGame {
 //      TODO: Move this to a method of deck or hand.
         for (Card card:
              userHand) {
-            System.out.println(card.toString());
+            System.out.println(card.getTitle());
         }
         return superTrumpsGame;
     }
