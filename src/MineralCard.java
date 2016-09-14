@@ -4,10 +4,7 @@ import java.util.ArrayList;
  * Created by Draga on 30/08/2016.
  */
 public class MineralCard extends Card{
-//    declare enum sequences here
 
-    enum CleavageScale{NONE, POOR_NONE, ONE_POOR, TWO_POOR, ONE_GOOD, ONE_GOOD_ONE_POOR, TWO_GOOD, THREE_GOOD, ONE_PERFECT,
-    ONE_PERFECT_ONE_GOOD, ONE_PERFECT_TWO_GOOD, TWO_PERFECT_ONE_GOOD, THREE_PERFECT, FOUR_PERFECT, SIX_PERFECT};
     enum AbundanceScale{ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
     enum EconomicValue{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
 
@@ -17,7 +14,7 @@ public class MineralCard extends Card{
     String occurrence;
     Hardness hardness;
     SpecificGravity specificGravity;
-    String cleavage;
+    Cleavage cleavage;
     String crustalAbundance;
     String economicValue;
 
@@ -30,7 +27,7 @@ public class MineralCard extends Card{
         this.occurrence = attributes.get(7);
         setHardness(attributes.get(8));
         setSpecificGravity(attributes.get(9));
-        this.cleavage = attributes.get(10);
+        setCleavage(attributes.get(10));
         this.crustalAbundance = attributes.get(11);
         this.economicValue = attributes.get(12);
     }
@@ -43,6 +40,11 @@ public class MineralCard extends Card{
     public void setSpecificGravity(String specificGravity) {
         this.specificGravity = new SpecificGravity(specificGravity);
     }
+
+    public void setCleavage(String cleavage) {
+        this.cleavage = new Cleavage(cleavage);
+    }
+
 
     @Override
     public String toString(){
@@ -82,7 +84,7 @@ public class MineralCard extends Card{
         return specificGravity;
     }
 
-    public String getCleavage() {
+    public Cleavage getCleavage() {
         return cleavage;
     }
 
@@ -105,9 +107,17 @@ public class MineralCard extends Card{
                     return true;
                 }
             case SPECIFIC_GRAVITY:
-                break;
+                SpecificGravity myGravity = this.getSpecificGravity();
+                SpecificGravity otherGravity = otherCard.getSpecificGravity();
+                if (myGravity.isHigherThan(otherGravity)){
+                    return true;
+                }
             case CLEAVAGE:
-                break;
+                Cleavage myCleavage = this.getCleavage();
+                Cleavage otherCleavage = otherCard.getCleavage();
+                if (myCleavage.isHigherThan(otherCleavage)){
+                    return true;
+                }
             case CRUSTAL_ABUNDANCE:
                 break;
             case ECONOMIC_VALUE:
