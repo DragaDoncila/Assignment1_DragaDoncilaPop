@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by Draga on 6/09/2016.
  */
 public class Game {
-    enum trumpCategories{HARDNESS, SPECIFIC_GRAVITY, CLEAVAGE, CRUSTAL_ABUNDANCE, ECONOMIC_VALUE}
+    enum TrumpCategories{HARDNESS, SPECIFIC_GRAVITY, CLEAVAGE, CRUSTAL_ABUNDANCE, ECONOMIC_VALUE}
 
     final String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
     final int CARDS_TO_A_HAND = 8;
@@ -16,6 +16,7 @@ public class Game {
     Player currentPlayer;
     Deck superTrumpsDeck;
     Card lastPlayedCard;
+
 
 
     public int incrementCountRounds() {
@@ -47,7 +48,7 @@ public class Game {
 
     public void dealInitialHands() {
         superTrumpsDeck.shuffle();
-        ArrayList<Card> newHand = new ArrayList<Card>(CARDS_TO_A_HAND);
+        ArrayList<Card> newHand;
         for (Player player:
              players) {
              newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
@@ -89,9 +90,9 @@ public class Game {
         return isWon;
     }
 
-    public void playTurn() {
-        currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard());
-    }
+//    public void playTurn() {
+//        currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard());
+//    }
 
     public int getCountRounds() {
         return countRounds;

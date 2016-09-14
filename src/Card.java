@@ -5,17 +5,18 @@ import java.util.ArrayList;
  */
 public class Card {
 
-    enum cardTypes{PLAY, TRUMP}
+    enum CardTypes {PLAY, TRUMP}
+    enum hardnessSeq{}
     String filename;
     String imagename;
-    cardTypes cardType;
+    CardTypes cardType;
     String title;
 
-    public cardTypes getCardType() {
+    public CardTypes getCardType() {
         return cardType;
     }
 
-    public void setCardType(cardTypes cardType) {
+    public void setCardType(CardTypes cardType) {
         this.cardType = cardType;
     }
 
@@ -24,10 +25,10 @@ public class Card {
         this.imagename = attributes.get(1);
         String cardTypeStr = attributes.get(2);
         if (cardTypeStr.equals("play")){
-            this.cardType = cardTypes.PLAY;
+            this.cardType = CardTypes.PLAY;
         }
         else{
-            this.cardType = cardTypes.TRUMP;
+            this.cardType = CardTypes.TRUMP;
         }
         this.title = attributes.get(3).toString();
 
@@ -66,7 +67,7 @@ public class Card {
     }
 
     public boolean canPlayOn(Card lastPlayedCard) {
-        if (cardType.equals(cardTypes.TRUMP)){
+        if (cardType.equals(CardTypes.TRUMP)){
             return true;
         }
         else{

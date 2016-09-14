@@ -31,7 +31,7 @@ public class PlayGame {
                 System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
                 while (superTrumpsGame.checkIfWon() == false){
                     System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
-                    superTrumpsGame.playTurn();
+//                    superTrumpsGame.playTurn();
                 }
 
             }

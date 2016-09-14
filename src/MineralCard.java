@@ -4,12 +4,18 @@ import java.util.ArrayList;
  * Created by Draga on 30/08/2016.
  */
 public class MineralCard extends Card{
+//    declare enum sequences here
+
+    enum CleavageScale{NONE, POOR_NONE, ONE_POOR, TWO_POOR, ONE_GOOD, ONE_GOOD_ONE_POOR, TWO_GOOD, THREE_GOOD, ONE_PERFECT,
+    ONE_PERFECT_ONE_GOOD, ONE_PERFECT_TWO_GOOD, TWO_PERFECT_ONE_GOOD, THREE_PERFECT, FOUR_PERFECT, SIX_PERFECT};
+    enum AbundanceScale{ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
+    enum EconomicValue{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
 
     String chemistry;
     String classification;
     String crystalSystem;
     String occurrence;
-    String hardness;
+    Hardness hardness;
     String specificGravity;
     String cleavage;
     String crustalAbundance;
@@ -17,15 +23,21 @@ public class MineralCard extends Card{
 
     public MineralCard(ArrayList<String> attributes) {
         super(attributes);
+//        setChemistry(); method takes string and converts it to enum value
         this.chemistry = attributes.get(4);
         this.classification = attributes.get(5);
         this.crystalSystem = attributes.get(6);
         this.occurrence = attributes.get(7);
-        this.hardness = attributes.get(8);
+        setHardness(attributes.get(8));
         this.specificGravity = attributes.get(9);
         this.cleavage = attributes.get(10);
         this.crustalAbundance = attributes.get(11);
         this.economicValue = attributes.get(12);
+    }
+
+
+    public void setHardness(String hardness) {
+        this.hardness = new Hardness(hardness);
     }
 
     @Override
@@ -58,8 +70,8 @@ public class MineralCard extends Card{
         return occurrence;
     }
 
-    public String getHardness() {
-        return hardness;
+    public double getHardness() {
+        return hardness.getHardnessVal();
     }
 
     public String getSpecificGravity() {
@@ -78,7 +90,8 @@ public class MineralCard extends Card{
         return economicValue;
     }
 
-    public boolean canPlayOn(Card lastPlayedCard){
-        return false;
-    }
+//    public boolean canPlayOn(Card lastPlayedCard, TrumpCategory currentCategory){
+//        lastPlayedCard.getCategory(currentCategory).
+//        return false;
+//    }
 }

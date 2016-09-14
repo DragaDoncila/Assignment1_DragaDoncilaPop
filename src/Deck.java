@@ -5,6 +5,7 @@ import java.util.Collections;
  * Created by Draga on 6/09/2016.
  */
 public class Deck {
+
     ArrayList<Card> cards;
 
     Deck(){

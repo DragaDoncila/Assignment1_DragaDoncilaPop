@@ -1229,7 +1229,7 @@
 			</array>
 
 			<key>hardness</key> 
-			<string>3.5 4.5</string>
+			<string>3.5-4.5</string>
 
 			<key>specific_gravity</key> 
 			<string>4.6</string>
@@ -1979,7 +1979,7 @@
 				<string>sedimentary</string>
 			</array>
 
-			<key>hardness</key> 
+			<key>hardness</key>
 			<string>4 - 4.5</string>
 
 			<key>specific_gravity</key> 
