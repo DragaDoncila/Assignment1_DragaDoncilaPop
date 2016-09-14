@@ -9,8 +9,6 @@ public class MineralCard extends Card{
         this.crustalAbundance = new CrustalAbundance(crustalAbundance);
     }
 
-    enum EconomicValue{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
-
     String chemistry;
     String classification;
     String crystalSystem;
@@ -19,7 +17,7 @@ public class MineralCard extends Card{
     SpecificGravity specificGravity;
     Cleavage cleavage;
     CrustalAbundance crustalAbundance;
-    String economicValue;
+    EconomicValue economicValue;
 
     public MineralCard(ArrayList<String> attributes) {
         super(attributes);
@@ -32,7 +30,11 @@ public class MineralCard extends Card{
         setSpecificGravity(attributes.get(9));
         setCleavage(attributes.get(10));
         setCrustalAbundance(attributes.get(11));
-        this.economicValue = attributes.get(12);
+        setEconomicValue(attributes.get(12));
+    }
+
+    private void setEconomicValue(String economicValStr) {
+        this.economicValue = new EconomicValue(economicValStr);
     }
 
 
@@ -95,7 +97,7 @@ public class MineralCard extends Card{
         return crustalAbundance;
     }
 
-    public String getEconomicValue() {
+    public EconomicValue getEconomicValue() {
         return economicValue;
     }
 
@@ -128,7 +130,11 @@ public class MineralCard extends Card{
                     return true;
                 }
             case ECONOMIC_VALUE:
-                break;
+                EconomicValue myEconomicValue = this.getEconomicValue();
+                EconomicValue otherEconomicValue = otherCard.getEconomicValue();
+                if (myEconomicValue.isHigherThan(otherEconomicValue)){
+                    return true;
+                }
         }
         return false;
     }
