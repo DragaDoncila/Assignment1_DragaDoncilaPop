@@ -1,3 +1,7 @@
+package Deck;
+
+import Cards.Card;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -6,7 +10,7 @@ import java.util.Collections;
  */
 public class Deck {
 
-    ArrayList<Card> cards;
+    private ArrayList<Card> cards;
 
     Deck(){
         cards =  new ArrayList<Card>();
@@ -36,5 +40,9 @@ public class Deck {
 
     public Card getCard(int i) {
         return this.cards.get(i);
+    }
+
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 }

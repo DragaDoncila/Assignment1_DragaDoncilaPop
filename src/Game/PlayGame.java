@@ -1,3 +1,8 @@
+package Game;
+
+import Cards.Card;
+import Players.Player;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -5,12 +10,12 @@ import java.util.Scanner;
  * Created by Draga on 6/09/2016.
  */
 public class PlayGame {
-    final static String MENU = "Mineral Supertrumps Menu\n" +
+    private final static String MENU = "Mineral Supertrumps Menu\n" +
             "(P)lay game\n" +
             "(I)nstructions\n" +
             "(Q)uit";
-    final static int MIN_PLAYERS = 3;
-    final static int MAX_PLAYERS = 5;
+    private final static int MIN_PLAYERS = 3;
+    private final static int MAX_PLAYERS = 5;
 
 
     public static void main(String[] args) {
@@ -29,11 +34,11 @@ public class PlayGame {
                 System.out.println("Ready to play, " + userName);
                 Player playerUp = superTrumpsGame.getNextPlayer();
                 System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
-                //TODO: Delete this
-                for (Card card :
-                        playerUp.getCurrentHand()) {
-                    System.out.println(card.getTitle());
-                }
+//                //TODO: Delete this
+//                for (Card card :
+//                        playerUp.getCurrentHand()) {
+//                    System.out.println(card.getTitle());
+//                }
                 while (superTrumpsGame.checkIfWon() == false){
                     System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
                     superTrumpsGame.playTurn();

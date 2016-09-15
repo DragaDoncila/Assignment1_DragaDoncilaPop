@@ -1,18 +1,20 @@
+package Trumps;
+
 /**Class handles enumeration, comparison and display of Crustal Abundance trump category.
  * Created by Draga on 14/09/2016.
  */
 public class CrustalAbundance extends Trump{
-    enum AbundanceScale{ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
+    private enum AbundanceScale{ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
 
-    AbundanceScale abundanceVal;
-    String abundanceStr;
+    private AbundanceScale abundanceVal;
+    private String abundanceStr;
 
     public CrustalAbundance(String crustalAbundance) {
         this.category = TrumpCategories.CRUSTAL_ABUNDANCE;
         setCrustalAbundance(crustalAbundance);
     }
 
-    public void setCrustalAbundance(String crustalAbundance) {
+    private void setCrustalAbundance(String crustalAbundance) {
         this.abundanceStr = crustalAbundance;
         crustalAbundance = crustalAbundance.replaceAll("\\s+", "");
         switch (crustalAbundance){
@@ -37,7 +39,7 @@ public class CrustalAbundance extends Trump{
         }
     }
 
-    public AbundanceScale getAbundanceVal() {
+    private AbundanceScale getAbundanceVal() {
         return abundanceVal;
     }
 
@@ -46,11 +48,8 @@ public class CrustalAbundance extends Trump{
         return abundanceStr;
     }
 
-    boolean isHigherThan(CrustalAbundance otherAbundance) {
+    public boolean isHigherThan(CrustalAbundance otherAbundance) {
         AbundanceScale otherAbundanceVal = otherAbundance.getAbundanceVal();
-        if (this.abundanceVal.compareTo(otherAbundance.getAbundanceVal()) > 0){
-            return true;
-        }
-        else return false;
+        return this.abundanceVal.compareTo(otherAbundanceVal) > 0;
     }
 }

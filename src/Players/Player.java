@@ -1,11 +1,17 @@
+package Players;
+
+import Cards.Card;
+import Trumps.Trump;
+
 import java.util.ArrayList;
 
 /**Class describes current attributes of a player as well as their methods for interacting with the game
  * Created by Draga on 6/09/2016.
  */
 public class Player {
-    int id;
-    ArrayList<Card> currentHand;
+    private int id;
+
+    private ArrayList<Card> currentHand;
     private String name;
 
     public String getName() {
@@ -16,6 +22,10 @@ public class Player {
         this.id = id;
         this.name = name;
 
+    }
+
+    public void setCurrentHand(ArrayList<Card> currentHand) {
+        this.currentHand = currentHand;
     }
 
     public ArrayList<Card> getCurrentHand() {

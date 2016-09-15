@@ -1,3 +1,5 @@
+package Trumps;
+
 /**
  * Class parses string version of attribute to an enum value, and sets up methods
  * for display and comparison
@@ -5,20 +7,20 @@
  */
 public class Cleavage extends Trump {
 
-    enum CleavageScale {
+    private enum CleavageScale {
         NONE, POOR_NONE, ONE_POOR, TWO_POOR, ONE_GOOD, ONE_GOOD_ONE_POOR, TWO_GOOD, THREE_GOOD, ONE_PERFECT,
         ONE_PERFECT_ONE_GOOD, ONE_PERFECT_TWO_GOOD, TWO_PERFECT_ONE_GOOD, THREE_PERFECT, FOUR_PERFECT, SIX_PERFECT
     }
 
-    CleavageScale cleavage;
+    private CleavageScale cleavage;
     private String cleavageStr;
 
-    Cleavage(String cleavage) {
+    public Cleavage(String cleavage) {
         this.category = TrumpCategories.CLEAVAGE;
         setCleavage(cleavage);
     }
 
-    public void setCleavage(String cleavage) {
+    private void setCleavage(String cleavage) {
         this.cleavageStr = cleavage;
         cleavage = cleavage.replaceAll("\\s+", "");
         switch (cleavage) {
@@ -71,7 +73,7 @@ public class Cleavage extends Trump {
         }
     }
 
-    public CleavageScale getCleavageVal(){
+    private CleavageScale getCleavageVal(){
         return cleavage;
     }
 
@@ -81,11 +83,6 @@ public class Cleavage extends Trump {
     }
 
     public boolean isHigherThan(Cleavage otherCleavage){
-        if (this.cleavage.compareTo(otherCleavage.getCleavageVal()) > 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.cleavage.compareTo(otherCleavage.getCleavageVal()) > 0;
     }
 }

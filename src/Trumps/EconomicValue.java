@@ -1,13 +1,15 @@
+package Trumps;
+
 /**Class handles enumerating, display and comparison of economic value trump category.
  * Created by Draga on 14/09/2016.
  */
 public class EconomicValue extends Trump{
-    enum EconomicScale{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
+    private enum EconomicScale{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
 
-    EconomicScale economicVal;
-    String economicValStr;
+    private EconomicScale economicVal;
+    private String economicValStr;
 
-    EconomicValue(String economicValStr){
+    public EconomicValue(String economicValStr){
         this.category = TrumpCategories.ECONOMIC_VALUE;
         this.economicValStr = economicValStr;
         setEconomicVal(economicValStr);
@@ -42,16 +44,12 @@ public class EconomicValue extends Trump{
         return economicValStr;
     }
 
-    EconomicScale getEconomicVal(){
+    private EconomicScale getEconomicVal(){
         return this.economicVal;
     }
 
-    boolean isHigherThan(EconomicValue otherEconomicValue){
-        if(this.economicVal.compareTo(otherEconomicValue.getEconomicVal()) > 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean isHigherThan(EconomicValue otherEconomicValue){
+        //TODO: pull othereconomic val directly.
+        return this.economicVal.compareTo(otherEconomicValue.getEconomicVal()) > 0;
     }
 }

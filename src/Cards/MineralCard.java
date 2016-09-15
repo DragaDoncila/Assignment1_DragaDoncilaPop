@@ -1,4 +1,7 @@
+package Cards;
+
 import java.util.ArrayList;
+import Trumps.*;
 
 /**Class designed to store information and methods about a playing card.
  * Created by Draga on 30/08/2016.
@@ -6,15 +9,15 @@ import java.util.ArrayList;
 public class MineralCard extends Card{
 
 
-    String chemistry;
-    String classification;
-    String crystalSystem;
-    String occurrence;
-    Hardness hardness;
-    SpecificGravity specificGravity;
-    Cleavage cleavage;
-    CrustalAbundance crustalAbundance;
-    EconomicValue economicValue;
+    private String chemistry;
+    private String classification;
+    private String crystalSystem;
+    private String occurrence;
+    private Hardness hardness;
+    private SpecificGravity specificGravity;
+    private Cleavage cleavage;
+    private CrustalAbundance crustalAbundance;
+    private EconomicValue economicValue;
 
     public MineralCard(ArrayList<String> attributes) {
         super(attributes);
@@ -35,22 +38,21 @@ public class MineralCard extends Card{
     }
 
 
-    public void setHardness(String hardness) {
+    private void setHardness(String hardness) {
         this.hardness = new Hardness(hardness);
     }
 
-    public void setSpecificGravity(String specificGravity) {
+    private void setSpecificGravity(String specificGravity) {
         this.specificGravity = new SpecificGravity(specificGravity);
     }
 
-    public void setCleavage(String cleavage) {
+    private void setCleavage(String cleavage) {
         this.cleavage = new Cleavage(cleavage);
     }
 
-    public void setCrustalAbundance(String crustalAbundance) {
+    private void setCrustalAbundance(String crustalAbundance) {
         this.crustalAbundance = new CrustalAbundance(crustalAbundance);
     }
-
 
     @Override
     public String toString(){
@@ -59,42 +61,42 @@ public class MineralCard extends Card{
         displayString += "\n";
         displayString += String.format("%-40s%-20s%-20s-%40s", chemistry, classification, crystalSystem, occurrence);
         displayString += "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n" ;
-        displayString += String.format("%-20s%-20s%-20s%-20s%-20s", "Hardness", "Specific Gravity", "Cleavage", "Abundance", "Value");
+        displayString += String.format("%-20s%-20s%-20s%-20s%-20s", "Trumps.Hardness", "Specific Gravity", "Trumps.Cleavage", "Abundance", "Value");
         displayString += "\n";
         displayString += String.format("%-20s%-20s%-20s%-20s%-20s", hardness, specificGravity, cleavage, crustalAbundance, economicValue);
         displayString += "\n";
         return displayString;
     }
 
-    public String getChemistry() {
+    private String getChemistry() {
         return chemistry;
     }
 
-    public String getClassification() {
+    private String getClassification() {
         return classification;
     }
 
-    public String getCrystalSystem() {
+    private String getCrystalSystem() {
         return crystalSystem;
     }
 
-    public String getOccurrence() {
+    private String getOccurrence() {
         return occurrence;
     }
 
-    public Hardness getHardness() {
+    private Hardness getHardness() {
         return hardness;
     }
 
-    public SpecificGravity getSpecificGravity() {
+    private SpecificGravity getSpecificGravity() {
         return specificGravity;
     }
 
-    public Cleavage getCleavage() {
+    private Cleavage getCleavage() {
         return cleavage;
     }
 
-    public CrustalAbundance getCrustalAbundance() {
+    private CrustalAbundance getCrustalAbundance() {
         return crustalAbundance;
     }
 

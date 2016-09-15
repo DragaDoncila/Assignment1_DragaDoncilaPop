@@ -1,7 +1,9 @@
-/**Practising parsing an XML plist file
+package Deck; /**Practising parsing an XML plist file
  * Created by Draga on 23/08/2016.
  */
 
+import Cards.MineralCard;
+import Cards.SupertrumpCard;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 public class DeckBuilder {
     static final String FILENAME = "MstCards_151021.plist";
 
-    static Deck buildDeck(){
+    public static Deck buildDeck(){
         Deck superTrumpsDeck = new Deck();
 //        Open the plist file as a file
         File cardsFile = new File(FILENAME);

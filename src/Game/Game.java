@@ -1,3 +1,11 @@
+package Game;
+
+import Cards.Card;
+import Deck.Deck;
+import Deck.DeckBuilder;
+import Trumps.Trump;
+import Players.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -5,27 +13,26 @@ import java.util.Random;
 /**Class handles the attributes and associated methods required for the playing of a Mineral Supertrumps game.
  * Created by Draga on 6/09/2016.
  */
-public class Game {
+class Game {
 
-    final String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
-    final int CARDS_TO_A_HAND = 8;
-    int numPlayers;
-    Player[] players;
-    Player dealer;
-    Player currentPlayer;
-    Deck superTrumpsDeck;
-    Trump.TrumpCategories currentCategory;
-    Card lastPlayedCard;
+    private final String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
+    private final int CARDS_TO_A_HAND = 8;
+    private int numPlayers;
+    private Player[] players;
+    private Player dealer;
+    private Player currentPlayer;
+    private Deck superTrumpsDeck;
+    private Trump.TrumpCategories currentCategory;
+    private Card lastPlayedCard;
+    private int countRounds;
 
 
 
 
-    public int incrementCountRounds() {
+    int incrementCountRounds() {
         ++this.countRounds;
         return countRounds;
     }
-
-    int countRounds;
 
 
     Game(int numPlayers, String userName) {
@@ -41,7 +48,7 @@ public class Game {
 
     }
 
-    public String selectDealer() {
+    String selectDealer() {
         Random rand = new Random();
         int dealerID = rand.nextInt(numPlayers);
         this.dealer = players[dealerID];
@@ -49,26 +56,26 @@ public class Game {
         return dealer.getName();
     }
 
-    public void dealInitialHands() {
+    void dealInitialHands() {
         superTrumpsDeck.shuffle();
         ArrayList<Card> newHand;
         for (Player player:
              players) {
              newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
-             player.currentHand = newHand;
+             player.setCurrentHand(newHand);
 
         }
-//        for (Card card:
+//        for (Cards.Card card:
 //             newHand) {
 //            System.out.println(card.getTitle());
 //        }
     }
 
-    public Player[] getPlayers() {
+    Player[] getPlayers() {
         return players;
     }
 
-    public Player getNextPlayer() {
+    Player getNextPlayer() {
         int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
 //        if the id of the current player is last in the list
         if (currentPlayerID == players.length - 1) {
@@ -82,7 +89,7 @@ public class Game {
         return currentPlayer;
     }
 
-    public boolean checkIfWon() {
+    boolean checkIfWon() {
         boolean isWon = false;
         for (Player player:
              players) {
@@ -93,17 +100,17 @@ public class Game {
         return isWon;
     }
 
-    public void playTurn() {
-        this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
-        System.out.println(lastPlayedCard.getTitle());
+    void playTurn() {
+//        this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
+//        System.out.println(lastPlayedCard.getTitle());
         currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard(), this.currentCategory);
     }
 
-    public int getCountRounds() {
+    private int getCountRounds() {
         return countRounds;
     }
 
-    public Card getLastPlayedCard() {
+    private Card getLastPlayedCard() {
         return lastPlayedCard;
     }
 }

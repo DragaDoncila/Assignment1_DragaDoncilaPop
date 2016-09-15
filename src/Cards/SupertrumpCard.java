@@ -1,6 +1,9 @@
-import java.util.ArrayList;
+package Cards;
 
-/**Class extends MineralCard and handles supertrump objects.
+import java.util.ArrayList;
+import Trumps.Trump;
+
+/**Class extends Cards.MineralCard and handles supertrump objects.
  * Created by Draga on 6/09/2016.
  */
 public class SupertrumpCard extends Card{

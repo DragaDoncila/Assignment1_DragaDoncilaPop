@@ -1,13 +1,15 @@
-/**Class handles Trump objects of the Hardness category. Provides methods for parsing string to appropriate value type
+package Trumps;
+
+/**Class handles Trumps.Trump objects of the Trumps.Hardness category. Provides methods for parsing string to appropriate value type
  * for comparison, as well as methods for comparison and display.
  * Created by Draga on 13/09/2016.
  */
 public class Hardness extends Trump{
 
-    double hardnessVal;
-    String hardnessStr;
+    private double hardnessVal;
+    private String hardnessStr;
 
-    Hardness(String hardnessStr){
+    public Hardness(String hardnessStr){
         this.category = TrumpCategories.HARDNESS;
         setHardness(hardnessStr);
     }
@@ -32,7 +34,7 @@ public class Hardness extends Trump{
         this.hardnessVal = hardness;
     }
 
-    public double getHardness() {
+    private double getHardness() {
         return hardnessVal;
     }
 
@@ -41,12 +43,7 @@ public class Hardness extends Trump{
         return hardnessStr;
     }
 
-    boolean isHigherThan(Hardness otherHardness) {
-        if (this.getHardness() > otherHardness.getHardness()){
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean isHigherThan(Hardness otherHardness) {
+        return this.getHardness() > otherHardness.getHardness();
     }
 }

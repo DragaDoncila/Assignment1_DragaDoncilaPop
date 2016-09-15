@@ -1,17 +1,19 @@
-/**Class handles Trump objects of the Specific Gravity category. Provides methods for parsing string to appropriate value type
+package Trumps;
+
+/**Class handles Trumps.Trump objects of the Specific Gravity category. Provides methods for parsing string to appropriate value type
  * for comparison, as well as methods for comparison and display.
  * Created by Draga on 14/09/2016.
  */
 public class SpecificGravity extends Trump{
-    double gravityVal;
-    String gravityStr;
+    private double gravityVal;
+    private String gravityStr;
 
-    SpecificGravity(String gravityStr){
+    public SpecificGravity(String gravityStr){
         this.category = TrumpCategories.SPECIFIC_GRAVITY;
         setSpecificGravity(gravityStr);
     }
 
-    public void setSpecificGravity(String specificGravity) {
+    private void setSpecificGravity(String specificGravity) {
         double gravity = 0.0;
         boolean hasRange = false;
 //        get rid of any spaces/trailing whitespace from file
@@ -31,7 +33,7 @@ public class SpecificGravity extends Trump{
         this.gravityStr = specificGravity;
     }
 
-    public double getGravity(){
+    private double getGravity(){
         return this.gravityVal;
     }
 
@@ -40,12 +42,7 @@ public class SpecificGravity extends Trump{
         return this.gravityStr;
     }
 
-    boolean isHigherThan(SpecificGravity otherGravity){
-        if (this.getGravity() > otherGravity.getGravity()){
-            return true;
-        }
-        else {
-            return false;
-        }
+    public boolean isHigherThan(SpecificGravity otherGravity){
+        return this.getGravity() > otherGravity.getGravity();
     }
 }
