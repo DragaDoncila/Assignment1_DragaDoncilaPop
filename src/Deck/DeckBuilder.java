@@ -1,7 +1,7 @@
 package Deck; /**Practising parsing an XML plist file
  * Created by Draga on 23/08/2016.
  */
-
+import Cards.Card;
 import Cards.MineralCard;
 import Cards.SupertrumpCard;
 import org.w3c.dom.Document;
@@ -75,11 +75,11 @@ public class DeckBuilder {
 //                    System.out.println(valArray.get(7).toString());
 //                    System.out.println("------------------------------------------------------");
                     if (i <= 54){
-                        MineralCard tempCard = new MineralCard(valArray);
+                        Card tempCard = new MineralCard(valArray);
                         superTrumpsDeck.addCard(tempCard);
                     }
                     else {
-                        SupertrumpCard tempCard = new SupertrumpCard(valArray);
+                        Card tempCard = new SupertrumpCard(valArray);
                         superTrumpsDeck.addCard(tempCard);
                     }
 

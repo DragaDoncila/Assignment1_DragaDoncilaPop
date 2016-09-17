@@ -5,23 +5,17 @@ import Trumps.Trump;
 
 import java.util.ArrayList;
 
-/**Class describes current attributes of a player as well as their methods for interacting with the game
- * Created by Draga on 6/09/2016.
+/**
+ * Created by Draga on 17/09/2016.
  */
-public class Player {
-    private int id;
+public abstract class Player {
+    int id;
 
-    private ArrayList<Card> currentHand;
-    private String name;
+    ArrayList<Card> currentHand;
+    String name;
 
     public String getName() {
         return name;
-    }
-
-    public Player(int id, String name) {
-        this.id = id;
-        this.name = name;
-
     }
 
     public void setCurrentHand(ArrayList<Card> currentHand) {
@@ -32,13 +26,7 @@ public class Player {
         return currentHand;
     }
 
-    public Card chooseCardToPlay(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
-        ArrayList<Card> playableCards = getPlayableCards(countRounds, lastPlayedCard, currentCategory);
-
-        return playableCards.get(0);
-    }
-
-    private ArrayList<Card> getPlayableCards(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
+    ArrayList<Card> getPlayableCards(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
         ArrayList<Card> playableCards = new ArrayList<>();
         for (Card card:
                 currentHand) {
@@ -52,4 +40,7 @@ public class Player {
         }
         return playableCards;
     }
+
+    public abstract Card chooseCardToPlay(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory);
+
 }

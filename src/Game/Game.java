@@ -3,8 +3,9 @@ package Game;
 import Cards.Card;
 import Deck.Deck;
 import Deck.DeckBuilder;
-import Trumps.Trump;
+import Players.HumanPlayer;
 import Players.Player;
+import Trumps.Trump;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,10 +39,10 @@ class Game {
     Game(int numPlayers, String userName) {
         superTrumpsDeck = DeckBuilder.buildDeck();
         this.numPlayers = numPlayers;
-        players = new Player[numPlayers];
-        players[0] = new Player(0, userName);
+        players = new HumanPlayer[numPlayers];
+        players[0] = new HumanPlayer(0, userName);
         for (int i=1; i < players.length; ++i){
-            players[i] = new Player(i, BOTNAMES[i-1]);
+            players[i] = new HumanPlayer(i, BOTNAMES[i-1]);
         }
         countRounds = 0;
         this.lastPlayedCard = superTrumpsDeck.getCard(0);
