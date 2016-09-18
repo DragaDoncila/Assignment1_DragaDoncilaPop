@@ -3,6 +3,7 @@ package Game;
 import Cards.Card;
 import Deck.Deck;
 import Deck.DeckBuilder;
+import Players.AIPlayer;
 import Players.HumanPlayer;
 import Players.Player;
 import Trumps.Trump;
@@ -16,11 +17,11 @@ import java.util.Random;
  */
 class Game {
 
-    private final String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
     private final int CARDS_TO_A_HAND = 8;
     private int numPlayers;
     private Player[] players;
     private Player dealer;
+    private HumanPlayer user;
     private Player currentPlayer;
     private Deck superTrumpsDeck;
     private Trump.TrumpCategories currentCategory;
@@ -39,10 +40,11 @@ class Game {
     Game(int numPlayers, String userName) {
         superTrumpsDeck = DeckBuilder.buildDeck();
         this.numPlayers = numPlayers;
-        players = new HumanPlayer[numPlayers];
-        players[0] = new HumanPlayer(0, userName);
+        players = new Player[numPlayers];
+        this.user = new HumanPlayer(0, userName);
+        players[0] = this.user;
         for (int i=1; i < players.length; ++i){
-            players[i] = new HumanPlayer(i, BOTNAMES[i-1]);
+            players[i] = new AIPlayer(i);
         }
         countRounds = 0;
         this.lastPlayedCard = superTrumpsDeck.getCard(0);
@@ -101,11 +103,23 @@ class Game {
         return isWon;
     }
 
-    void playTurn() {
-//        this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
-//        System.out.println(lastPlayedCard.getTitle());
-        currentPlayer.chooseCardToPlay(this.getCountRounds(), this.getLastPlayedCard(), this.currentCategory);
+    boolean isPlayable(Card userChoice){
+        boolean isPlayable = false;
+        String userCardTitle = userChoice.getTitle();
+        for (Card card :
+                currentPlayer.getPlayableCards()) {
+            if (card.getTitle().equals(userCardTitle)){
+                isPlayable = true;
+            }
+        }
+        return isPlayable;
     }
+
+//    Card playTurn() {
+//        currentPlayer.setPlayableCards(this.getCountRounds(), this.getLastPlayedCard(), this.currentCategory);
+//
+//        currentPlayer.chooseCardToPlay();
+//    }
 
     private int getCountRounds() {
         return countRounds;
@@ -113,5 +127,49 @@ class Game {
 
     private Card getLastPlayedCard() {
         return lastPlayedCard;
+    }
+
+    boolean userIsUp(){
+        if (currentPlayer.getType() == Player.PlayerTypes.USER){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public String selectDealer(Player allPlayer) {
+        this.dealer = allPlayer;
+        return allPlayer.getName();
+    }
+
+    public void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
+        this.lastPlayedCard = cardChoice;
+        this.setCurrentCategory(trumpChoiceStr);
+        incrementCountRounds();
+    }
+
+    public void setCurrentCategory(String currentCategory) {
+        switch (currentCategory){
+            case "Cleavage":
+                this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
+                break;
+            case "Crustal Abundance":
+                this.currentCategory = Trump.TrumpCategories.CRUSTAL_ABUNDANCE;
+                break;
+            case "Economic Value":
+                this.currentCategory = Trump.TrumpCategories.ECONOMIC_VALUE;
+                break;
+            case "Hardness":
+                this.currentCategory = Trump.TrumpCategories.HARDNESS;
+                break;
+            case "Specific Gravity":
+                this.currentCategory = Trump.TrumpCategories.SPECIFIC_GRAVITY;
+                break;
+        }
+    }
+
+    public void playFirstTurn() {
+
     }
 }

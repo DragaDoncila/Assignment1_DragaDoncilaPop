@@ -16,6 +16,7 @@ public class PlayGame {
             "(Q)uit";
     private final static int MIN_PLAYERS = 3;
     private final static int MAX_PLAYERS = 5;
+    private final static String[] validTrumps = {"Cleavage", "Crustal Abundance", "Economic Value", "Hardness", "Specific Gravity"};
 
 
     public static void main(String[] args) {
@@ -34,14 +35,16 @@ public class PlayGame {
                 System.out.println("Ready to play, " + userName);
                 Player playerUp = superTrumpsGame.getNextPlayer();
                 System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
-//                //TODO: Delete this
-//                for (Card card :
-//                        playerUp.getCurrentHand()) {
-//                    System.out.println(card.getTitle());
-//                }
+                if (superTrumpsGame.userIsUp()){
+                    playUserFirstTurn(superTrumpsGame, playerUp);
+                }
+                else {
+                    superTrumpsGame.playFirstTurn();
+                }
+
                 while (superTrumpsGame.checkIfWon() == false){
                     System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
-                    superTrumpsGame.playTurn();
+//                    Card cardChoice = superTrumpsGame.playTurn();
                     break;
                 }
 
@@ -51,9 +54,80 @@ public class PlayGame {
         }
     }
 
+    static void playUserFirstTurn(Game superTrumpsGame, Player playerUp) {
+        Card cardChoice;
+        cardChoice = getUserCardChoice(playerUp);
+        System.out.println("You've chosen to play : " + cardChoice.getTitle());
+        int trumpChoiceNum = getValidTrumpChoice();
+        String trumpChoiceStr = validTrumps[trumpChoiceNum];
+        superTrumpsGame.playFirstTurn(cardChoice, trumpChoiceStr);
+    }
+
+    protected static int getValidTrumpChoice() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("What is your trump choice?");
+        for (int i = 0; i < validTrumps.length; i++) {
+            System.out.println("<" + i + ">" + validTrumps[i]);
+        }
+        int userChoice = getValidNumInRange(validTrumps.length-1);
+        return userChoice;
+    }
+
+    protected static Card getUserCardChoice(Player playerUp) {
+        Card userCardChoice;
+        Scanner keyboard = new Scanner(System.in);
+            System.out.println("Choose a card to play: ");
+            displayCardChoices(playerUp);
+            int userChoice = getValidNumInRange(playerUp.getCurrentHand().size());
+            userCardChoice = playerUp.getCurrentHand().get(userChoice);
+        return userCardChoice;
+    }
+
+    private static int getValidNumInRange(int max) {
+        boolean validChoice = false;
+        Scanner input = new Scanner(System.in);
+        System.out.printf("Your choice >>> ");
+        String userChoice = input.nextLine();
+        int num = -1;
+        while (!validChoice) {
+            try {
+                num = Integer.parseInt(userChoice);
+                if (num < 0 || num > max){
+                    System.out.println("That is not a valid choice.");
+                    System.out.printf("Your choice >>> ");
+                    userChoice = input.nextLine();
+                }
+                else{
+                    validChoice = true;
+                }
+            }
+            catch (NumberFormatException error){
+                System.out.println("That is not a valid choice.");
+                System.out.printf("Your choice >>> ");
+                userChoice = input.nextLine();
+            }
+        }
+        return num;
+    }
+
+    protected static void displayCardChoices(Player playerUp) {
+        int i = 0;
+        for (Card card:
+                playerUp.getCurrentHand()) {
+            System.out.println("<" + i + ">" + card.getTitle());
+            ++i;
+        }
+    }
+
     private static Game startnewgame(String userName) {
         int numPlayers = getValidNumPlayers();
         Game superTrumpsGame = new Game(numPlayers, userName);
+        System.out.println("Let's see who's playing today!");
+        Player[] allPlayers = superTrumpsGame.getPlayers();
+        for (Player player:
+             allPlayers) {
+            System.out.println(player.getName());
+        }
         String dealerName = superTrumpsGame.selectDealer();
         System.out.println("Dealer has been selected! " + dealerName + " is dealing today.");
         superTrumpsGame.dealInitialHands();
