@@ -21,6 +21,11 @@ public class HumanPlayer extends Player {
     }
 
     @Override
+    public String chooseCategory(Card lastPlayedCard) {
+        return null;
+    }
+
+    @Override
     public Card playFirstCard(int cardChoice){
 //        Card chosenCard = currentHand.get(cardChoice);
         return currentHand.remove(cardChoice);

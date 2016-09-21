@@ -42,10 +42,10 @@ public class PlayGame {
                     superTrumpsGame.playFirstTurn();
                 }
                 displayTurnResults(superTrumpsGame, playerUp);
-
-                while (superTrumpsGame.checkIfWon() == false){
-                    System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
-//                    Card cardChoice = superTrumpsGame.playTurn();
+                while (!superTrumpsGame.isWon()){
+                    playerUp = superTrumpsGame.getNextPlayer();
+                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
+                    superTrumpsGame.isWon();
                     break;
                 }
 
@@ -70,6 +70,7 @@ public class PlayGame {
         if (chosenCard.isMineral() || chosenCard.getTitle().equals("The Geologist")){
             int trumpChoiceNum = getValidTrumpChoice();
             String trumpChoiceStr = validTrumpChoices[trumpChoiceNum];
+            trumpChoiceStr = trumpChoiceStr.replaceAll("\\s+", "").toLowerCase();
             superTrumpsGame.playFirstTurn(chosenCard, trumpChoiceStr);
         }
         else {

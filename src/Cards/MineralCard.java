@@ -113,7 +113,7 @@ public class MineralCard extends Card{
     }
 
     @Override
-    public boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory){
+    public boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory){
         boolean canPlayOn = false;
         MineralCard otherCard = (MineralCard) lastPlayedCard;
         switch (currentCategory){

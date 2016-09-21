@@ -23,6 +23,8 @@ public abstract class Player {
         return titlesStr;
     }
 
+    public abstract String chooseCategory(Card lastPlayedCard);
+
     public enum PlayerTypes{USER, BOT};
     int id;
 
@@ -44,14 +46,11 @@ public abstract class Player {
         return currentHand;
     }
 
-    public void setPlayableCards(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
+    public void setPlayableCards(Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
         ArrayList<Card> playableCards = new ArrayList<>();
         for (Card card:
                 currentHand) {
-            if (countRounds == 1) {
-                playableCards.add(card);
-            }
-            else if (card.canPlayOn(countRounds, lastPlayedCard, currentCategory)){
+            if (card.canPlayOn(lastPlayedCard, currentCategory)){
                 playableCards.add(card);
             }
 

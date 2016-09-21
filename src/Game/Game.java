@@ -91,7 +91,7 @@ class Game {
         return currentPlayer;
     }
 
-    boolean checkIfWon() {
+    boolean isWon() {
         boolean isWon = false;
         for (Player player:
              players) {
@@ -114,12 +114,6 @@ class Game {
         return isPlayable;
     }
 
-//    Card playTurn() {
-//        currentPlayer.setPlayableCards(this.getCountRounds(), this.getLastPlayedCard(), this.currentCategory);
-//
-//        currentPlayer.chooseCardToPlay();
-//    }
-
     private int getCountRounds() {
         return countRounds;
     }
@@ -127,6 +121,11 @@ class Game {
     public Card getLastPlayedCard() {
         return lastPlayedCard;
     }
+
+    public void setLastPlayedCard(int cardIndex) {
+        this.lastPlayedCard = currentPlayer.getCurrentHand().get(cardIndex);
+    }
+
 
     boolean userIsUp(){
         if (currentPlayer.getType() == Player.PlayerTypes.USER){
@@ -154,37 +153,12 @@ class Game {
         this.lastPlayedCard = cardChoice;
         setCurrentCategory(trumpChoiceStr);
         incrementCountRounds();
-        this.currentPlayer = this.getNextPlayer();
-    }
-
-    public void setCurrentCategory(String currentCategory) {
-        switch (currentCategory){
-            case "Cleavage":
-                this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
-                break;
-            case "Crustal Abundance":
-                this.currentCategory = Trump.TrumpCategories.CRUSTAL_ABUNDANCE;
-                break;
-            case "Economic Value":
-                this.currentCategory = Trump.TrumpCategories.ECONOMIC_VALUE;
-                break;
-            case "Hardness":
-                this.currentCategory = Trump.TrumpCategories.HARDNESS;
-                break;
-            case "Specific Gravity":
-                this.currentCategory = Trump.TrumpCategories.SPECIFIC_GRAVITY;
-                break;
-        }
     }
 
     public void playFirstTurn() {
-        //AI play first turn functionality
+        this.lastPlayedCard = currentPlayer.playFirstCard(0);
+        setCurrentCategory(currentPlayer.chooseCategory(lastPlayedCard));
 
-
-    }
-
-    public void setLastPlayedCard(int cardIndex) {
-        this.lastPlayedCard = currentPlayer.getCurrentHand().get(cardIndex);
     }
 
     public void playFirstTurn(Card chosenCard) {
@@ -198,10 +172,29 @@ class Game {
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(lastPlayedCard.getInfo());
         incrementCountRounds();
-        this.currentPlayer = this.getNextPlayer();
     }
 
     public Trump.TrumpCategories getCurrentCategory() {
         return currentCategory;
+    }
+
+    public void setCurrentCategory(String currentCategory) {
+        switch (currentCategory){
+            case "cleavage":
+                this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
+                break;
+            case "crustalabundance":
+                this.currentCategory = Trump.TrumpCategories.CRUSTAL_ABUNDANCE;
+                break;
+            case "economicvalue":
+                this.currentCategory = Trump.TrumpCategories.ECONOMIC_VALUE;
+                break;
+            case "hardness":
+                this.currentCategory = Trump.TrumpCategories.HARDNESS;
+                break;
+            case "specificgravity":
+                this.currentCategory = Trump.TrumpCategories.SPECIFIC_GRAVITY;
+                break;
+        }
     }
 }

@@ -77,7 +77,7 @@ public abstract class Card {
                 "\n" + "---------------------------------------------------------------------\n";
     }
 
-    public abstract boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory);
+    public abstract boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory);
 
     public abstract String getInfo();
 
