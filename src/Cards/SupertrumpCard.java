@@ -54,4 +54,9 @@ public class SupertrumpCard extends Card{
     public String getInfo() {
         return cardInfo;
     }
+
+    @Override
+    public String getTrumpVal(Trump.TrumpCategories category) {
+        return null;
+    }
 }

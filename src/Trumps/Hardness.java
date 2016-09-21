@@ -46,4 +46,8 @@ public class Hardness extends Trump{
     public boolean isHigherThan(Hardness otherHardness) {
         return this.getHardness() > otherHardness.getHardness();
     }
+
+    public String getValueString() {
+        return Double.toString(hardnessVal);
+    }
 }

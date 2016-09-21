@@ -81,4 +81,6 @@ public abstract class Card {
 
     public abstract String getInfo();
 
+    public abstract String getTrumpVal(Trump.TrumpCategories category);
+
 }

@@ -31,7 +31,7 @@ public class Deck {
     }
 
     public ArrayList<Card> dealHand(int cards_to_a_hand) {
-        ArrayList<Card> hand = new ArrayList<Card>(cards_to_a_hand);
+        ArrayList<Card> hand = new ArrayList<>(cards_to_a_hand);
         for (int i = 0; i < cards_to_a_hand; ++i){
             hand.add(cards.remove(i));
         }
@@ -44,5 +44,10 @@ public class Deck {
 
     public ArrayList<Card> getCards() {
         return cards;
+    }
+
+    public Card drawCard() {
+//        Return the card on the top of the deck
+        return cards.remove(0);
     }
 }

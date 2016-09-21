@@ -82,6 +82,10 @@ public class Cleavage extends Trump {
         return cleavageStr;
     }
 
+    public String getValueString() {
+        return this.toString();
+    }
+
     public boolean isHigherThan(Cleavage otherCleavage){
         return this.cleavage.compareTo(otherCleavage.getCleavageVal()) > 0;
     }

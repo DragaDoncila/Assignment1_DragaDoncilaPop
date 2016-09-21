@@ -45,4 +45,8 @@ public class SpecificGravity extends Trump{
     public boolean isHigherThan(SpecificGravity otherGravity){
         return this.getGravity() > otherGravity.getGravity();
     }
+
+    public String getValueString() {
+        return Double.toString(gravityVal);
+    }
 }

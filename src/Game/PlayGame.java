@@ -61,7 +61,24 @@ public class PlayGame {
         }
     }
 
-    private static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
+    protected static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
+        playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
+        int numPlayable = playerUp.getPlayableCards().size();
+        if (numPlayable == 0){
+            System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
+            System.out.println("You must pass.");
+            superTrumpsGame.pass();
+        }
+        else {
+            int cardChoice = getUserCardChoice(playerUp);
+            Card chosenCard = playerUp.getCard(cardChoice);
+            if (superTrumpsGame.isPlayable(chosenCard)){
+                System.out.println("It Plays!");
+            }
+            else {
+                System.out.println("It don't");
+            }
+        }
         /*Get card choice from the user
         * while !valid
         * if game.playableCardChosen AND card isn't geologist:

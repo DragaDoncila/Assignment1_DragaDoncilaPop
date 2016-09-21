@@ -52,4 +52,8 @@ public class CrustalAbundance extends Trump{
         AbundanceScale otherAbundanceVal = otherAbundance.getAbundanceVal();
         return this.abundanceVal.compareTo(otherAbundanceVal) > 0;
     }
+
+    public String getValueString() {
+        return this.toString();
+    }
 }

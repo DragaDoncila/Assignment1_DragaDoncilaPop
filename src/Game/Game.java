@@ -216,4 +216,11 @@ class Game {
     }
 
 
+    public void pass() {
+        int numCardsLeft = superTrumpsDeck.getCards().size();
+        if (numCardsLeft != 0){
+            Card drawnCard = superTrumpsDeck.drawCard();
+            currentPlayer.addCard(drawnCard);
+        }
+    }
 }

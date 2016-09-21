@@ -52,4 +52,8 @@ public class EconomicValue extends Trump{
         //TODO: pull othereconomic val directly.
         return this.economicVal.compareTo(otherEconomicValue.getEconomicVal()) > 0;
     }
+
+    public String getValueString() {
+        return this.toString();
+    }
 }

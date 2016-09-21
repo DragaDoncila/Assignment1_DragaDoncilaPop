@@ -76,6 +76,25 @@ public class MineralCard extends Card{
 
     }
 
+    @Override
+    public String getTrumpVal(Trump.TrumpCategories category) {
+        switch (category){
+            case HARDNESS:
+                return this.getHardness().getValueString();
+            case ECONOMIC_VALUE:
+                return this.getEconomicValue().getValueString();
+            case CRUSTAL_ABUNDANCE:
+                return this.getCrustalAbundance().getValueString();
+            case CLEAVAGE:
+                return this.getCleavage().getValueString();
+            case SPECIFIC_GRAVITY:
+                return this.getSpecificGravity().getValueString();
+            default:
+                return "Not Found";
+
+        }
+    }
+
     private String getChemistry() {
         return chemistry;
     }

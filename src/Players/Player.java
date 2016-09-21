@@ -25,6 +25,14 @@ public abstract class Player {
 
     public abstract String chooseCategory(Card lastPlayedCard);
 
+    public void addCard(Card drawnCard){
+        currentHand.add(drawnCard);
+    }
+
+    public Card getCard(int cardChoice) {
+        return currentHand.get(cardChoice);
+    }
+
     public enum PlayerTypes{USER, BOT};
     int id;
 
