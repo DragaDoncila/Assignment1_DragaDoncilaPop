@@ -20,6 +20,12 @@ public class MineralCard extends Card{
     private EconomicValue economicValue;
 
 
+    @Override
+    public boolean isGeologist() {
+//        Mineral Card cannot be the Geologist
+        return false;
+    }
+
     public MineralCard(ArrayList<String> attributes) {
         super(attributes);
 //        setChemistry(); method takes string and converts it to enum value

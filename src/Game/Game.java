@@ -156,6 +156,7 @@ class Game {
     }
 
     public void playFirstTurn() {
+//        AI Play First Turn
         this.lastPlayedCard = currentPlayer.playFirstCard(0);
         setCurrentCategory(currentPlayer.chooseCategory(lastPlayedCard));
 

@@ -13,6 +13,10 @@ public class SupertrumpCard extends Card{
     String cardInfo;
 
 
+    @Override
+    public boolean isGeologist() {
+        return this.getTitle().equals("The Geologist");
+    }
 
     public SupertrumpCard(ArrayList<String> attributes){
         super(attributes);

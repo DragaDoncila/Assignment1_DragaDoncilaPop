@@ -8,6 +8,8 @@ import Trumps.Trump;
  */
 public abstract class Card {
 
+    public abstract boolean isGeologist();
+
     private enum CardTypes {PLAY, TRUMP}
     private String filename;
     private String imagename;

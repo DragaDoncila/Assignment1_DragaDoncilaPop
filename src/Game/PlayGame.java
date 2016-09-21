@@ -49,6 +49,7 @@ public class PlayGame {
                         userPlayTurn(superTrumpsGame, playerUp);
                     }
                     else {
+//                        AI plays their turn
                         superTrumpsGame.playTurn();
                     }
                     superTrumpsGame.isWon();
@@ -72,11 +73,26 @@ public class PlayGame {
         else {
             int cardChoice = getUserCardChoice(playerUp);
             Card chosenCard = playerUp.getCard(cardChoice);
-            if (superTrumpsGame.isPlayable(chosenCard)){
-                System.out.println("It Plays!");
-            }
-            else {
-                System.out.println("It don't");
+            boolean validCard = false;
+            while (!validCard) {
+                if (superTrumpsGame.isPlayable(chosenCard)){
+                    if (chosenCard.isGeologist()){
+                        String trumpChoice = getTrumpStr();
+                        superTrumpsGame.playTurn(chosenCard, trumpChoice);
+                        validCard = true;
+                    }
+    //                Card chosen is playable and is not the Geologist
+                    else {
+                        superTrumpsGame.playTurn(chosenCard);
+                        validCard = true;
+                    }
+                }
+    //            User has playable cards but has chosen unplayable
+                else {
+                    System.out.println("That card cannot play on " + superTrumpsGame.getLastPlayedCard().getTitle());
+                    cardChoice = getUserCardChoice(playerUp);
+                    chosenCard = playerUp.getCard(cardChoice);
+                }
             }
         }
         /*Get card choice from the user
@@ -106,10 +122,8 @@ public class PlayGame {
         int cardChoice = getUserCardChoice(playerUp);
         Card chosenCard = playerUp.playFirstCard(cardChoice);
         if (chosenCard.isMineral() || chosenCard.getTitle().equals("The Geologist")){
-            int trumpChoiceNum = getValidTrumpChoice();
-            String trumpChoiceStr = validTrumpChoices[trumpChoiceNum];
-            trumpChoiceStr = trumpChoiceStr.replaceAll("\\s+", "").toLowerCase();
-            superTrumpsGame.playFirstTurn(chosenCard, trumpChoiceStr);
+            String trumpChoice = getTrumpStr();
+            superTrumpsGame.playFirstTurn(chosenCard, trumpChoice);
         }
         else {
             superTrumpsGame.playFirstTurn(chosenCard);
@@ -211,5 +225,11 @@ public class PlayGame {
     }
 
 
+    public static String getTrumpStr() {
+        int trumpChoiceNum = getValidTrumpChoice();
+        String trumpStr = validTrumpChoices[trumpChoiceNum];
+        trumpStr = trumpStr.replaceAll("\\s+", "").toLowerCase();
+        return trumpStr;
+    }
 }
 
