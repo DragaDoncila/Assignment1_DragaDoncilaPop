@@ -2443,7 +2443,7 @@
 			<string>The Gemmologist</string>
 
 			<key>subtitle</key> 
-			<string>Trumps.Hardness</string>
+			<string>Hardness</string>
 		</dict>
 
 		<dict>
@@ -2460,7 +2460,7 @@
 			<string>The Mineralogist</string>
 
 			<key>subtitle</key> 
-			<string>Trumps.Cleavage</string>
+			<string>Cleavage</string>
 		</dict>		
 
 		<dict>

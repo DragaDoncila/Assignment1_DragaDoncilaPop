@@ -56,6 +56,20 @@ public abstract class Card {
         this.title = title;
     }
 
+    public boolean isTrump(){
+        if (this.cardType == CardTypes.TRUMP){
+            return true;
+        }
+        else return false;
+    }
+
+    public boolean isMineral(){
+        if (this.cardType == CardTypes.PLAY){
+            return true;
+        }
+        else return false;
+    }
+
     @Override
     public String toString(){
         return "---------------------------------------------------------------------\n" +
@@ -64,5 +78,7 @@ public abstract class Card {
     }
 
     public abstract boolean canPlayOn(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory);
+
+    public abstract String getInfo();
 
 }

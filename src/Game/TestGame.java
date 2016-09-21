@@ -34,7 +34,8 @@ public class TestGame {
         Player playerUp = newGame.getNextPlayer();
         System.out.println("Next up: " + playerUp.getName());
         if (newGame.userIsUp()){
-            PlayGame.playUserFirstTurn(newGame, playerUp);
+            PlayGame.userPlayFirstTurn(newGame, playerUp);
+            PlayGame.displayTurnResults(newGame, playerUp);
         }
     }
 }

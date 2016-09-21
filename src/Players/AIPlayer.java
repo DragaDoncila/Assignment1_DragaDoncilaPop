@@ -20,4 +20,9 @@ public class AIPlayer extends Player{
     public Card chooseCardToPlay(int countRounds, Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
         return null;
     }
+
+    @Override
+    public Card playFirstCard(int cardChoice) {
+        return null;
+    }
 }

@@ -47,7 +47,6 @@ class Game {
             players[i] = new AIPlayer(i);
         }
         countRounds = 0;
-        this.lastPlayedCard = superTrumpsDeck.getCard(0);
 
     }
 
@@ -125,7 +124,7 @@ class Game {
         return countRounds;
     }
 
-    private Card getLastPlayedCard() {
+    public Card getLastPlayedCard() {
         return lastPlayedCard;
     }
 
@@ -144,9 +143,18 @@ class Game {
     }
 
     public void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
+//Used in case of mineral card OR The Geologist Trump
+//        setLastPlayedCard(cardChoice);
+        /*Need to:
+        * set last played card to the chosen card
+        * set current trump category to the chosen category
+        * increment rounds
+        * increment current player
+        * return current trump value? or just get it in play game..*/
         this.lastPlayedCard = cardChoice;
-        this.setCurrentCategory(trumpChoiceStr);
+        setCurrentCategory(trumpChoiceStr);
         incrementCountRounds();
+        this.currentPlayer = this.getNextPlayer();
     }
 
     public void setCurrentCategory(String currentCategory) {
@@ -170,6 +178,30 @@ class Game {
     }
 
     public void playFirstTurn() {
+        //AI play first turn functionality
 
+
+    }
+
+    public void setLastPlayedCard(int cardIndex) {
+        this.lastPlayedCard = currentPlayer.getCurrentHand().get(cardIndex);
+    }
+
+    public void playFirstTurn(Card chosenCard) {
+        //Trump play first turn functionality
+        /*Need to:
+        * set last played card to the chosen card
+        * set current trump category based on card effect
+        * increment rounds
+        * increment current player
+        * return current trump cat? or just get it in play game..*/
+        this.lastPlayedCard = chosenCard;
+        setCurrentCategory(lastPlayedCard.getInfo());
+        incrementCountRounds();
+        this.currentPlayer = this.getNextPlayer();
+    }
+
+    public Trump.TrumpCategories getCurrentCategory() {
+        return currentCategory;
     }
 }

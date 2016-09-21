@@ -3,7 +3,6 @@ package Players;
 import Cards.Card;
 import Trumps.Trump;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**Abstract class outlays behaviours of Players for MineralSupertrumps games.
@@ -64,15 +63,7 @@ public abstract class Player {
         return playableCards;
     }
 
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
+    public abstract Card playFirstCard(int cardChoice);
 
 
 }

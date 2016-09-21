@@ -16,7 +16,7 @@ public class PlayGame {
             "(Q)uit";
     private final static int MIN_PLAYERS = 3;
     private final static int MAX_PLAYERS = 5;
-    private final static String[] validTrumps = {"Cleavage", "Crustal Abundance", "Economic Value", "Hardness", "Specific Gravity"};
+    private final static String[] validTrumpChoices = {"Cleavage", "Crustal Abundance", "Economic Value", "Hardness", "Specific Gravity"};
 
 
     public static void main(String[] args) {
@@ -36,11 +36,12 @@ public class PlayGame {
                 Player playerUp = superTrumpsGame.getNextPlayer();
                 System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
                 if (superTrumpsGame.userIsUp()){
-                    playUserFirstTurn(superTrumpsGame, playerUp);
+                    userPlayFirstTurn(superTrumpsGame, playerUp);
                 }
                 else {
                     superTrumpsGame.playFirstTurn();
                 }
+                displayTurnResults(superTrumpsGame, playerUp);
 
                 while (superTrumpsGame.checkIfWon() == false){
                     System.out.println("Round: " + superTrumpsGame.incrementCountRounds());
@@ -54,33 +55,47 @@ public class PlayGame {
         }
     }
 
-    static void playUserFirstTurn(Game superTrumpsGame, Player playerUp) {
-        Card cardChoice;
-        cardChoice = getUserCardChoice(playerUp);
-        System.out.println("You've chosen to play : " + cardChoice.getTitle());
-        int trumpChoiceNum = getValidTrumpChoice();
-        String trumpChoiceStr = validTrumps[trumpChoiceNum];
-        superTrumpsGame.playFirstTurn(cardChoice, trumpChoiceStr);
+    protected static void displayTurnResults(Game superTrumpsGame, Player playerUp) {
+        System.out.println("Turn Complete!");
+        System.out.println(playerUp.getName() + " played " + superTrumpsGame.getLastPlayedCard().getTitle());
+        System.out.println("Current trump category is: " + superTrumpsGame.getCurrentCategory());
+
+
+    }
+
+    static void userPlayFirstTurn(Game superTrumpsGame, Player playerUp) {
+        //TODO: Add functionality for user choosing a supertrumps card.
+        int cardChoice = getUserCardChoice(playerUp);
+        Card chosenCard = playerUp.playFirstCard(cardChoice);
+        if (chosenCard.isMineral() || chosenCard.getTitle().equals("The Geologist")){
+            int trumpChoiceNum = getValidTrumpChoice();
+            String trumpChoiceStr = validTrumpChoices[trumpChoiceNum];
+            superTrumpsGame.playFirstTurn(chosenCard, trumpChoiceStr);
+        }
+        else {
+            superTrumpsGame.playFirstTurn(chosenCard);
+        }
+//        System.out.println("You've chosen to play : " + cardChoice.getTitle());
     }
 
     protected static int getValidTrumpChoice() {
+        //TODO: Refactor to validate through game.
         Scanner input = new Scanner(System.in);
         System.out.println("What is your trump choice?");
-        for (int i = 0; i < validTrumps.length; i++) {
-            System.out.println("<" + i + ">" + validTrumps[i]);
+        for (int i = 0; i < validTrumpChoices.length; i++) {
+            System.out.println("<" + i + ">" + validTrumpChoices[i]);
         }
-        int userChoice = getValidNumInRange(validTrumps.length-1);
+        int userChoice = getValidNumInRange(validTrumpChoices.length-1);
         return userChoice;
     }
 
-    protected static Card getUserCardChoice(Player playerUp) {
-        Card userCardChoice;
+    protected static int getUserCardChoice(Player playerUp) {
+        //TODO: Refactor to validate through game.
         Scanner keyboard = new Scanner(System.in);
-            System.out.println("Choose a card to play: ");
+            System.out.println("Choose the number of your desired card: ");
             displayCardChoices(playerUp);
             int userChoice = getValidNumInRange(playerUp.getCurrentHand().size());
-            userCardChoice = playerUp.getCurrentHand().get(userChoice);
-        return userCardChoice;
+        return userChoice;
     }
 
     private static int getValidNumInRange(int max) {
@@ -93,7 +108,7 @@ public class PlayGame {
             try {
                 num = Integer.parseInt(userChoice);
                 if (num < 0 || num > max){
-                    System.out.println("That is not a valid choice.");
+                    System.out.println("That is not a valid choice. Please enter number in range.");
                     System.out.printf("Your choice >>> ");
                     userChoice = input.nextLine();
                 }
@@ -102,7 +117,7 @@ public class PlayGame {
                 }
             }
             catch (NumberFormatException error){
-                System.out.println("That is not a valid choice.");
+                System.out.println("That is not a valid choice. Please enter valid number.");
                 System.out.printf("Your choice >>> ");
                 userChoice = input.nextLine();
             }
