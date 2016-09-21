@@ -197,4 +197,23 @@ class Game {
                 break;
         }
     }
+
+    public void playTurn() {
+//        For AI only
+    }
+
+    public void playTurn(Card chosenCard) {
+        //    For human Supertrump cards
+
+    }
+
+    public void playTurn(Card chosenCard, String trumpStr) {
+//        For human mineral cards
+    }
+
+    public boolean playableCardChosen(Card chosenCard){
+        return chosenCard.canPlayOn(lastPlayedCard, currentCategory);
+    }
+
+
 }

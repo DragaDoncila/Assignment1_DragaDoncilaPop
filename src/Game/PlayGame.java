@@ -45,6 +45,12 @@ public class PlayGame {
                 while (!superTrumpsGame.isWon()){
                     playerUp = superTrumpsGame.getNextPlayer();
                     System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
+                    if (superTrumpsGame.userIsUp()){
+                        userPlayTurn(superTrumpsGame, playerUp);
+                    }
+                    else {
+                        superTrumpsGame.playTurn();
+                    }
                     superTrumpsGame.isWon();
                     break;
                 }
@@ -53,6 +59,21 @@ public class PlayGame {
             System.out.printf(MENU);
             userChoice = input.nextLine().toUpperCase();
         }
+    }
+
+    private static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
+        /*Get card choice from the user
+        * while !valid
+        * if game.playableCardChosen AND card isn't geologist:
+        *           playTurn(card)
+        *           isvalid
+        *else if card is Geologist:
+        *           get trump choice
+        *           playTurn(card, trumpChoice)
+        *           isvalid
+        *else (it's not playable and it's not geologist)
+        *           get card choice again
+*/
     }
 
     protected static void displayTurnResults(Game superTrumpsGame, Player playerUp) {
