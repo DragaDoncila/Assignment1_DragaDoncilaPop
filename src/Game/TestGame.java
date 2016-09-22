@@ -50,5 +50,10 @@ public class TestGame {
                             newGame.getLastPlayedCard().getTrumpVal(newGame.getCurrentCategory()));
         }
         PlayGame.userPlayTurn(newGame, playerUp);
+        PlayGame.displayTurnResults(newGame, playerUp);
+        for (Card card :
+                playerUp.getCurrentHand()) {
+            System.out.println(card.getTitle());
+        }
     }
 }

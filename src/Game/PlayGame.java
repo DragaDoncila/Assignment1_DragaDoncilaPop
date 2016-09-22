@@ -72,10 +72,13 @@ public class PlayGame {
         }
         else {
             int cardChoice = getUserCardChoice(playerUp);
+//            We get the card, but do not play it until it is checked as playable
             Card chosenCard = playerUp.getCard(cardChoice);
             boolean validCard = false;
             while (!validCard) {
                 if (superTrumpsGame.isPlayable(chosenCard)){
+//                    If the card is actually playable, we play it and remove it from the hand
+                    chosenCard = playerUp.playCard(cardChoice);
                     if (chosenCard.isGeologist()){
                         String trumpChoice = getTrumpStr();
                         superTrumpsGame.playTurn(chosenCard, trumpChoice);

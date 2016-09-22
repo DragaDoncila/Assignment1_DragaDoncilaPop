@@ -204,12 +204,18 @@ class Game {
     }
 
     public void playTurn(Card chosenCard) {
-        //    For human Supertrump cards
+        //    For all but Geologist cards.
+        this.lastPlayedCard = chosenCard;
+        //If Supertrump card was chosen, category is reset
+        if (chosenCard.isTrump()) {
+            setCurrentCategory(lastPlayedCard.getInfo());
+        }
+        incrementCountRounds();
 
     }
 
     public void playTurn(Card chosenCard, String trumpStr) {
-//        For human mineral cards
+//        For Geologist playing
     }
 
     public boolean playableCardChosen(Card chosenCard){

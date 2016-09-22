@@ -31,6 +31,11 @@ public class AIPlayer extends Player{
     }
 
     @Override
+    public Card playCard(int cardChoice) {
+        return null;
+    }
+
+    @Override
     public Card playFirstCard(int cardChoice) {
         cardChoice = new Random().nextInt(currentHand.size());
         return currentHand.remove(cardChoice);

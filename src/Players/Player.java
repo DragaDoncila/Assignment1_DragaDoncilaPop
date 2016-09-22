@@ -33,6 +33,8 @@ public abstract class Player {
         return currentHand.get(cardChoice);
     }
 
+    public abstract Card playCard(int cardChoice);
+
     public enum PlayerTypes{USER, BOT};
     int id;
 
