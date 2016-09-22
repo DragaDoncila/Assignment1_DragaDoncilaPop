@@ -38,22 +38,24 @@ public class TestGame {
             PlayGame.userPlayFirstTurn(newGame, playerUp);
             PlayGame.displayTurnResults(newGame, playerUp);
         }
-        System.out.println("Your turn again");
-        System.out.println(newGame.getLastPlayedCard().getTitle() + "\n" + newGame.getLastPlayedCard().toString());
-        System.out.println("Trump category is " + newGame.getCurrentCategory());
-        for (Card card :
-                playerUp.getCurrentHand()) {
-            System.out.println(
-                    card.getTitle() + " : " +
-                    card.getTrumpVal(newGame.getCurrentCategory()) +
-                            "======" +
-                            newGame.getLastPlayedCard().getTrumpVal(newGame.getCurrentCategory()));
-        }
-        PlayGame.userPlayTurn(newGame, playerUp);
-        PlayGame.displayTurnResults(newGame, playerUp);
-        for (Card card :
-                playerUp.getCurrentHand()) {
-            System.out.println(card.getTitle());
+        while (!newGame.isWon()) {
+            System.out.println("Your turn again");
+            System.out.println(newGame.getLastPlayedCard().getTitle() + "\n" + newGame.getLastPlayedCard().toString());
+            System.out.println("Trump category is " + newGame.getCurrentCategory());
+            for (Card card :
+                    playerUp.getCurrentHand()) {
+                System.out.println(
+                        card.getTitle() + " : " +
+                        card.getTrumpVal(newGame.getCurrentCategory()) +
+                                "======" +
+                                newGame.getLastPlayedCard().getTrumpVal(newGame.getCurrentCategory()));
+            }
+            PlayGame.userPlayTurn(newGame, playerUp);
+            PlayGame.displayTurnResults(newGame, playerUp);
+            for (Card card :
+                    playerUp.getCurrentHand()) {
+                System.out.println(card.getTitle());
+            }
         }
     }
 }

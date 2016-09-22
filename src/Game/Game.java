@@ -158,7 +158,7 @@ class Game {
     public void playFirstTurn() {
 //        AI Play First Turn
         this.lastPlayedCard = currentPlayer.playFirstCard(0);
-        setCurrentCategory(currentPlayer.chooseCategory(lastPlayedCard));
+        setCurrentCategory(currentPlayer.chooseCategory());
 
     }
 
@@ -201,6 +201,14 @@ class Game {
 
     public void playTurn() {
 //        For AI only
+        this.lastPlayedCard = currentPlayer.playCard(0);
+        if (lastPlayedCard.isGeologist()) {
+            setCurrentCategory(currentPlayer.chooseCategory());
+        }
+        else if (lastPlayedCard.isTrump()) {
+            setCurrentCategory(lastPlayedCard.getInfo());
+        }
+        incrementCountRounds();
     }
 
     public void playTurn(Card chosenCard) {
@@ -216,6 +224,9 @@ class Game {
 
     public void playTurn(Card chosenCard, String trumpStr) {
 //        For Geologist playing
+        this.lastPlayedCard = chosenCard;
+        setCurrentCategory(trumpStr);
+        incrementCountRounds();
     }
 
     public boolean playableCardChosen(Card chosenCard){

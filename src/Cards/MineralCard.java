@@ -140,43 +140,49 @@ public class MineralCard extends Card{
     @Override
     public boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory){
         boolean canPlayOn = false;
-        MineralCard otherCard = (MineralCard) lastPlayedCard;
-        switch (currentCategory){
-            case HARDNESS:
-                Hardness myHardness = this.getHardness();
-                Hardness otherHardness = otherCard.getHardness();
-                if (myHardness.isHigherThan(otherHardness)){
-                    canPlayOn =  true;
-                }
-                break;
-            case SPECIFIC_GRAVITY:
-                SpecificGravity myGravity = this.getSpecificGravity();
-                SpecificGravity otherGravity = otherCard.getSpecificGravity();
-                if (myGravity.isHigherThan(otherGravity)){
-                    canPlayOn = true;
-                }
-                break;
-            case CLEAVAGE:
-                Cleavage myCleavage = this.getCleavage();
-                Cleavage otherCleavage = otherCard.getCleavage();
-                if (myCleavage.isHigherThan(otherCleavage)){
-                    canPlayOn =  true;
-                }
-                break;
-            case CRUSTAL_ABUNDANCE:
-                CrustalAbundance myCrustalAbundance = this.getCrustalAbundance();
-                CrustalAbundance otherCrustalAbundance = otherCard.getCrustalAbundance();
-                if (myCrustalAbundance.isHigherThan(otherCrustalAbundance)){
-                    canPlayOn = true;
-                }
-                break;
-            case ECONOMIC_VALUE:
-                EconomicValue myEconomicValue = this.getEconomicValue();
-                EconomicValue otherEconomicValue = otherCard.getEconomicValue();
-                if (myEconomicValue.isHigherThan(otherEconomicValue)){
-                    canPlayOn = true;
-                }
+        if (lastPlayedCard.isTrump()) {
+            canPlayOn = true;
         }
+        else {
+            MineralCard otherCard = (MineralCard) lastPlayedCard;
+            switch (currentCategory){
+                case HARDNESS:
+                    Hardness myHardness = this.getHardness();
+                    Hardness otherHardness = otherCard.getHardness();
+                    if (myHardness.isHigherThan(otherHardness)){
+                        canPlayOn =  true;
+                    }
+                    break;
+                case SPECIFIC_GRAVITY:
+                    SpecificGravity myGravity = this.getSpecificGravity();
+                    SpecificGravity otherGravity = otherCard.getSpecificGravity();
+                    if (myGravity.isHigherThan(otherGravity)){
+                        canPlayOn = true;
+                    }
+                    break;
+                case CLEAVAGE:
+                    Cleavage myCleavage = this.getCleavage();
+                    Cleavage otherCleavage = otherCard.getCleavage();
+                    if (myCleavage.isHigherThan(otherCleavage)){
+                        canPlayOn =  true;
+                    }
+                    break;
+                case CRUSTAL_ABUNDANCE:
+                    CrustalAbundance myCrustalAbundance = this.getCrustalAbundance();
+                    CrustalAbundance otherCrustalAbundance = otherCard.getCrustalAbundance();
+                    if (myCrustalAbundance.isHigherThan(otherCrustalAbundance)){
+                        canPlayOn = true;
+                    }
+                    break;
+                case ECONOMIC_VALUE:
+                    EconomicValue myEconomicValue = this.getEconomicValue();
+                    EconomicValue otherEconomicValue = otherCard.getEconomicValue();
+                    if (myEconomicValue.isHigherThan(otherEconomicValue)){
+                        canPlayOn = true;
+                    }
+            }
+        }
+
         return canPlayOn;
     }
     }

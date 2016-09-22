@@ -25,14 +25,26 @@ public class AIPlayer extends Player{
     }
 
     @Override
-    public String chooseCategory(Card lastPlayedCard) {
+    public String chooseCategory() {
         int trumpChoice = new Random().nextInt(trumpCats.length);
         return trumpCats[trumpChoice];
     }
 
     @Override
     public Card playCard(int cardChoice) {
-        return null;
+        //Randomly select a playable card
+        cardChoice = new Random().nextInt(playableCards.size());
+        Card chosenCard = playableCards.get(cardChoice);
+//        Remove the card from the hand, not just playable array before returning
+        int handIndex = -1;
+        for (int i = 0; i < currentHand.size(); i++) {
+            Card currentCard = currentHand.get(i);
+            if (currentCard.getTitle().equals(chosenCard.getTitle())){
+                handIndex = i;
+            }
+        }
+        currentHand.remove(handIndex);
+        return playableCards.remove(cardChoice);
     }
 
     @Override

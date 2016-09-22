@@ -44,17 +44,27 @@ public class PlayGame {
                 displayTurnResults(superTrumpsGame, playerUp);
                 while (!superTrumpsGame.isWon()){
                     playerUp = superTrumpsGame.getNextPlayer();
+                    playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
                     System.out.println("Let's go! It's " + playerUp.getName() + "'s turn.");
                     if (superTrumpsGame.userIsUp()){
                         userPlayTurn(superTrumpsGame, playerUp);
+                        displayTurnResults(superTrumpsGame, playerUp);
                     }
                     else {
 //                        AI plays their turn
-                        superTrumpsGame.playTurn();
+                        if (playerUp.hasPlayableCards()){
+                            System.out.println("Has playable");
+                            superTrumpsGame.playTurn();
+                            displayTurnResults(superTrumpsGame, playerUp);
+                        }
+                        else {
+                            System.out.println("Has no playable");
+                            superTrumpsGame.pass();
+                            System.out.println(playerUp.getName() + " has passed.");
+                        }
                     }
-                    superTrumpsGame.isWon();
-                    break;
                 }
+                System.out.println("YOU WON!");
 
             }
             System.out.printf(MENU);
@@ -63,7 +73,6 @@ public class PlayGame {
     }
 
     protected static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
-        playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
         int numPlayable = playerUp.getPlayableCards().size();
         if (numPlayable == 0){
             System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");

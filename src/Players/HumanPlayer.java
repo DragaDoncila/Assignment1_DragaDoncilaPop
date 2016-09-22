@@ -21,7 +21,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public String chooseCategory(Card lastPlayedCard) {
+    public String chooseCategory() {
         return null;
     }
 

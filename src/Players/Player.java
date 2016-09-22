@@ -23,7 +23,7 @@ public abstract class Player {
         return titlesStr;
     }
 
-    public abstract String chooseCategory(Card lastPlayedCard);
+    public abstract String chooseCategory();
 
     public void addCard(Card drawnCard){
         currentHand.add(drawnCard);
@@ -35,12 +35,17 @@ public abstract class Player {
 
     public abstract Card playCard(int cardChoice);
 
+    public boolean hasPlayableCards() {
+        if ((playableCards.size() != 0)) return true;
+        else return false;
+    }
+
     public enum PlayerTypes{USER, BOT};
     int id;
 
     PlayerTypes type;
     ArrayList<Card> currentHand;
-    private ArrayList<Card> playableCards;
+    ArrayList<Card> playableCards;
     String name;
 
 
