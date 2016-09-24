@@ -28,7 +28,7 @@ class Game {
     private Card lastPlayedCard;
     private int countRounds;
     private int numPasses;
-    private boolean roundWon;
+    private boolean isNewRound;
 
 
 //    void incrementCountRounds() {
@@ -47,7 +47,7 @@ class Game {
         if (this.numPasses == this.numPlayers - 1){
             ++this.countRounds;
             this.numPasses = 0;
-            roundWon = true;
+            isNewRound = true;
         }
     }
 
@@ -62,7 +62,7 @@ class Game {
             players[i] = new AIPlayer(i);
         }
         countRounds = 0;
-        roundWon = true;
+        isNewRound = true;
         numPasses = 0;
 
     }
@@ -108,8 +108,8 @@ class Game {
         return currentPlayer;
     }
 
-    public boolean isRoundWon() {
-        return roundWon;
+    public boolean isNewRound() {
+        return isNewRound;
     }
 
     boolean isWon() {
@@ -267,6 +267,12 @@ class Game {
 
     public void resetNumPasses(){
         this.numPasses = 0;
-        this.roundWon = false;
+        this.isNewRound = false;
+    }
+
+    public void playCombo() {
+        this.lastPlayedCard = currentPlayer.playCombo();
+        ++this.countRounds;
+        isNewRound = true;
     }
 }

@@ -16,7 +16,8 @@ public class PlayGame {
             "(Q)uit";
     private final static String TURN_MENU = "Turn Menu\n" +
             "(V)iew hand details\n" +
-            "(C)hoose card\n" +
+            "(S)elect card\n" +
+            "(C)ombo" +
             "(P)ass";
     private final static int MIN_PLAYERS = 3;
     private final static int MAX_PLAYERS = 5;
@@ -39,7 +40,7 @@ public class PlayGame {
                 System.out.println("Ready to play, " + userName);
                 Player playerUp = superTrumpsGame.getNextPlayer();
                 while (!superTrumpsGame.isWon()) {
-                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn. TESTING");
+                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn");
                     while (superTrumpsGame.userIsUp()) {
                         userChoice = getUserTurnChoice();
                         switch (userChoice) {
@@ -52,8 +53,14 @@ public class PlayGame {
                                 playerUp = superTrumpsGame.getNextPlayer();
                                 break;
                             case "C":
-                                if (superTrumpsGame.isRoundWon()) {
-                                    System.out.println("NEW ROUND");
+                                if (playerUp.hasCombo()){
+                                    superTrumpsGame.playCombo();
+                                }
+                                else {
+                                    System.out.println("You do not hold the combo in your hand.");
+                                }
+                            case "S":
+                                if (superTrumpsGame.isNewRound()) {
                                     userPlayFirstTurn(superTrumpsGame, playerUp);
 
                                 } else {
@@ -68,7 +75,7 @@ public class PlayGame {
                         }
                     }
 //                    ROBOTS PLAY BELOW
-                    if (superTrumpsGame.isRoundWon()) {
+                    if (superTrumpsGame.isNewRound()) {
                         superTrumpsGame.playFirstTurn();
                         displayTurnResults(superTrumpsGame, playerUp);
                     } else {
@@ -136,18 +143,6 @@ public class PlayGame {
                 }
             }
         }
-        /*Get card choice from the user
-        * while !valid
-        * if game.playableCardChosen AND card isn't geologist:
-        *           playTurn(card)
-        *           isvalid
-        *else if card is Geologist:
-        *           get trump choice
-        *           playTurn(card, trumpChoice)
-        *           isvalid
-        *else (it's not playable and it's not geologist)
-        *           get card choice again
-*/
     }
 
     protected static void displayTurnResults(Game superTrumpsGame, Player playerUp) {

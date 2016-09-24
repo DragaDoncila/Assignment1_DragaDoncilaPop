@@ -2,7 +2,6 @@ package Game;
 
 import Cards.Card;
 import Players.Player;
-import com.sun.org.apache.xpath.internal.SourceTree;
 
 /**Testing a hard coded game object
  * Created by Draga on 17/09/2016.
@@ -39,7 +38,7 @@ public class TestGame {
             PlayGame.displayTurnResults(newGame, playerUp);
         }
         while (!newGame.isWon()) {
-            if(newGame.isRoundWon()) {
+            if(newGame.isNewRound()) {
                 System.out.println("YOU WON ROUND");
                 System.out.println("NEW ROUND");
             }

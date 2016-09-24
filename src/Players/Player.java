@@ -40,6 +40,40 @@ public abstract class Player {
         else return false;
     }
 
+    public boolean hasCombo() {
+        boolean hasCombo = false;
+        int countComboCards = 0;
+        for (Card card :
+                currentHand) {
+            if (card.isComboCard()){
+                ++countComboCards;
+            }
+        }
+        if (countComboCards == 2) {
+            hasCombo = true;
+        }
+        return hasCombo;
+    }
+
+    public Card playCombo() {
+        int magnetiteIndex = -1;
+        int geophysIndex = -1;
+
+        for (int i = 0; i < currentHand.size(); i++) {
+            Card currentCard = currentHand.get(i);
+            if (currentCard.getTitle().equals("Magnetite")){
+                magnetiteIndex = i;
+            }
+            else if (currentCard.getTitle().equals("The Geophysicist")){
+                geophysIndex = i;
+            }
+        }
+        //TODO: TRY EXCEPT
+        currentHand.remove(geophysIndex);
+        return currentHand.remove(magnetiteIndex);
+    }
+
+
     public enum PlayerTypes{USER, BOT};
     int id;
 

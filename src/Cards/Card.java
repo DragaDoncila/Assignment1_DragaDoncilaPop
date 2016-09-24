@@ -10,6 +10,10 @@ public abstract class Card {
 
     public abstract boolean isGeologist();
 
+    public boolean isComboCard() {
+        return (this.title.equals("The Geophysicist") || this.title.equals("Magnetite"));
+    }
+
     private enum CardTypes {PLAY, TRUMP}
     private String filename;
     private String imagename;
