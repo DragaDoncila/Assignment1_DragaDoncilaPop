@@ -22,6 +22,7 @@ public class TestGame {
         System.out.println();
         System.out.println("Dealer is: " + newGame.selectDealer(allPlayers[allPlayers.length -1]));
         newGame.dealInitialHands();
+//        test combo
         for (Player pl : allPlayers) {
             System.out.println(pl.getName() + "'s hand: ");
             System.out.println("#######################");

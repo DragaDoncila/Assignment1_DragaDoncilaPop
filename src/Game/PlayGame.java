@@ -13,11 +13,12 @@ public class PlayGame {
     private final static String MAIN_MENU = "Main Menu\n" +
             "(P)lay game\n" +
             "(I)nstructions\n" +
-            "(Q)uit";
+            "(Q)uit\n" +
+            "   >>> ";
     private final static String TURN_MENU = "Turn Menu\n" +
             "(V)iew hand details\n" +
             "(S)elect card\n" +
-            "(C)ombo" +
+            "(C)ombo\n" +
             "(P)ass";
     private final static int MIN_PLAYERS = 3;
     private final static int MAX_PLAYERS = 5;
@@ -30,6 +31,7 @@ public class PlayGame {
         System.out.printf("What is your name? >>> ");
 //        TODO: error check non blank username
         String userName = input.nextLine();
+        System.out.println();
         System.out.printf(MAIN_MENU);
         String userChoice = input.nextLine().toUpperCase();
         while (!userChoice.equals("Q")) {
@@ -37,10 +39,11 @@ public class PlayGame {
                 System.out.println("Instructions");
             } else {
                 Game superTrumpsGame = startnewgame(userName);
-                System.out.println("Ready to play, " + userName);
+                System.out.println("Ready to play, " + userName + "?");
+                waitForUser();
                 Player playerUp = superTrumpsGame.getNextPlayer();
                 while (!superTrumpsGame.isWon()) {
-                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn");
+                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                     while (superTrumpsGame.userIsUp()) {
                         userChoice = getUserTurnChoice();
                         switch (userChoice) {
@@ -50,6 +53,7 @@ public class PlayGame {
                             case "P":
                                 superTrumpsGame.pass();
                                 System.out.println("Player passed.");
+                                waitForUser();
                                 playerUp = superTrumpsGame.getNextPlayer();
                                 break;
                             case "C":
@@ -57,8 +61,10 @@ public class PlayGame {
                                     superTrumpsGame.playCombo();
                                 }
                                 else {
-                                    System.out.println("You do not hold the combo in your hand.");
+                                    System.out.println("\nYou do not hold the combo in your hand.");
+                                    waitForUser();
                                 }
+                                break;
                             case "S":
                                 if (superTrumpsGame.isNewRound()) {
                                     userPlayFirstTurn(superTrumpsGame, playerUp);
@@ -71,7 +77,7 @@ public class PlayGame {
                                 playerUp = superTrumpsGame.getNextPlayer();
                                 break;
                             default:
-                                System.out.println("Invalid choice.");
+                                System.out.println("\nInvalid choice.\n");
                         }
                     }
 //                    ROBOTS PLAY BELOW
@@ -86,6 +92,7 @@ public class PlayGame {
                         } else {
                             superTrumpsGame.pass();
                             System.out.println("Player passed.");
+                            waitForUser();
                         }
                     }
                     playerUp = superTrumpsGame.getNextPlayer();
@@ -96,6 +103,13 @@ public class PlayGame {
                 userChoice = input.nextLine().toUpperCase();
             }
         }
+    }
+
+    private static void waitForUser() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("###########################");
+        System.out.println("Enter to continue >>>");
+        input.nextLine();
     }
 
     private static void viewHandDetails(ArrayList<Card> currentHand) {
@@ -111,6 +125,7 @@ public class PlayGame {
         if (numPlayable == 0){
             System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
             System.out.println("You must pass.");
+            waitForUser();
             superTrumpsGame.pass();
         }
         else {
@@ -146,9 +161,10 @@ public class PlayGame {
     }
 
     protected static void displayTurnResults(Game superTrumpsGame, Player playerUp) {
-        System.out.println("Turn Complete!");
+        System.out.println("Turn Complete! Let's see what happened...");
+        waitForUser();
         System.out.println(playerUp.getName() + " played " + superTrumpsGame.getLastPlayedCard().getTitle());
-        System.out.println("Current trump category is: " + superTrumpsGame.getCurrentCategory());
+        System.out.println("Current trump category is: " + superTrumpsGame.getCurrentCategory() + "\n");
 
 
     }
@@ -225,23 +241,34 @@ public class PlayGame {
 
     private static Game startnewgame(String userName) {
         int numPlayers = getValidNumPlayers();
+        System.out.println("\nSetting up game for " + numPlayers + " players.\n");
         Game superTrumpsGame = new Game(numPlayers, userName);
-        System.out.println("Let's see who's playing today!");
+        System.out.println("Let's welcome the party!");
+        waitForUser();
         Player[] allPlayers = superTrumpsGame.getPlayers();
+        int i = 1;
         for (Player player:
              allPlayers) {
-            System.out.println(player.getName());
+            System.out.println("Player " + i + ": " + player.getName());
+            ++i;
         }
+        System.out.println();
+        System.out.println("Selecting dealer...");
+        waitForUser();
         String dealerName = superTrumpsGame.selectDealer();
-        System.out.println("Dealer has been selected! " + dealerName + " is dealing today.");
+        System.out.println(dealerName + " is dealing today.\n");
         superTrumpsGame.dealInitialHands();
         ArrayList<Card> userHand = superTrumpsGame.getPlayers()[0].getCurrentHand();
-        System.out.println(userName + "! Your hand has been dealt!");
+        System.out.println("Dealing hands...");
+        waitForUser();
 //      TODO: Move this to a method of deck or hand.
+        System.out.println("Your hand:");
+        System.out.println("---------------------------");
         for (Card card:
              userHand) {
             System.out.println(card.getTitle());
         }
+        System.out.println();
         return superTrumpsGame;
     }
 
