@@ -39,6 +39,10 @@ public class TestGame {
             PlayGame.displayTurnResults(newGame, playerUp);
         }
         while (!newGame.isWon()) {
+            if(newGame.isRoundWon()) {
+                System.out.println("YOU WON ROUND");
+                System.out.println("NEW ROUND");
+            }
             System.out.println("Your turn again");
             System.out.println(newGame.getLastPlayedCard().getTitle() + "\n" + newGame.getLastPlayedCard().toString());
             System.out.println("Trump category is " + newGame.getCurrentCategory());

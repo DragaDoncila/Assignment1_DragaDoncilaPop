@@ -27,13 +27,28 @@ class Game {
     private Trump.TrumpCategories currentCategory;
     private Card lastPlayedCard;
     private int countRounds;
+    private int numPasses;
+    private boolean roundWon;
 
 
+//    void incrementCountRounds() {
+//        if (this.numPasses == this.numPlayers - 1){
+//            ++this.countRounds;
+//            resetNumPasses();
+//        }
+//    }
 
+    public int getNumPasses() {
+        return numPasses;
+    }
 
-    int incrementCountRounds() {
-        ++this.countRounds;
-        return countRounds;
+    public void incrementNumPasses(){
+        ++this.numPasses;
+        if (this.numPasses == this.numPlayers - 1){
+            ++this.countRounds;
+            this.numPasses = 0;
+            roundWon = true;
+        }
     }
 
 
@@ -47,6 +62,8 @@ class Game {
             players[i] = new AIPlayer(i);
         }
         countRounds = 0;
+        roundWon = true;
+        numPasses = 0;
 
     }
 
@@ -91,6 +108,10 @@ class Game {
         return currentPlayer;
     }
 
+    public boolean isRoundWon() {
+        return roundWon;
+    }
+
     boolean isWon() {
         boolean isWon = false;
         for (Player player:
@@ -122,9 +143,9 @@ class Game {
         return lastPlayedCard;
     }
 
-    public void setLastPlayedCard(int cardIndex) {
-        this.lastPlayedCard = currentPlayer.getCurrentHand().get(cardIndex);
-    }
+//    public void setLastPlayedCard(int cardIndex) {
+//        this.lastPlayedCard = currentPlayer.getCurrentHand().get(cardIndex);
+//    }
 
 
     boolean userIsUp(){
@@ -152,13 +173,14 @@ class Game {
         * return current trump value? or just get it in play game..*/
         this.lastPlayedCard = cardChoice;
         setCurrentCategory(trumpChoiceStr);
-        incrementCountRounds();
+        resetNumPasses();
     }
 
     public void playFirstTurn() {
 //        AI Play First Turn
         this.lastPlayedCard = currentPlayer.playFirstCard(0);
         setCurrentCategory(currentPlayer.chooseCategory());
+        resetNumPasses();
 
     }
 
@@ -172,7 +194,7 @@ class Game {
         * return current trump cat? or just get it in play game..*/
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(lastPlayedCard.getInfo());
-        incrementCountRounds();
+        resetNumPasses();
     }
 
     public Trump.TrumpCategories getCurrentCategory() {
@@ -208,7 +230,7 @@ class Game {
         else if (lastPlayedCard.isTrump()) {
             setCurrentCategory(lastPlayedCard.getInfo());
         }
-        incrementCountRounds();
+        resetNumPasses();
     }
 
     public void playTurn(Card chosenCard) {
@@ -218,7 +240,7 @@ class Game {
         if (chosenCard.isTrump()) {
             setCurrentCategory(lastPlayedCard.getInfo());
         }
-        incrementCountRounds();
+        resetNumPasses();
 
     }
 
@@ -226,7 +248,7 @@ class Game {
 //        For Geologist playing
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(trumpStr);
-        incrementCountRounds();
+        resetNumPasses();
     }
 
     public boolean playableCardChosen(Card chosenCard){
@@ -240,5 +262,11 @@ class Game {
             Card drawnCard = superTrumpsDeck.drawCard();
             currentPlayer.addCard(drawnCard);
         }
+        incrementNumPasses();
+    }
+
+    public void resetNumPasses(){
+        this.numPasses = 0;
+        this.roundWon = false;
     }
 }
