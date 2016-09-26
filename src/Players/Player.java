@@ -99,7 +99,7 @@ public abstract class Player {
         ArrayList<Card> playableCards = new ArrayList<>();
         for (Card card:
                 currentHand) {
-            if (card.canPlayOn(lastPlayedCard, currentCategory)){
+            if ((lastPlayedCard == null || currentCategory == null) || card.canPlayOn(lastPlayedCard, currentCategory)){
                 playableCards.add(card);
             }
 

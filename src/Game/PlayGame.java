@@ -2,11 +2,13 @@ package Game;
 
 import Cards.Card;
 import Players.Player;
+import Trumps.Trump;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**Class handles playing a MineralSupertrump game from start to finish
+/**
+ * Class handles playing a MineralSupertrump game from start to finish
  * Created by Draga on 6/09/2016.
  */
 public class PlayGame {
@@ -45,42 +47,50 @@ public class PlayGame {
                 while (!superTrumpsGame.isWon()) {
                     System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                     while (superTrumpsGame.userIsUp()) {
-                        userChoice = getUserTurnChoice();
-                        switch (userChoice) {
-                            case "V":
-                                viewHandDetails(playerUp.getCurrentHand(), superTrumpsGame);
-                                break;
-                            case "P":
-                                superTrumpsGame.pass();
-                                System.out.println("Player passed.");
-                                waitForUser();
-                                playerUp = superTrumpsGame.getNextPlayer();
-                                break;
-                            case "C":
-                                if (playerUp.hasCombo()){
-                                    superTrumpsGame.playCombo();
-                                }
-                                else {
-                                    System.out.println("\nYou do not hold the combo in your hand.");
+                        //WHAT DO BEFORE CARD HAS BEEN PLAYED?!?
+                        playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
+                        if (playerUp.hasPlayableCards()) {
+                            userChoice = getUserTurnChoice();
+                            switch (userChoice) {
+                                case "V":
+                                    viewHandDetails(playerUp.getCurrentHand(), superTrumpsGame);
+                                    break;
+                                case "P":
+                                    superTrumpsGame.pass();
+                                    System.out.println("Player passed.");
                                     waitForUser();
-                                }
-                                break;
-                            case "S":
-                                if (superTrumpsGame.isNewRound()) {
-                                    userPlayFirstTurn(superTrumpsGame, playerUp);
+                                    playerUp = superTrumpsGame.getNextPlayer();
+                                    break;
+                                case "C":
+                                    if (playerUp.hasCombo()) {
+                                        superTrumpsGame.playCombo();
+                                    } else {
+                                        System.out.println("\nYou do not hold the combo in your hand.");
+                                        waitForUser();
+                                    }
+                                    break;
+                                case "S":
+                                    if (superTrumpsGame.isNewRound()) {
+                                        userPlayFirstTurn(superTrumpsGame, playerUp);
 
-                                } else {
-                                    playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
-                                    userPlayTurn(superTrumpsGame, playerUp);
-                                }
-                                displayTurnResults(superTrumpsGame, playerUp);
-                                playerUp = superTrumpsGame.getNextPlayer();
-                                break;
-                            default:
-                                System.out.println("\nInvalid choice.\n");
+                                    } else {
+                                        userPlayTurn(superTrumpsGame, playerUp);
+                                    }
+                                    displayTurnResults(superTrumpsGame, playerUp);
+                                    playerUp = superTrumpsGame.getNextPlayer();
+                                    break;
+                                default:
+                                    System.out.println("\nInvalid choice.\n");
+                            }
+                        } else {
+                            System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
+                            System.out.println("You must pass.");
+                            waitForUser();
+                            superTrumpsGame.pass();
+                            playerUp = superTrumpsGame.getNextPlayer();
                         }
                     }
-//                    ROBOTS PLAY BELOW
+                    //                    ROBOTS PLAY BELOW
                     if (superTrumpsGame.isNewRound()) {
                         superTrumpsGame.playFirstTurn();
                         displayTurnResults(superTrumpsGame, playerUp);
@@ -98,11 +108,11 @@ public class PlayGame {
                     playerUp = superTrumpsGame.getNextPlayer();
                 }
                 System.out.println("YOU WON!");
-
             }
-            System.out.printf(MAIN_MENU);
-            userChoice = input.nextLine().toUpperCase();
+
         }
+        System.out.printf(MAIN_MENU);
+        userChoice = input.nextLine().toUpperCase();
     }
 
     private static void waitForUser() {
@@ -113,51 +123,45 @@ public class PlayGame {
     }
 
     private static void viewHandDetails(ArrayList<Card> currentHand, Game superTrumpsGame) {
-        //TODO: NEEDS TO DISPLAY INFORMATION AS WELL
+        System.out.println();
         for (Card card :
-             currentHand) {
+                currentHand) {
             System.out.println(card);
+            Trump.TrumpCategories currentCategory = superTrumpsGame.getCurrentCategory();
+            System.out.println(String.format("%-30s", "Current Category: ") + currentCategory);
+            if (superTrumpsGame.getLastPlayedCard() != null) {
+                System.out.println(String.format("%-30s", "Last Played Value: ") + superTrumpsGame.getLastPlayedCard().getTrumpVal(currentCategory));
+            }
+            System.out.println("------------------------------------------");
             waitForUser();
-//            System.out.println(card.getTrumpVal(superTrumpsGame.getCurrentCategory()));
         }
     }
 
     static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
-        int numPlayable = playerUp.getPlayableCards().size();
-        if (numPlayable == 0){
-            System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
-            System.out.println("You must pass.");
-            waitForUser();
-            superTrumpsGame.pass();
-        }
-        else {
-            int cardChoice = getUserCardChoice(playerUp);
+        int cardChoice = getUserCardChoice(playerUp);
 //            We get the card, but do not play it until it is checked as playable
-            Card chosenCard = playerUp.getCard(cardChoice);
-            boolean validCard = false;
-            while (!validCard) {
-                if (superTrumpsGame.isPlayable(chosenCard)){
+        Card chosenCard = playerUp.getCard(cardChoice);
+        boolean validCard = false;
+        while (!validCard) {
+            if (superTrumpsGame.isPlayable(chosenCard)) {
 //                    If the card is actually playable, we play it and remove it from the hand
-                    chosenCard = playerUp.playCard(cardChoice);
-                    if (chosenCard.isGeologist()){
-                        String trumpChoice = getTrumpStr();
-                        superTrumpsGame.playTurn(chosenCard, trumpChoice);
-                        validCard = true;
-                    }
-    //                Card chosen is playable and is not the Geologist
-                    else {
-                        superTrumpsGame.playTurn(chosenCard);
-                        validCard = true;
-                    }
-                    displayTurnResults(superTrumpsGame, playerUp);
-
+                chosenCard = playerUp.playCard(cardChoice);
+                if (chosenCard.isGeologist()) {
+                    String trumpChoice = getTrumpStr();
+                    superTrumpsGame.playTurn(chosenCard, trumpChoice);
+                    validCard = true;
                 }
-    //            User has playable cards but has chosen unplayable
+                //                Card chosen is playable and is not the Geologist
                 else {
-                    System.out.println("That card cannot play on " + superTrumpsGame.getLastPlayedCard().getTitle());
-                    cardChoice = getUserCardChoice(playerUp);
-                    chosenCard = playerUp.getCard(cardChoice);
+                    superTrumpsGame.playTurn(chosenCard);
+                    validCard = true;
                 }
+            }
+            //            User has playable cards but has chosen unplayable
+            else {
+                System.out.println("That card cannot play on " + superTrumpsGame.getLastPlayedCard().getTitle());
+                cardChoice = getUserCardChoice(playerUp);
+                chosenCard = playerUp.getCard(cardChoice);
             }
         }
     }
@@ -176,11 +180,10 @@ public class PlayGame {
         //TODO: Add functionality for user choosing a supertrumps card.
         int cardChoice = getUserCardChoice(playerUp);
         Card chosenCard = playerUp.playFirstCard(cardChoice);
-        if (chosenCard.isMineral() || chosenCard.getTitle().equals("The Geologist")){
+        if (chosenCard.isMineral() || chosenCard.getTitle().equals("The Geologist")) {
             String trumpChoice = getTrumpStr();
             superTrumpsGame.playFirstTurn(chosenCard, trumpChoice);
-        }
-        else {
+        } else {
             superTrumpsGame.playFirstTurn(chosenCard);
         }
 //        System.out.println("You've chosen to play : " + cardChoice.getTitle());
@@ -192,13 +195,13 @@ public class PlayGame {
         for (int i = 0; i < validTrumpChoices.length; i++) {
             System.out.println("<" + i + ">" + validTrumpChoices[i]);
         }
-        return getValidNumInRange(validTrumpChoices.length-1);
+        return getValidNumInRange(validTrumpChoices.length - 1);
     }
 
     private static int getUserCardChoice(Player playerUp) {
         //TODO: Refactor to validate through game.
-            System.out.println("Choose the number of your desired card: ");
-            displayCardChoices(playerUp);
+        System.out.println("Choose the number of your desired card: ");
+        displayCardChoices(playerUp);
         return getValidNumInRange(playerUp.getCurrentHand().size());
     }
 
@@ -211,16 +214,14 @@ public class PlayGame {
         while (!validChoice) {
             try {
                 num = Integer.parseInt(userChoice);
-                if (num < 0 || num > max){
+                if (num < 0 || num > max) {
                     System.out.println("That is not a valid choice. Please enter number in range.");
                     System.out.printf("Your choice >>> ");
                     userChoice = input.nextLine();
-                }
-                else{
+                } else {
                     validChoice = true;
                 }
-            }
-            catch (NumberFormatException error){
+            } catch (NumberFormatException error) {
                 System.out.println("That is not a valid choice. Please enter valid number.");
                 System.out.printf("Your choice >>> ");
                 userChoice = input.nextLine();
@@ -231,7 +232,7 @@ public class PlayGame {
 
     private static void displayCardChoices(Player playerUp) {
         int i = 0;
-        for (Card card:
+        for (Card card :
                 playerUp.getCurrentHand()) {
             System.out.println("<" + i + ">" + card.getTitle());
             ++i;
@@ -246,8 +247,8 @@ public class PlayGame {
         waitForUser();
         Player[] allPlayers = superTrumpsGame.getPlayers();
         int i = 1;
-        for (Player player:
-             allPlayers) {
+        for (Player player :
+                allPlayers) {
             System.out.println("Player " + i + ": " + player.getName());
             ++i;
         }
@@ -263,8 +264,8 @@ public class PlayGame {
 //      TODO: Move this to a method of deck or hand.
         System.out.println("Your hand:");
         System.out.println("---------------------------");
-        for (Card card:
-             userHand) {
+        for (Card card :
+                userHand) {
             System.out.println(card.getTitle());
         }
         System.out.println();
@@ -296,7 +297,7 @@ public class PlayGame {
 
     private static String getUserTurnChoice() {
         String userTurnChoice;
-        Scanner input  = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);
         System.out.println(TURN_MENU);
         System.out.printf("What do you wish to do? >>>");
         userTurnChoice = input.nextLine().toUpperCase();
