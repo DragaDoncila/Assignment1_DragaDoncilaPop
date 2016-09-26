@@ -48,7 +48,7 @@ public class PlayGame {
                         userChoice = getUserTurnChoice();
                         switch (userChoice) {
                             case "V":
-                                viewHandDetails(playerUp.getCurrentHand());
+                                viewHandDetails(playerUp.getCurrentHand(), superTrumpsGame);
                                 break;
                             case "P":
                                 superTrumpsGame.pass();
@@ -99,9 +99,9 @@ public class PlayGame {
                 }
                 System.out.println("YOU WON!");
 
-                System.out.printf(MAIN_MENU);
-                userChoice = input.nextLine().toUpperCase();
             }
+            System.out.printf(MAIN_MENU);
+            userChoice = input.nextLine().toUpperCase();
         }
     }
 
@@ -112,15 +112,17 @@ public class PlayGame {
         input.nextLine();
     }
 
-    private static void viewHandDetails(ArrayList<Card> currentHand) {
+    private static void viewHandDetails(ArrayList<Card> currentHand, Game superTrumpsGame) {
         //TODO: NEEDS TO DISPLAY INFORMATION AS WELL
         for (Card card :
              currentHand) {
-            System.out.println(card.getTitle());
+            System.out.println(card);
+            waitForUser();
+//            System.out.println(card.getTrumpVal(superTrumpsGame.getCurrentCategory()));
         }
     }
 
-    protected static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
+    static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
         int numPlayable = playerUp.getPlayableCards().size();
         if (numPlayable == 0){
             System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
@@ -160,11 +162,12 @@ public class PlayGame {
         }
     }
 
-    protected static void displayTurnResults(Game superTrumpsGame, Player playerUp) {
+    static void displayTurnResults(Game superTrumpsGame, Player playerUp) {
         System.out.println("Turn Complete! Let's see what happened...");
         waitForUser();
         System.out.println(playerUp.getName() + " played " + superTrumpsGame.getLastPlayedCard().getTitle());
         System.out.println("Current trump category is: " + superTrumpsGame.getCurrentCategory() + "\n");
+        System.out.println("Current trump value is: " + superTrumpsGame.getLastPlayedCard().getTrumpVal(superTrumpsGame.getCurrentCategory()));
 
 
     }
@@ -183,24 +186,20 @@ public class PlayGame {
 //        System.out.println("You've chosen to play : " + cardChoice.getTitle());
     }
 
-    protected static int getValidTrumpChoice() {
+    private static int getValidTrumpChoice() {
         //TODO: Refactor to validate through game.
-        Scanner input = new Scanner(System.in);
         System.out.println("What is your trump choice?");
         for (int i = 0; i < validTrumpChoices.length; i++) {
             System.out.println("<" + i + ">" + validTrumpChoices[i]);
         }
-        int userChoice = getValidNumInRange(validTrumpChoices.length-1);
-        return userChoice;
+        return getValidNumInRange(validTrumpChoices.length-1);
     }
 
-    protected static int getUserCardChoice(Player playerUp) {
+    private static int getUserCardChoice(Player playerUp) {
         //TODO: Refactor to validate through game.
-        Scanner keyboard = new Scanner(System.in);
             System.out.println("Choose the number of your desired card: ");
             displayCardChoices(playerUp);
-            int userChoice = getValidNumInRange(playerUp.getCurrentHand().size());
-        return userChoice;
+        return getValidNumInRange(playerUp.getCurrentHand().size());
     }
 
     private static int getValidNumInRange(int max) {
@@ -230,7 +229,7 @@ public class PlayGame {
         return num;
     }
 
-    protected static void displayCardChoices(Player playerUp) {
+    private static void displayCardChoices(Player playerUp) {
         int i = 0;
         for (Card card:
                 playerUp.getCurrentHand()) {
@@ -288,14 +287,14 @@ public class PlayGame {
     }
 
 
-    public static String getTrumpStr() {
+    private static String getTrumpStr() {
         int trumpChoiceNum = getValidTrumpChoice();
         String trumpStr = validTrumpChoices[trumpChoiceNum];
         trumpStr = trumpStr.replaceAll("\\s+", "").toLowerCase();
         return trumpStr;
     }
 
-    public static String getUserTurnChoice() {
+    private static String getUserTurnChoice() {
         String userTurnChoice;
         Scanner input  = new Scanner(System.in);
         System.out.println(TURN_MENU);

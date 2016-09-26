@@ -2,6 +2,7 @@ package Cards;
 
 import java.util.ArrayList;
 import Trumps.*;
+import Trumps.Trump.TrumpCategories;
 
 /**Class designed to store information and methods about a playing card.
  * Created by Draga on 30/08/2016.
@@ -63,27 +64,30 @@ public class MineralCard extends Card{
 
     @Override
     public String toString(){
-        String displayString = "";
-        displayString += String.format("%-20s%-20s%-20s%-20s%-20s", "Hardness", "Specific Gravity", "Cleavage", "Abundance", "Value");
-        displayString += "\n";
-        displayString += String.format("%-20s%-20s%-20s%-20s%-20s", hardness, specificGravity, cleavage, crustalAbundance, economicValue);
-        displayString += "\n";
+        String displayString = getInfo();
+        displayString += String.format("%-30s", "Hardness: ") + this.getTrumpVal(TrumpCategories.HARDNESS) + "\n";
+        displayString += String.format("%-30s", "Crustal Abundance: ") + this.getTrumpVal(TrumpCategories.CRUSTAL_ABUNDANCE) + "\n";
+        displayString += String.format("%-30s", "Economic Value: ") + this.getTrumpVal(TrumpCategories.ECONOMIC_VALUE) + "\n";
+        displayString += String.format("%-30s", "Cleavage: ") + this.getTrumpVal(TrumpCategories.CLEAVAGE) + "\n";
+        displayString += String.format("%-30s", "Specific Gravity: ") + this.getTrumpVal(TrumpCategories.SPECIFIC_GRAVITY) + "\n";
+        displayString += "------------------------------------------\n";
         return displayString;
     }
 
     @Override
     public String getInfo() {
         String infoString = super.toString();
-        infoString += String.format("%-40s%-20s%-20s%-40s", "Chemistry", "Classification", "Crystal System", "Occurrence");
-        infoString += "\n";
-        infoString += String.format("%-40s%-20s%-20s-%40s", chemistry, classification, crystalSystem, occurrence);
-        infoString += "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n" ;
+        infoString += String.format("%-30s", "Chemistry: ") + chemistry + "\n";
+        infoString += String.format("%-30s", "Classification: ") + classification + "\n";
+        infoString += String.format("%-30s", "Crystal System: ") + crystalSystem + "\n";
+        infoString += String.format("%-30s", "Occurrence: ") + occurrence + "\n";
+        infoString += "------------------------------------------\n";
         return infoString;
 
     }
 
     @Override
-    public String getTrumpVal(Trump.TrumpCategories category) {
+    public String getTrumpVal(TrumpCategories category) {
         switch (category){
             case HARDNESS:
                 return this.getHardness().getValueString();
@@ -138,7 +142,7 @@ public class MineralCard extends Card{
     }
 
     @Override
-    public boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory){
+    public boolean canPlayOn(Card lastPlayedCard, TrumpCategories currentCategory){
         boolean canPlayOn = false;
         if (lastPlayedCard.isTrump()) {
             canPlayOn = true;

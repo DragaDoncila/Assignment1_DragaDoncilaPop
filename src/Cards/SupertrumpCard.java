@@ -8,8 +8,7 @@ import Trumps.Trump;
  */
 public class SupertrumpCard extends Card{
 
-    public enum CardEffects {SET_CLEAVAGE, SET_CRUSTAL_ABUNDANCE, SET_ECON_VALUE, SET_SPECIFIC_GRAVITY, SET_HARDNESS, WILDCARD}
-    CardEffects cardEffect;
+    String cardEffect;
     String cardInfo;
 
 
@@ -28,23 +27,23 @@ public class SupertrumpCard extends Card{
         this.cardInfo = cardEffect;
         switch (cardEffect){
             case "cleavage":
-                this.cardEffect = CardEffects.SET_CLEAVAGE;
+                this.cardEffect = "Set to Cleavage";
                 break;
             case "crustalabundance":
-                this.cardEffect = CardEffects.SET_CRUSTAL_ABUNDANCE;
+                this.cardEffect = "Set to Crustal Abundance";
                 break;
             case "economicvalue":
-                this.cardEffect = CardEffects.SET_ECON_VALUE;
+                this.cardEffect = "Set to Economic Value";
                 break;
             case "hardness":
-                this.cardEffect = CardEffects.SET_HARDNESS;
+                this.cardEffect = "Set to Hardness";
                 break;
             case "specificgravity":
-                this.cardEffect = CardEffects.SET_SPECIFIC_GRAVITY;
+                this.cardEffect = "Set to Specific Gravity";
                 break;
-//            default:
-//                this.cardEffect = CardEffects.WILDCARD;
-//                break;
+            default:
+                this.cardEffect = "Set to Trump of Your Choice";
+                break;
 
         }
     }
@@ -57,6 +56,11 @@ public class SupertrumpCard extends Card{
     @Override
     public String getInfo() {
         return cardInfo;
+    }
+
+    public String toString(){
+        return super.toString() + String.format("%-30s", "Card Effect: ") + cardEffect + "\n------------------------------------------\n";
+
     }
 
     @Override

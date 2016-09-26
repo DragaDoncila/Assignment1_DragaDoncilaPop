@@ -78,9 +78,7 @@ public abstract class Card {
 
     @Override
     public String toString(){
-        return "---------------------------------------------------------------------\n" +
-                title +
-                "\n" + "---------------------------------------------------------------------\n";
+        return String.format("%-30s", "Title: ") + title + "\n------------------------------------------\n";
     }
 
     public abstract boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory);
