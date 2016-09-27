@@ -3,10 +3,12 @@ package Game;
 import Cards.Card;
 import Players.Player;
 import Trumps.Trump;
-import com.sun.org.apache.xpath.internal.SourceTree;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static Game.Game.MAX_PLAYERS;
+import static Game.Game.MIN_PLAYERS;
 
 /**
  * Class handles playing a MineralSupertrump game from start to finish
@@ -24,8 +26,6 @@ public class PlayGame {
             "(C)ombo\n" +
             "(P)ass";
 
-    private final static int MIN_PLAYERS = 3;
-    private final static int MAX_PLAYERS = 5;
     private final static String[] validTrumpChoices = {"Cleavage", "Crustal Abundance", "Economic Value", "Hardness", "Specific Gravity"};
     private final static int BACK_VALUE = -1;
 
@@ -42,7 +42,7 @@ public class PlayGame {
             if (userChoice.equals("I")) {
                 System.out.println("Instructions");
             } else {
-                Game superTrumpsGame = startnewgame(userName);
+                Game superTrumpsGame = startNewGame(userName);
                 System.out.println("Ready to play, " + userName + "?");
                 waitForUser();
                 superTrumpsGame.getNextPlayer();
@@ -67,6 +67,7 @@ public class PlayGame {
                                 case "C":
                                     if (playerUp.hasCombo()) {
                                         playerUp = superTrumpsGame.playCombo();
+                                        System.out.println("COMBO PLAYED! " + playerUp.getName() + " plays again!");
                                     } else {
                                         System.out.println("\nYou do not hold the combo in your hand.");
                                         waitForUser();
@@ -263,7 +264,7 @@ public class PlayGame {
         System.out.println("(B)ack");
     }
 
-    private static Game startnewgame(String userName) {
+    private static Game startNewGame(String userName) {
         int numPlayers = getValidNumPlayers();
         System.out.println("\nSetting up game for " + numPlayers + " players.\n");
         Game superTrumpsGame = new Game(numPlayers, userName);
@@ -301,7 +302,7 @@ public class PlayGame {
         System.out.println("This is a game for " + MIN_PLAYERS + " to " + MAX_PLAYERS + " people.");
         System.out.printf("Please enter the number of players today>>> ");
         int numPlayers = input.nextInt();
-        while (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {
+        while (!Game.isValidNumPlayers(numPlayers)) {
             System.out.println("That is not a valid number of players.");
 
             System.out.println("This is a game for " + MIN_PLAYERS + " to " + MAX_PLAYERS + " people.");

@@ -15,7 +15,9 @@ import java.util.Random;
 /**Class handles the attributes and associated methods required for the playing of a Mineral Supertrumps game.
  * Created by Draga on 6/09/2016.
  */
-class Game {
+public class Game {
+    public final static int MIN_PLAYERS = 3;
+    public final static int MAX_PLAYERS = 5;
 
     private final int CARDS_TO_A_HAND = 8;
     private int numPlayers;
@@ -53,7 +55,7 @@ class Game {
     }
 
 
-    Game(int numPlayers, String userName) {
+    public Game(int numPlayers, String userName) {
         superTrumpsDeck = DeckBuilder.buildDeck();
         this.numPlayers = numPlayers;
         players = new Player[numPlayers];
@@ -91,7 +93,7 @@ class Game {
 //        }
     }
 
-    Player[] getPlayers() {
+    public Player[] getPlayers() {
         return players;
     }
 
@@ -292,5 +294,9 @@ class Game {
 
     public void resetUserPlayed(){
         this.hasUserPlayed = false;
+    }
+
+    public static boolean isValidNumPlayers(int numPlayers) {
+        return (numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS);
     }
 }
