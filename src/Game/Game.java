@@ -29,6 +29,7 @@ class Game {
     private int countRounds;
     private int numPasses;
     private boolean isNewRound;
+    private boolean hasUserPlayed;
 
 
 //    void incrementCountRounds() {
@@ -174,6 +175,7 @@ class Game {
         this.lastPlayedCard = cardChoice;
         setCurrentCategory(trumpChoiceStr);
         resetNumPasses();
+        hasUserPlayed = true;
     }
 
     public void playFirstTurn() {
@@ -195,6 +197,7 @@ class Game {
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(lastPlayedCard.getInfo());
         resetNumPasses();
+        hasUserPlayed = true;
     }
 
     public Trump.TrumpCategories getCurrentCategory() {
@@ -241,6 +244,7 @@ class Game {
             setCurrentCategory(lastPlayedCard.getInfo());
         }
         resetNumPasses();
+        hasUserPlayed = true;
 
     }
 
@@ -249,6 +253,7 @@ class Game {
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(trumpStr);
         resetNumPasses();
+        hasUserPlayed = true;
     }
 
     public boolean playableCardChosen(Card chosenCard){
@@ -270,13 +275,22 @@ class Game {
         this.isNewRound = false;
     }
 
-    public void playCombo() {
+    public Player playCombo() {
         this.lastPlayedCard = currentPlayer.playCombo();
         ++this.countRounds;
         isNewRound = true;
+        return currentPlayer;
     }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public boolean hasUserPlayed() {
+        return this.hasUserPlayed;
+    }
+
+    public void resetUserPlayed(){
+        this.hasUserPlayed = false;
     }
 }
