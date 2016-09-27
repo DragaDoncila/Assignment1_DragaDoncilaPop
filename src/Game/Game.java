@@ -275,4 +275,8 @@ class Game {
         ++this.countRounds;
         isNewRound = true;
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 }

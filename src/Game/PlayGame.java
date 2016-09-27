@@ -46,12 +46,13 @@ public class PlayGame {
                 Game superTrumpsGame = startnewgame(userName);
                 System.out.println("Ready to play, " + userName + "?");
                 waitForUser();
-                Player playerUp = superTrumpsGame.getNextPlayer();
+                superTrumpsGame.getNextPlayer();
+                Player playerUp = superTrumpsGame.getCurrentPlayer();
                 while (!superTrumpsGame.isWon()) {
-                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                     while (superTrumpsGame.userIsUp()) {
+                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                         playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
-                        if (playerUp.hasPlayableCards()) {
+                        if (playerUp.hasPlayableCards() || superTrumpsGame.isNewRound()) {
                             userChoice = getUserTurnChoice();
                             switch (userChoice) {
                                 case "V":
@@ -61,7 +62,7 @@ public class PlayGame {
                                     superTrumpsGame.pass();
                                     System.out.println("Player passed.");
                                     waitForUser();
-                                    playerUp = superTrumpsGame.getNextPlayer();
+                                    superTrumpsGame.getNextPlayer();
                                     break;
                                 case "C":
                                     if (playerUp.hasCombo()) {
@@ -87,10 +88,12 @@ public class PlayGame {
                             System.out.println("You must pass.");
                             waitForUser();
                             superTrumpsGame.pass();
-                            playerUp = superTrumpsGame.getNextPlayer();
+//                            playerUp = superTrumpsGame.getNextPlayer();
                         }
+                        playerUp = superTrumpsGame.getNextPlayer();
                     }
                     //                    ROBOTS PLAY BELOW
+                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                     if (superTrumpsGame.isNewRound()) {
                         superTrumpsGame.playFirstTurn();
                         displayTurnResults(superTrumpsGame, playerUp);
@@ -113,7 +116,7 @@ public class PlayGame {
             System.out.printf(MAIN_MENU);
             userChoice = input.nextLine().toUpperCase();
         }
-        System.out.println("Thank you for playing Mineral Supertrumps. Goodybe " + userName);
+        System.out.println("Thank you for playing Mineral Supertrumps. Goodbye " + userName);
     }
 
     private static void waitForUser() {
@@ -170,7 +173,7 @@ public class PlayGame {
                         validCard = true;
                     }
                     displayTurnResults(superTrumpsGame, playerUp);
-                    playerUp = superTrumpsGame.getNextPlayer();
+//                    superTrumpsGame.getNextPlayer();
                 }
                 //            User has playable cards but has chosen unplayable
                 else {
@@ -203,6 +206,8 @@ public class PlayGame {
             } else {
                 superTrumpsGame.playFirstTurn(chosenCard);
             }
+            displayTurnResults(superTrumpsGame, playerUp);
+//            superTrumpsGame.getNextPlayer();
         }
 //        System.out.println("You've chosen to play : " + cardChoice.getTitle());
     }
