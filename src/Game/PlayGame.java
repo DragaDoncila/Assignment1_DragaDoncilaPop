@@ -15,6 +15,7 @@ import static Game.Game.MIN_PLAYERS;
  * Created by Draga on 6/09/2016.
  */
 public class PlayGame {
+
     private final static String MAIN_MENU = "Main Menu\n" +
             "(P)lay game\n" +
             "(I)nstructions\n" +
@@ -32,15 +33,13 @@ public class PlayGame {
     public static void main(String[] args) {
         System.out.println("Welcome to Mineral Supertrumps!");
         Scanner input = new Scanner(System.in);
-        System.out.printf("What is your name? >>> ");
-//        TODO: error check non blank username
-        String userName = input.nextLine();
+        String userName = getNonBlankUserName();
         System.out.println();
         System.out.printf(MAIN_MENU);
         String userChoice = input.nextLine().toUpperCase();
         while (!userChoice.equals("Q")) {
             if (userChoice.equals("I")) {
-                System.out.println("Instructions");
+                printInstructions();
             } else {
                 Game superTrumpsGame = startNewGame(userName);
                 System.out.println("Ready to play, " + userName + "?");
@@ -48,8 +47,15 @@ public class PlayGame {
                 superTrumpsGame.getNextPlayer();
                 while (!superTrumpsGame.isWon()) {
                     Player playerUp = superTrumpsGame.getCurrentPlayer();
+                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
+                    //If a supertrump was played everyone is back in
+                    if (superTrumpsGame.getLastPlayedCard() != null && superTrumpsGame.getLastPlayedCard().isTrump()) {
+                        superTrumpsGame.setAllPlayersIn();
+                        superTrumpsGame.resetNumPasses();
+                        System.out.println("Supertrump was played, all players back in.");
+                        waitForUser();
+                    }
                     while (playerUp.isUser()) {
-                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                         playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
                         if (!playerUp.isOut()) {
                             if (playerUp.hasPlayableCards()) {
@@ -73,16 +79,17 @@ public class PlayGame {
                                         }
                                         break;
                                     case "S":
+                                        //If it's a new round or the first turn, everybody back in & search for a winner
                                         if (superTrumpsGame.isNewRound() || superTrumpsGame.isFirstTurn()) {
                                             superTrumpsGame.setAllPlayersIn();
                                             superTrumpsGame.resetNumPasses();
                                             System.out.println("Starting out new round...");
-                                            if (superTrumpsGame.hasRoundWinner()){
+                                            if (superTrumpsGame.hasRoundWinner()) {
                                                 System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
                                             }
                                             waitForUser();
                                             userPlayFirstTurn(superTrumpsGame, playerUp);
-
+                                            //It's not a new round and the user has hands to play.
                                         } else {
                                             userPlayTurn(superTrumpsGame, playerUp);
                                         }
@@ -96,8 +103,7 @@ public class PlayGame {
                                 waitForUser();
                                 superTrumpsGame.pass();
                             }
-                        }
-                        else {
+                        } else {
                             System.out.println("You are out for the round");
                             superTrumpsGame.skipPlayer(playerUp);
                             waitForUser();
@@ -106,12 +112,12 @@ public class PlayGame {
                     }
                     //                    ROBOTS PLAY BELOW
                     if (!playerUp.isOut()) {
-                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
+//                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                         if (superTrumpsGame.isNewRound() || superTrumpsGame.isFirstTurn()) {
                             superTrumpsGame.setAllPlayersIn();
                             superTrumpsGame.resetNumPasses();
                             System.out.println("Starting out new round...");
-                            if (superTrumpsGame.hasRoundWinner()){
+                            if (superTrumpsGame.hasRoundWinner()) {
                                 System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
                             }
                             waitForUser();
@@ -128,8 +134,7 @@ public class PlayGame {
                                 waitForUser();
                             }
                         }
-                    }
-                    else {
+                    } else {
                         System.out.println(playerUp + " is out for the round. ");
                         superTrumpsGame.skipPlayer(playerUp);
                         waitForUser();
@@ -142,6 +147,23 @@ public class PlayGame {
             userChoice = input.nextLine().toUpperCase();
         }
         System.out.println("Thank you for playing Mineral Supertrumps. Goodbye " + userName);
+    }
+
+    private static void printInstructions() {
+        final String INSTRUCTIONS = "";
+
+    }
+
+    private static String getNonBlankUserName() {
+        Scanner input = new Scanner(System.in);
+        System.out.printf("What is your name? >>> ");
+        String userName = input.nextLine();
+        while (userName.length() < 1 || userName.trim().length() < 1) {
+            System.out.println("That is not a valid username. Please enter at least one character. ");
+            System.out.printf("What is your name? >>> ");
+            userName = input.nextLine();
+        }
+        return userName;
     }
 
     private static void waitForUser() {
@@ -174,7 +196,7 @@ public class PlayGame {
             boolean validCard = false;
             while (!validCard) {
                 if (superTrumpsGame.isPlayable(chosenCard)) {
-    //                    If the card is actually playable, we play it and remove it from the hand
+                    //                    If the card is actually playable, we play it and remove it from the hand
                     chosenCard = playerUp.playCard(cardChoice);
                     if (chosenCard.isGeologist()) {
                         String trumpChoice = getTrumpStr();
@@ -258,10 +280,9 @@ public class PlayGame {
                     validChoice = true;
                 }
             } catch (NumberFormatException error) {
-                if (userChoice.equals("B")){
+                if (userChoice.equals("B")) {
                     return num;
-                }
-                else {
+                } else {
                     System.out.println("That is not a valid choice. Please enter valid number or B to return to turn menu.");
                     System.out.printf("Your choice >>> ");
                     userChoice = input.nextLine();
