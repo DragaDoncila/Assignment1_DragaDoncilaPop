@@ -46,76 +46,94 @@ public class PlayGame {
                 System.out.println("Ready to play, " + userName + "?");
                 waitForUser();
                 superTrumpsGame.getNextPlayer();
-                Player playerUp = superTrumpsGame.getCurrentPlayer();
                 while (!superTrumpsGame.isWon()) {
-                    while (superTrumpsGame.userIsUp()) {
-                        superTrumpsGame.resetUserPlayed();
+                    Player playerUp = superTrumpsGame.getCurrentPlayer();
+                    while (playerUp.isUser()) {
                         System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                         playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
-                        if (playerUp.hasPlayableCards() || superTrumpsGame.isNewRound()) {
-                            userChoice = getUserTurnChoice();
-                            switch (userChoice) {
-                                case "V":
-                                    viewHandDetails(playerUp, superTrumpsGame);
-                                    break;
-                                case "P":
-                                    superTrumpsGame.pass();
-                                    System.out.println("Player passed.");
-                                    waitForUser();
-                                    playerUp = superTrumpsGame.getNextPlayer();
-                                    break;
-                                case "C":
-                                    if (playerUp.hasCombo()) {
-                                        playerUp = superTrumpsGame.playCombo();
-                                        System.out.println("COMBO PLAYED! " + playerUp.getName() + " plays again!");
-                                    } else {
-                                        System.out.println("\nYou do not hold the combo in your hand.");
+                        if (!playerUp.isOut()) {
+                            if (playerUp.hasPlayableCards()) {
+                                userChoice = getUserTurnChoice();
+                                switch (userChoice) {
+                                    case "V":
+                                        viewHandDetails(playerUp, superTrumpsGame);
+                                        break;
+                                    case "P":
+                                        superTrumpsGame.pass();
+                                        System.out.println("Player passed.");
                                         waitForUser();
-                                    }
-                                    break;
-                                case "S":
-                                    if (superTrumpsGame.isNewRound()) {
-                                        System.out.println(playerUp.getName() + " won that round. Starting out new round.");
-                                        waitForUser();
-                                        userPlayFirstTurn(superTrumpsGame, playerUp);
+                                        break;
+                                    case "C":
+                                        if (playerUp.hasCombo()) {
+                                            playerUp = superTrumpsGame.playCombo();
+                                            System.out.println("COMBO PLAYED! " + playerUp.getName() + " plays again!");
+                                        } else {
+                                            System.out.println("\nYou do not hold the combo in your hand.");
+                                            waitForUser();
+                                        }
+                                        break;
+                                    case "S":
+                                        if (superTrumpsGame.isNewRound() || superTrumpsGame.isFirstTurn()) {
+                                            superTrumpsGame.setAllPlayersIn();
+                                            superTrumpsGame.resetNumPasses();
+                                            System.out.println("Starting out new round...");
+                                            if (superTrumpsGame.hasRoundWinner()){
+                                                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
+                                            }
+                                            waitForUser();
+                                            userPlayFirstTurn(superTrumpsGame, playerUp);
 
-                                    } else {
-                                        userPlayTurn(superTrumpsGame, playerUp);
-                                    }
-                                    break;
-                                default:
-                                    System.out.println("\nInvalid choice.\n");
+                                        } else {
+                                            userPlayTurn(superTrumpsGame, playerUp);
+                                        }
+                                        break;
+                                    default:
+                                        System.out.println("\nInvalid choice.\n");
+                                }
+                            } else {
+                                System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
+                                System.out.println("You must pass. You are out for the round.");
+                                waitForUser();
+                                superTrumpsGame.pass();
                             }
-                        } else {
-                            System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
-                            System.out.println("You must pass.");
+                        }
+                        else {
+                            System.out.println("You are out for the round");
+                            superTrumpsGame.skipPlayer(playerUp);
                             waitForUser();
-                            superTrumpsGame.pass();
-                            playerUp = superTrumpsGame.getNextPlayer();
                         }
-                        if (superTrumpsGame.hasUserPlayed()){
-                            playerUp = superTrumpsGame.getNextPlayer();
-                        }
+                        playerUp = superTrumpsGame.getCurrentPlayer();
                     }
                     //                    ROBOTS PLAY BELOW
-                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
-                    if (superTrumpsGame.isNewRound()) {
-                        System.out.println("Starting out new round...");
-                        waitForUser();
-                        superTrumpsGame.playFirstTurn();
-                        displayTurnResults(superTrumpsGame, playerUp);
-                    } else {
-                        playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
-                        if (playerUp.hasPlayableCards()) {
-                            superTrumpsGame.playTurn();
+                    if (!playerUp.isOut()) {
+                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
+                        if (superTrumpsGame.isNewRound() || superTrumpsGame.isFirstTurn()) {
+                            superTrumpsGame.setAllPlayersIn();
+                            superTrumpsGame.resetNumPasses();
+                            System.out.println("Starting out new round...");
+                            if (superTrumpsGame.hasRoundWinner()){
+                                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
+                            }
+                            waitForUser();
+                            superTrumpsGame.playFirstTurn();
                             displayTurnResults(superTrumpsGame, playerUp);
                         } else {
-                            superTrumpsGame.pass();
-                            System.out.println("Player passed.");
-                            waitForUser();
+                            playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
+                            if (playerUp.hasPlayableCards()) {
+                                superTrumpsGame.playTurn();
+                                displayTurnResults(superTrumpsGame, playerUp);
+                            } else {
+                                superTrumpsGame.pass();
+                                System.out.println("Player passed.");
+                                waitForUser();
+                            }
                         }
                     }
-                    playerUp = superTrumpsGame.getNextPlayer();
+                    else {
+                        System.out.println(playerUp + " is out for the round. ");
+                        superTrumpsGame.skipPlayer(playerUp);
+                        waitForUser();
+                    }
                 }
                 System.out.println("YOU WON!");
             }
@@ -169,7 +187,6 @@ public class PlayGame {
                         validCard = true;
                     }
                     displayTurnResults(superTrumpsGame, playerUp);
-//                    superTrumpsGame.getNextPlayer();
                 }
                 //            User has playable cards but has chosen unplayable
                 else {

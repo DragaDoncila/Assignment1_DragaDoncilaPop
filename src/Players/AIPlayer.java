@@ -16,6 +16,7 @@ public class AIPlayer extends Player{
         this.type = PlayerTypes.BOT;
         this.id = id;
         this.name = BOTNAMES[id-1];
+        this.isOut = false;
 
     }
 
@@ -45,6 +46,11 @@ public class AIPlayer extends Player{
         }
         currentHand.remove(handIndex);
         return playableCards.remove(cardChoice);
+    }
+
+    @Override
+    public boolean isUser() {
+        return false;
     }
 
     @Override

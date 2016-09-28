@@ -17,6 +17,7 @@ public class HumanPlayer extends Player {
         this.type = PlayerTypes.USER;
         this.id = id;
         this.name = name;
+        this.isOut = false;
 
     }
 
@@ -31,8 +32,12 @@ public class HumanPlayer extends Player {
     }
 
     @Override
+    public boolean isUser() {
+        return true;
+    }
+
+    @Override
     public Card playFirstCard(int cardChoice){
-//        Card chosenCard = currentHand.get(cardChoice);
         return currentHand.remove(cardChoice);
     }
 }

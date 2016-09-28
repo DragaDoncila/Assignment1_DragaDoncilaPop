@@ -12,9 +12,11 @@ import java.util.Arrays;
 public class StartNewGame {
     public static void main(String[] args) {
         System.out.println("Testing starting game with valid number of players...\n");
+
         System.out.println("Potential numbers of players: ");
         int[] potentialPlayerNum = {3, 6, 4, 1, 7, 0, 8, 2, 7, 5};
         System.out.println(Arrays.toString(potentialPlayerNum) + "\n");
+
         System.out.println("Valid number of players range between " + Game.MIN_PLAYERS + " and " + Game.MAX_PLAYERS);
         System.out.println("##################################");
 
@@ -40,5 +42,7 @@ public class StartNewGame {
             }
             System.out.println();
         }
+
+//        prove that the same thing happens using startNewGame()!!!
     }
 }

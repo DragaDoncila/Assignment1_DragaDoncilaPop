@@ -68,10 +68,19 @@ public abstract class Player {
                 geophysIndex = i;
             }
         }
-        //TODO: TRY EXCEPT
         currentHand.remove(geophysIndex);
         return currentHand.remove(magnetiteIndex);
     }
+
+    public void setIsOut(boolean isOut) {
+        this.isOut = isOut;
+    }
+
+    public boolean isOut() {
+        return isOut;
+    }
+
+    public abstract boolean isUser();
 
 
     public enum PlayerTypes{USER, BOT};
@@ -81,6 +90,7 @@ public abstract class Player {
     ArrayList<Card> currentHand;
     ArrayList<Card> playableCards;
     String name;
+    boolean isOut;
 
 
     public String getName() {

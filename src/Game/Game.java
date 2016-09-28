@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-/**Class handles the attributes and associated methods required for the playing of a Mineral Supertrumps game.
+/**
+ * Class handles the attributes and associated methods required for the playing of a Mineral Supertrumps game.
  * Created by Draga on 6/09/2016.
  */
 public class Game {
@@ -32,6 +33,7 @@ public class Game {
     private int numPasses;
     private boolean isNewRound;
     private boolean hasUserPlayed;
+    private String roundWinner;
 
 
 //    void incrementCountRounds() {
@@ -45,15 +47,28 @@ public class Game {
         return numPasses;
     }
 
-    public void incrementNumPasses(){
+    public void incrementNumPasses() {
         ++this.numPasses;
-        if (this.numPasses == this.numPlayers - 1){
-            ++this.countRounds;
-            this.numPasses = 0;
-            isNewRound = true;
-        }
     }
 
+    public boolean isNewRound() {
+        if (this.numPasses == this.numPlayers - 1) {
+            ++this.countRounds;
+            isNewRound = true;
+        } else {
+            isNewRound = false;
+        }
+        return isNewRound;
+    }
+
+
+    public boolean isFirstTurn() {
+        if (this.lastPlayedCard == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public Game(int numPlayers, String userName) {
         superTrumpsDeck = DeckBuilder.buildDeck();
@@ -61,11 +76,10 @@ public class Game {
         players = new Player[numPlayers];
         this.user = new HumanPlayer(0, userName);
         players[0] = this.user;
-        for (int i=1; i < players.length; ++i){
+        for (int i = 1; i < players.length; ++i) {
             players[i] = new AIPlayer(i);
         }
         countRounds = 0;
-        isNewRound = true;
         numPasses = 0;
 
     }
@@ -74,17 +88,17 @@ public class Game {
         Random rand = new Random();
         int dealerID = rand.nextInt(numPlayers);
         this.dealer = players[dealerID];
-        this.currentPlayer = players[dealerID];
+        this.currentPlayer = getNextPlayer();
         return dealer.getName();
     }
 
     void dealInitialHands() {
         superTrumpsDeck.shuffle();
         ArrayList<Card> newHand;
-        for (Player player:
-             players) {
-             newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
-             player.setCurrentHand(newHand);
+        for (Player player :
+                players) {
+            newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
+            player.setCurrentHand(newHand);
 
         }
 //        for (Cards.Card card:
@@ -111,27 +125,23 @@ public class Game {
         return currentPlayer;
     }
 
-    public boolean isNewRound() {
-        return isNewRound;
-    }
-
     boolean isWon() {
         boolean isWon = false;
-        for (Player player:
-             players) {
-            if(player.getCurrentHand().size() == 0){
+        for (Player player :
+                players) {
+            if (player.getCurrentHand().size() == 0) {
                 isWon = true;
             }
         }
         return isWon;
     }
 
-    boolean isPlayable(Card userChoice){
+    boolean isPlayable(Card userChoice) {
         boolean isPlayable = false;
         String userCardTitle = userChoice.getTitle();
         for (Card card :
                 currentPlayer.getPlayableCards()) {
-            if (card.getTitle().equals(userCardTitle)){
+            if (card.getTitle().equals(userCardTitle)) {
                 isPlayable = true;
             }
         }
@@ -151,11 +161,10 @@ public class Game {
 //    }
 
 
-    boolean userIsUp(){
-        if (currentPlayer.getType() == Player.PlayerTypes.USER){
+    boolean userIsUp() {
+        if (currentPlayer.getType() == Player.PlayerTypes.USER) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -176,15 +185,14 @@ public class Game {
         * return current trump value? or just get it in play game..*/
         this.lastPlayedCard = cardChoice;
         setCurrentCategory(trumpChoiceStr);
-        resetNumPasses();
-        hasUserPlayed = true;
+        currentPlayer = getNextPlayer();
     }
 
     public void playFirstTurn() {
 //        AI Play First Turn
         this.lastPlayedCard = currentPlayer.playFirstCard(0);
         setCurrentCategory(currentPlayer.chooseCategory());
-        resetNumPasses();
+        currentPlayer = getNextPlayer();
 
     }
 
@@ -198,8 +206,8 @@ public class Game {
         * return current trump cat? or just get it in play game..*/
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(lastPlayedCard.getInfo());
-        resetNumPasses();
         hasUserPlayed = true;
+        currentPlayer = getNextPlayer();
     }
 
     public Trump.TrumpCategories getCurrentCategory() {
@@ -207,7 +215,7 @@ public class Game {
     }
 
     public void setCurrentCategory(String currentCategory) {
-        switch (currentCategory){
+        switch (currentCategory) {
             case "cleavage":
                 this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
                 break;
@@ -231,11 +239,10 @@ public class Game {
         this.lastPlayedCard = currentPlayer.playCard(0);
         if (lastPlayedCard.isGeologist()) {
             setCurrentCategory(currentPlayer.chooseCategory());
-        }
-        else if (lastPlayedCard.isTrump()) {
+        } else if (lastPlayedCard.isTrump()) {
             setCurrentCategory(lastPlayedCard.getInfo());
         }
-        resetNumPasses();
+        currentPlayer = getNextPlayer();
     }
 
     public void playTurn(Card chosenCard) {
@@ -245,8 +252,7 @@ public class Game {
         if (chosenCard.isTrump()) {
             setCurrentCategory(lastPlayedCard.getInfo());
         }
-        resetNumPasses();
-        hasUserPlayed = true;
+        currentPlayer = getNextPlayer();
 
     }
 
@@ -254,25 +260,36 @@ public class Game {
 //        For Geologist playing
         this.lastPlayedCard = chosenCard;
         setCurrentCategory(trumpStr);
-        resetNumPasses();
-        hasUserPlayed = true;
+        currentPlayer = getNextPlayer();
     }
 
-    public boolean playableCardChosen(Card chosenCard){
+    public boolean playableCardChosen(Card chosenCard) {
         return chosenCard.canPlayOn(lastPlayedCard, currentCategory);
     }
 
 
     public void pass() {
         int numCardsLeft = superTrumpsDeck.getCards().size();
-        if (numCardsLeft != 0){
+        if (numCardsLeft != 0) {
             Card drawnCard = superTrumpsDeck.drawCard();
             currentPlayer.addCard(drawnCard);
         }
+        currentPlayer.setIsOut(true);
         incrementNumPasses();
+        currentPlayer = getNextPlayer();
+        if (isNewRound()) {
+            roundWinner = currentPlayer.getName();
+        }
     }
 
-    public void resetNumPasses(){
+    public void setAllPlayersIn() {
+        for (Player player :
+                players) {
+            player.setIsOut(false);
+        }
+    }
+
+    public void resetNumPasses() {
         this.numPasses = 0;
         this.isNewRound = false;
     }
@@ -292,11 +309,31 @@ public class Game {
         return this.hasUserPlayed;
     }
 
-    public void resetUserPlayed(){
+    public boolean hasRoundWinner() {
+        if (roundWinner != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void resetUserPlayed() {
         this.hasUserPlayed = false;
     }
 
     public static boolean isValidNumPlayers(int numPlayers) {
         return (numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS);
+    }
+
+    public String getRoundWinner() {
+        return roundWinner;
+    }
+
+    public void skipPlayer(Player playerUp) {
+        currentPlayer = getNextPlayer();
+    }
+
+    public void setRoundWinner(Player roundWinner) {
+        this.roundWinner = roundWinner.getName();
     }
 }
