@@ -49,27 +49,15 @@ public class PlayGame {
                 while (!superTrumpsGame.isWon()) {
                     Player playerUp = superTrumpsGame.getCurrentPlayer();
                     System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
-                    //If a supertrump was played everyone is back in
-                    if (superTrumpsGame.getLastPlayedCard() != null && superTrumpsGame.getLastPlayedCard().isTrump()) {
-                        superTrumpsGame.setAllPlayersIn();
-                        superTrumpsGame.resetNumPasses();
-                        System.out.println("Supertrump was played, all players back in.");
-                        waitForUser();
-                    }
-                    if (superTrumpsGame.isNewRound()) {
-                        isNew = true;
-                        superTrumpsGame.setAllPlayersIn();
-                        superTrumpsGame.resetNumPasses();
-                        System.out.println("Starting out new round...");
-                        if (superTrumpsGame.hasRoundWinner()) {
-                            System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
-                        }
-                        waitForUser();
-                    }
                     while (playerUp.isUser()) {
+                        //If a supertrump was played everybody is back in
+                        checkForSuperTrump(superTrumpsGame);
+                        //If it's the beginning of a round, the appropriate attributes are set.
+                        isNew = checkForNewRound(superTrumpsGame);
+                        waitForUser();
                         playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
                         if (!playerUp.isOut()) {
-                            if (playerUp.hasPlayableCards()) {
+                            if (playerUp.hasPlayableCards() || isNew) {
                                 userChoice = getUserTurnChoice();
                                 switch (userChoice) {
                                     case "V":
@@ -90,7 +78,7 @@ public class PlayGame {
                                         }
                                         break;
                                     case "S":
-                                        //If it's a new round or the first turn, everybody back in & search for a winner
+                                        //If it's a new round or the first turn
                                         if (isNew || superTrumpsGame.isFirstTurn()) {
                                             userPlayFirstTurn(superTrumpsGame, playerUp);
                                             //It's not a new round and the user has hands to play.
@@ -113,12 +101,15 @@ public class PlayGame {
                             waitForUser();
                         }
                         playerUp = superTrumpsGame.getCurrentPlayer();
-                        isNew = false;
                     }
+                    //If a supertrump was played everybody is back in
+                    checkForSuperTrump(superTrumpsGame);
+                    //If it's the beginning of a round, the appropriate attributes are set.
+                    isNew = checkForNewRound(superTrumpsGame);
                     //                    ROBOTS PLAY BELOW
                     if (!playerUp.isOut()) {
 //                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
-                        if (isNew || superTrumpsGame.isFirstTurn()) {
+                        if ( isNew || superTrumpsGame.isFirstTurn()) {
 //                            superTrumpsGame.setAllPlayersIn();
 //                            superTrumpsGame.resetNumPasses();
 //                            System.out.println("Starting out new round...");
@@ -144,7 +135,6 @@ public class PlayGame {
                         superTrumpsGame.skipPlayer(playerUp);
                         waitForUser();
                     }
-                    isNew = false;
                 }
                 System.out.println("YOU WON!");
             }
@@ -155,6 +145,30 @@ public class PlayGame {
             userChoice = input.nextLine().toUpperCase();
         }
         System.out.println("Thank you for playing Mineral Supertrumps. Goodbye " + userName);
+    }
+
+    private static boolean checkForNewRound(Game superTrumpsGame) {
+        if (superTrumpsGame.isNewRound()) {
+            superTrumpsGame.setAllPlayersIn();
+            superTrumpsGame.resetNumPasses();
+            System.out.println("Starting out new round...");
+            if (superTrumpsGame.hasRoundWinner()) {
+                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
+            }
+            return true;
+        }
+        else {
+
+            return false;
+        }
+    }
+
+    private static void checkForSuperTrump(Game superTrumpsGame) {
+        if (superTrumpsGame.getLastPlayedCard() != null && superTrumpsGame.getLastPlayedCard().isTrump()) {
+            superTrumpsGame.setAllPlayersIn();
+            superTrumpsGame.resetNumPasses();
+            System.out.println("Supertrump was played, all players back in.");
+        }
     }
 
     private static void printInstructions() {

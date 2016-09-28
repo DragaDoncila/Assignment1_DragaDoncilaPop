@@ -85,6 +85,7 @@ public class Game {
     private boolean isNewRound;
     private boolean hasUserPlayed;
     private String roundWinner;
+    private Player lastUserToPlay;
 
 
 //    void incrementCountRounds() {
@@ -235,6 +236,7 @@ public class Game {
         * increment current player
         * return current trump value? or just get it in play game..*/
         this.lastPlayedCard = cardChoice;
+        this.lastUserToPlay = currentPlayer;
         setCurrentCategory(trumpChoiceStr);
         currentPlayer = getNextPlayer();
     }
@@ -242,6 +244,7 @@ public class Game {
     public void playFirstTurn() {
 //        AI Play First Turn
         this.lastPlayedCard = currentPlayer.playFirstCard(0);
+        this.lastUserToPlay = currentPlayer;
         setCurrentCategory(currentPlayer.chooseCategory());
         currentPlayer = getNextPlayer();
 
@@ -256,6 +259,7 @@ public class Game {
         * increment current player
         * return current trump cat? or just get it in play game..*/
         this.lastPlayedCard = chosenCard;
+        this.lastUserToPlay = currentPlayer;
         setCurrentCategory(lastPlayedCard.getInfo());
         hasUserPlayed = true;
         currentPlayer = getNextPlayer();
@@ -288,6 +292,7 @@ public class Game {
     public void playTurn() {
 //        For AI only
         this.lastPlayedCard = currentPlayer.playCard(0);
+        this.lastUserToPlay = currentPlayer;
         if (lastPlayedCard.isGeologist()) {
             setCurrentCategory(currentPlayer.chooseCategory());
         } else if (lastPlayedCard.isTrump()) {
@@ -299,6 +304,7 @@ public class Game {
     public void playTurn(Card chosenCard) {
         //    For all but Geologist cards.
         this.lastPlayedCard = chosenCard;
+        this.lastUserToPlay = currentPlayer;
         //If Supertrump card was chosen, category is reset
         if (chosenCard.isTrump()) {
             setCurrentCategory(lastPlayedCard.getInfo());
@@ -310,6 +316,7 @@ public class Game {
     public void playTurn(Card chosenCard, String trumpStr) {
 //        For Geologist playing
         this.lastPlayedCard = chosenCard;
+        this.lastUserToPlay = currentPlayer;
         setCurrentCategory(trumpStr);
         currentPlayer = getNextPlayer();
     }
@@ -329,7 +336,8 @@ public class Game {
         incrementNumPasses();
         currentPlayer = getNextPlayer();
         if (isNewRound()) {
-            roundWinner = currentPlayer.getName();
+            roundWinner = lastUserToPlay.getName();
+            currentPlayer = lastUserToPlay;
         }
     }
 
@@ -342,7 +350,6 @@ public class Game {
 
     public void resetNumPasses() {
         this.numPasses = 0;
-        this.isNewRound = false;
     }
 
     public Player playCombo() {
@@ -384,7 +391,4 @@ public class Game {
         currentPlayer = getNextPlayer();
     }
 
-    public void setRoundWinner(Player roundWinner) {
-        this.roundWinner = roundWinner.getName();
-    }
 }
