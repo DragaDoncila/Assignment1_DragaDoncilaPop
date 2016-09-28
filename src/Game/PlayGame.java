@@ -48,13 +48,15 @@ public class PlayGame {
                 boolean isNew = false;
                 while (!superTrumpsGame.isWon()) {
                     Player playerUp = superTrumpsGame.getCurrentPlayer();
-                    System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
-                    while (playerUp.isUser()) {
+                    if (superTrumpsGame.userIsUp()) {
+                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                         //If a supertrump was played everybody is back in
                         checkForSuperTrump(superTrumpsGame);
                         //If it's the beginning of a round, the appropriate attributes are set.
                         isNew = checkForNewRound(superTrumpsGame);
                         waitForUser();
+                    }
+                    while (playerUp.isUser()) {
                         playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
                         if (!playerUp.isOut()) {
                             if (playerUp.hasPlayableCards() || isNew) {
