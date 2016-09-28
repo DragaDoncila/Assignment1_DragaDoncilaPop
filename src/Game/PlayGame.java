@@ -40,11 +40,12 @@ public class PlayGame {
         while (!userChoice.equals("Q")) {
             if (userChoice.equals("I")) {
                 printInstructions();
-            } else {
+            } else if (userChoice.equals("P")){
                 Game superTrumpsGame = startNewGame(userName);
                 System.out.println("Ready to play, " + userName + "?");
                 waitForUser();
                 superTrumpsGame.getNextPlayer();
+                boolean isNew = false;
                 while (!superTrumpsGame.isWon()) {
                     Player playerUp = superTrumpsGame.getCurrentPlayer();
                     System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
@@ -53,6 +54,16 @@ public class PlayGame {
                         superTrumpsGame.setAllPlayersIn();
                         superTrumpsGame.resetNumPasses();
                         System.out.println("Supertrump was played, all players back in.");
+                        waitForUser();
+                    }
+                    if (superTrumpsGame.isNewRound()) {
+                        isNew = true;
+                        superTrumpsGame.setAllPlayersIn();
+                        superTrumpsGame.resetNumPasses();
+                        System.out.println("Starting out new round...");
+                        if (superTrumpsGame.hasRoundWinner()) {
+                            System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
+                        }
                         waitForUser();
                     }
                     while (playerUp.isUser()) {
@@ -66,7 +77,7 @@ public class PlayGame {
                                         break;
                                     case "P":
                                         superTrumpsGame.pass();
-                                        System.out.println("Player passed.");
+                                        System.out.println(playerUp.getName() + " passed.");
                                         waitForUser();
                                         break;
                                     case "C":
@@ -80,14 +91,7 @@ public class PlayGame {
                                         break;
                                     case "S":
                                         //If it's a new round or the first turn, everybody back in & search for a winner
-                                        if (superTrumpsGame.isNewRound() || superTrumpsGame.isFirstTurn()) {
-                                            superTrumpsGame.setAllPlayersIn();
-                                            superTrumpsGame.resetNumPasses();
-                                            System.out.println("Starting out new round...");
-                                            if (superTrumpsGame.hasRoundWinner()) {
-                                                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
-                                            }
-                                            waitForUser();
+                                        if (isNew || superTrumpsGame.isFirstTurn()) {
                                             userPlayFirstTurn(superTrumpsGame, playerUp);
                                             //It's not a new round and the user has hands to play.
                                         } else {
@@ -109,18 +113,19 @@ public class PlayGame {
                             waitForUser();
                         }
                         playerUp = superTrumpsGame.getCurrentPlayer();
+                        isNew = false;
                     }
                     //                    ROBOTS PLAY BELOW
                     if (!playerUp.isOut()) {
 //                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
-                        if (superTrumpsGame.isNewRound() || superTrumpsGame.isFirstTurn()) {
-                            superTrumpsGame.setAllPlayersIn();
-                            superTrumpsGame.resetNumPasses();
-                            System.out.println("Starting out new round...");
-                            if (superTrumpsGame.hasRoundWinner()) {
-                                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
-                            }
-                            waitForUser();
+                        if (isNew || superTrumpsGame.isFirstTurn()) {
+//                            superTrumpsGame.setAllPlayersIn();
+//                            superTrumpsGame.resetNumPasses();
+//                            System.out.println("Starting out new round...");
+//                            if (superTrumpsGame.hasRoundWinner()) {
+//                                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
+//                            }
+//                            waitForUser();
                             superTrumpsGame.playFirstTurn();
                             displayTurnResults(superTrumpsGame, playerUp);
                         } else {
@@ -130,19 +135,22 @@ public class PlayGame {
                                 displayTurnResults(superTrumpsGame, playerUp);
                             } else {
                                 superTrumpsGame.pass();
-                                System.out.println("Player passed.");
+                                System.out.println(playerUp.getName() + " passed.");
                                 waitForUser();
                             }
                         }
                     } else {
-                        System.out.println(playerUp + " is out for the round. ");
+                        System.out.println(playerUp.getName() + " is out for the round. ");
                         superTrumpsGame.skipPlayer(playerUp);
                         waitForUser();
                     }
+                    isNew = false;
                 }
                 System.out.println("YOU WON!");
             }
-
+            else {
+                System.out.println("Invalid menu choice.");
+            }
             System.out.printf(MAIN_MENU);
             userChoice = input.nextLine().toUpperCase();
         }
@@ -150,7 +158,30 @@ public class PlayGame {
     }
 
     private static void printInstructions() {
-        final String INSTRUCTIONS = "";
+        System.out.println(Game.INSTRUCTIONS1);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS2);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS3);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS4);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS5);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS6);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS7);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS8);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS9);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS10);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS11);
+        waitForUser();
+        System.out.println(Game.INSTRUCTIONS12);
+        waitForUser();
 
     }
 
@@ -337,15 +368,31 @@ public class PlayGame {
 
     private static int getValidNumPlayers() {
         Scanner input = new Scanner(System.in);
+        boolean isValidNum = false;
+        int numPlayers = 0;
         System.out.println("This is a game for " + MIN_PLAYERS + " to " + MAX_PLAYERS + " people.");
         System.out.printf("Please enter the number of players today>>> ");
-        int numPlayers = input.nextInt();
-        while (!Game.isValidNumPlayers(numPlayers)) {
-            System.out.println("That is not a valid number of players.");
+        String userEntry = input.nextLine();
+        while (!isValidNum) {
+            try {
+                numPlayers = Integer.parseInt(userEntry);
+                if (!Game.isValidNumPlayers(numPlayers)){
+                    System.out.println("That is not a valid number of players.");
+                    System.out.println("This is a game for " + MIN_PLAYERS + " to " + MAX_PLAYERS + " people.");
+                    System.out.printf("Please enter the number of players today>>> ");
+                    userEntry = input.nextLine();
+                }
+                else {
+                    isValidNum = true;
+                }
 
-            System.out.println("This is a game for " + MIN_PLAYERS + " to " + MAX_PLAYERS + " people.");
-            System.out.printf("Please enter the number of players today>>> ");
-            numPlayers = input.nextInt();
+            }
+            catch (NumberFormatException error){
+                System.out.println("That is not a valid number of players.");
+                System.out.println("This is a game for " + MIN_PLAYERS + " to " + MAX_PLAYERS + " people.");
+                System.out.printf("Please enter the number of players today>>> ");
+                userEntry = input.nextLine();
+            }
         }
         return numPlayers;
     }

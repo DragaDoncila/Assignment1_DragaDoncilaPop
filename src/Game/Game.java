@@ -17,6 +17,57 @@ import java.util.Random;
  * Created by Draga on 6/09/2016.
  */
 public class Game {
+    final static String INSTRUCTIONS1 =
+            "1. This is a game for 3-5 people. The game begins with 8 cards being randomly \n" +
+                    "dealt to each player by a randomly assigned dealer.\n";
+    final static String INSTRUCTIONS2 =
+            "2. The player to the left of the dealer goes first by placing a card on the table. If the card is a \n" +
+                    "mineral card, the player must choose the trump category (Hardness, Economic Value, Cleavage,\n" +
+                    " Crustal Abundance or Specific Gravity) they wish to play. The card will then be played, and its \n" +
+                    "relevant trump value displayed.\n";
+    final static String INSTRUCTIONS3 =
+            "3. The next player to the left takes the next turn. This player must play a mineral card that has a \n" +
+                    "higher value in the trump category than the card played by the previous player. The game continues with\n" +
+                    " the next player to the left, and so on.\n";
+    final static String INSTRUCTIONS4 =
+            "4. If a player does not have any mineral cards that are of higher value for the specific trump category\n" +
+                    " being played, then the player must pass and picks up one card from the remaining deck. The player then\n" +
+                    " cannot play again until all but one player has passed, or until another player throws a supertrump \n" +
+                    "card to change the trump category, as described next. A player is allowed to pass even if they still \n" +
+                    "hold cards that could be played.\n";
+    final static String INSTRUCTIONS5 =
+            "5. If the player has a supertrump card (The Miner, The Geologist, The Geophysicist, The Petrologist, \n" +
+                    "The Mineralogist, The Gemologist), then they may play this card at any of their turns. By placing a \n" +
+                    "supertrump card, the player changes the trump category according to the instructions on the supertrump \n" +
+                    "card. At this stage, any other player who had passed on the previous round is now able to play again. \n" +
+                    "If a player happens to hold both The Geophysicist card and the Magnetite card in their hand, then that \n" +
+                    "player can place both cards together to win the round.\n";
+    final static String INSTRUCTIONS6 =
+            "6. The game continues with players taking turns to play cards until all but one player has passed. The \n" +
+                    "last player then gets to lead out the next round and chooses the trump category to be played.\n";
+    final static String INSTRUCTIONS7 =
+            "7. The winner of the game is the first player to lose all of their cards. The game continues until all \n" +
+                    "but one player has lost their cards.\n";
+    final static String INSTRUCTIONS8 =
+            "8. Trump Sequences:\n" +
+                    "\tHardness: relates to Moh’s hardness scale of minerals from 1 to 10. Where a range of values is \n" +
+                    "presented, the highest value should be used. \n";
+    final static String INSTRUCTIONS9 =
+            "Specific Gravity: in grams per cubic centimeter. Where a range of values is presented, the highest \n" +
+                    "value should be used. \n";
+    final static String INSTRUCTIONS10 =
+            "Cleavage: refers to the number of cleavage planes and how well the planes are typically expressed in \n" +
+                    "the crystal. For example, “1 perfect, 2 poor” means the mineral has 1 perfect cleavage plane, and 2 \n" +
+                    "poor cleavage planes. \n" +
+                    "The order of ranking from lowest to highest is: \n" +
+                    "[none - poor/none - 1 poor  - 2 poor  - 1 good  - 1 good, 1 poor - 2 good - 3 good - 1 perfect - \n" +
+                    "1 perfect, 1 good - 1 perfect, 2 good - 2 perfect, 1 good - 3 perfect - 4 perfect - 6 perfect]\n";
+    final static String INSTRUCTIONS11 =
+            "Crustal Abundance is ranked from lowest to highest as: \n" +
+                    "[ultratrace - trace - low - moderate - high - very high]\n";
+    final static String INSTRUCTIONS12 =
+            "Economic value: is ranked from lowest to highest as: \n" +
+                    "[trivial - low - moderate - high - very high - I’m rich!]\n";
     public final static int MIN_PLAYERS = 3;
     public final static int MAX_PLAYERS = 5;
 
