@@ -86,6 +86,7 @@ public class Game {
     private boolean hasUserPlayed;
     private String roundWinner;
     private Player lastUserToPlay;
+    private boolean comboWasPlayed;
 
 
 //    void incrementCountRounds() {
@@ -104,9 +105,10 @@ public class Game {
     }
 
     public boolean isNewRound() {
-        if (this.numPasses == this.numPlayers - 1) {
+        if (this.numPasses == this.numPlayers - 1 || comboWasPlayed) {
             ++this.countRounds;
             isNewRound = true;
+            comboWasPlayed = false;
         } else {
             isNewRound = false;
         }
@@ -151,12 +153,8 @@ public class Game {
                 players) {
             newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
             player.setCurrentHand(newHand);
-
         }
-//        for (Cards.Card card:
-//             newHand) {
-//            System.out.println(card.getTitle());
-//        }
+
     }
 
     public Player[] getPlayers() {
@@ -234,9 +232,9 @@ public class Game {
         currentPlayer = getNextPlayer();
     }
 
-    public void playFirstTurn() {
+    public void playFirstTurn(boolean isStartOfGame) {
 //        AI Play First Turn
-        this.lastPlayedCard = currentPlayer.playFirstCard(0);
+        this.lastPlayedCard = currentPlayer.playFirstCard(0, isStartOfGame);
         this.lastUserToPlay = currentPlayer;
         setCurrentCategory(currentPlayer.chooseCategory());
         currentPlayer = getNextPlayer();
@@ -284,14 +282,20 @@ public class Game {
 
     public void playTurn() {
 //        For AI only
-        this.lastPlayedCard = currentPlayer.playCard(0);
-        this.lastUserToPlay = currentPlayer;
-        if (lastPlayedCard.isGeologist()) {
-            setCurrentCategory(currentPlayer.chooseCategory());
-        } else if (lastPlayedCard.isTrump()) {
-            setCurrentCategory(lastPlayedCard.getInfo());
+        if (currentPlayer.hasCombo()){
+            this.lastPlayedCard = currentPlayer.playCombo();
+            comboWasPlayed = true;
         }
-        currentPlayer = getNextPlayer();
+        else {
+            this.lastPlayedCard = currentPlayer.playCard(0);
+            this.lastUserToPlay = currentPlayer;
+            if (lastPlayedCard.isGeologist()) {
+                setCurrentCategory(currentPlayer.chooseCategory());
+            } else if (lastPlayedCard.isTrump()) {
+                setCurrentCategory(lastPlayedCard.getInfo());
+            }
+            currentPlayer = getNextPlayer();
+        }
     }
 
     public void playTurn(Card chosenCard) {
@@ -347,8 +351,8 @@ public class Game {
 
     public Player playCombo() {
         this.lastPlayedCard = currentPlayer.playCombo();
+        comboWasPlayed = true;
         ++this.countRounds;
-        isNewRound = true;
         return currentPlayer;
     }
 
@@ -384,4 +388,7 @@ public class Game {
         currentPlayer = getNextPlayer();
     }
 
+    public boolean comboWasPlayed() {
+        return comboWasPlayed;
+    }
 }

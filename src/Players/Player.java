@@ -121,7 +121,7 @@ public abstract class Player {
         return playableCards;
     }
 
-    public abstract Card playFirstCard(int cardChoice);
+    public abstract Card playFirstCard(int cardChoice, boolean b);
 
 
 }

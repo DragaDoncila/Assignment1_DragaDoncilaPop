@@ -50,4 +50,25 @@ public class Deck {
 //        Return the card on the top of the deck
         return cards.remove(0);
     }
+
+    public Card getMagnetite() {
+        int index = -1;
+        for (int i = 0; i < cards.size(); i++) {
+            Card card = cards.get(i);
+            if (card.getTitle().equals("Magnetite")){
+                index = i;
+            }
+        }
+        return cards.remove(index);
+    }
+
+    public Card getGeophys() {
+        int index = -1;
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).getTitle().equals("The Geophysicist")){
+                index = i;
+            }
+        }
+        return cards.remove(index);
+    }
 }

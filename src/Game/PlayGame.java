@@ -47,20 +47,22 @@ public class PlayGame {
                     Game superTrumpsGame = startNewGame(userName);
                     System.out.println("Ready to play, " + userName + "?");
                     waitForUser();
-                    boolean isNew = false;
+                    boolean isNewRound = false;
                     while (!superTrumpsGame.isWon()) {
                         Player playerUp = superTrumpsGame.getCurrentPlayer();
                         if (superTrumpsGame.userIsUp()) {
                             //If a supertrump was played everybody is back in
                             checkForSuperTrump(superTrumpsGame);
                             //If it's the beginning of a round, the appropriate attributes are set.
-                            isNew = checkForNewRound(superTrumpsGame);
+                            isNewRound = checkForNewRound(superTrumpsGame);
                             System.out.println("Let's go! It's your turn\n");
                         }
                         while (playerUp.isUser()) {
-                            playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
+                            if (!isNewRound){
+                                playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
+                            }
                             if (!playerUp.isOut()) {
-                                if (playerUp.hasPlayableCards() || isNew) {
+                                if (playerUp.hasPlayableCards() || isNewRound) {
                                     userChoice = getUserTurnChoice();
                                     switch (userChoice) {
                                         case "V":
@@ -68,13 +70,14 @@ public class PlayGame {
                                             break;
                                         case "P":
                                             superTrumpsGame.pass();
-                                            System.out.println(playerUp.getName() + " passed.");
+                                            System.out.println(playerUp.getName() + " passed. They're out for the round.");
                                             waitForUser();
                                             break;
                                         case "C":
                                             if (playerUp.hasCombo()) {
                                                 playerUp = superTrumpsGame.playCombo();
                                                 System.out.println("COMBO PLAYED! " + playerUp.getName() + " plays again!");
+                                                isNewRound = checkForNewRound(superTrumpsGame);
                                             } else {
                                                 System.out.println("\nYou do not hold the combo in your hand.");
                                                 waitForUser();
@@ -82,7 +85,7 @@ public class PlayGame {
                                             break;
                                         case "S":
                                             //If it's a new round or the first turn
-                                            if (isNew || superTrumpsGame.isFirstTurn()) {
+                                            if (isNewRound || superTrumpsGame.isFirstTurn()) {
                                                 userPlayFirstTurn(superTrumpsGame, playerUp);
                                                 //It's not a new round and the user has hands to play.
                                             } else {
@@ -93,7 +96,7 @@ public class PlayGame {
                                             System.out.println("\nInvalid choice.\n");
                                     }
                                 } else {
-                                    System.out.println("No cards in your hand can play on " + superTrumpsGame.getLastPlayedCard().getTitle() + ".");
+                                    System.out.println("No cards in your hand are playable.");
                                     System.out.println("You must pass. You are out for the round.");
                                     waitForUser();
                                     superTrumpsGame.pass();
@@ -108,12 +111,16 @@ public class PlayGame {
                         //If a supertrump was played everybody is back in
                         checkForSuperTrump(superTrumpsGame);
                         //If it's the beginning of a round, the appropriate attributes are set.
-                        isNew = checkForNewRound(superTrumpsGame);
+                        isNewRound = checkForNewRound(superTrumpsGame);
                         System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
                         //                    ROBOTS PLAY BELOW
                         if (!playerUp.isOut()) {
 //                        System.out.println("Let's go! It's " + playerUp.getName() + "'s turn\n");
-                            if (isNew || superTrumpsGame.isFirstTurn()) {
+                            if (superTrumpsGame.isFirstTurn()){
+                                superTrumpsGame.playFirstTurn(true);
+                                displayTurnResults(superTrumpsGame, playerUp);
+                            }
+                            else if (isNewRound) {
 //                            superTrumpsGame.setAllPlayersIn();
 //                            superTrumpsGame.resetNumPasses();
 //                            System.out.println("Starting out new round...");
@@ -121,16 +128,21 @@ public class PlayGame {
 //                                System.out.println("Last round won by " + superTrumpsGame.getRoundWinner());
 //                            }
 //                            waitForUser();
-                                superTrumpsGame.playFirstTurn();
+                                superTrumpsGame.playFirstTurn(false);
                                 displayTurnResults(superTrumpsGame, playerUp);
                             } else {
                                 playerUp.setPlayableCards(superTrumpsGame.getLastPlayedCard(), superTrumpsGame.getCurrentCategory());
                                 if (playerUp.hasPlayableCards()) {
                                     superTrumpsGame.playTurn();
-                                    displayTurnResults(superTrumpsGame, playerUp);
+                                    if (superTrumpsGame.comboWasPlayed()){
+                                        System.out.println("COMBO PLAYED!");
+                                    }
+                                    else {
+                                        displayTurnResults(superTrumpsGame, playerUp);
+                                    }
                                 } else {
                                     superTrumpsGame.pass();
-                                    System.out.println(playerUp.getName() + " passed.");
+                                    System.out.println(playerUp.getName() + " passed. They're out for the round.");
                                     waitForUser();
                                 }
                             }
@@ -288,7 +300,7 @@ public class PlayGame {
         int cardChoice = getUserCardChoice(playerUp);
         if (cardChoice != BACK_VALUE) {
             Card potentialCard = playerUp.getCard(cardChoice);
-            while (potentialCard.isTrump()) {
+            while (potentialCard.isTrump() && superTrumpsGame.isFirstTurn()) {
                 System.out.println("Cannot play Supertrump on first turn.\n");
                 cardChoice = getUserCardChoice(playerUp);
                 if (cardChoice != BACK_VALUE){
@@ -384,8 +396,8 @@ public class PlayGame {
         System.out.println("Selecting dealer...");
         waitForUser();
         //TODO: DELETE DELETE DELETE DELETE
-//        String dealerName = superTrumpsGame.selectDealer();
-        String dealerName = superTrumpsGame.selectDealer(allPlayers[2]);
+        String dealerName = superTrumpsGame.selectDealer();
+//        String dealerName = superTrumpsGame.selectDealer(allPlayers[2]);
         System.out.println(dealerName + " is dealing today.\n");
         superTrumpsGame.dealInitialHands();
         ArrayList<Card> userHand = superTrumpsGame.getPlayers()[0].getCurrentHand();

@@ -54,13 +54,19 @@ public class AIPlayer extends Player{
     }
 
     @Override
-    public Card playFirstCard(int cardChoice) {
+    public Card playFirstCard(int cardChoice, boolean isStartofGame) {
         cardChoice = new Random().nextInt(currentHand.size());
         Card potentialCard = currentHand.get(cardChoice);
-        while (potentialCard.isTrump()){
-            cardChoice = new Random().nextInt(currentHand.size());
-            potentialCard = currentHand.get(cardChoice);
+        if (isStartofGame){
+            while (potentialCard.isTrump()){
+                System.out.println("TRIED TO PLAY TRUMP NO GO");
+                cardChoice = new Random().nextInt(currentHand.size());
+                potentialCard = currentHand.get(cardChoice);
+            }
+            return currentHand.remove(cardChoice);
         }
-        return currentHand.remove(cardChoice);
+        else {
+            return currentHand.remove(cardChoice);
+        }
     }
 }
