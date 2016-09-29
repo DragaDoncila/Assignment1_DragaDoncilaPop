@@ -65,11 +65,11 @@ public class MineralCard extends Card{
     @Override
     public String toString(){
         String displayString = getInfo();
-        displayString += String.format("%-30s", "Hardness: ") + this.getTrumpVal(TrumpCategories.HARDNESS) + "\n";
-        displayString += String.format("%-30s", "Crustal Abundance: ") + this.getTrumpVal(TrumpCategories.CRUSTAL_ABUNDANCE) + "\n";
-        displayString += String.format("%-30s", "Economic Value: ") + this.getTrumpVal(TrumpCategories.ECONOMIC_VALUE) + "\n";
-        displayString += String.format("%-30s", "Cleavage: ") + this.getTrumpVal(TrumpCategories.CLEAVAGE) + "\n";
-        displayString += String.format("%-30s", "Specific Gravity: ") + this.getTrumpVal(TrumpCategories.SPECIFIC_GRAVITY) + "\n";
+        displayString += String.format("%-30s", "Hardness: ") + this.hardness + "\n";
+        displayString += String.format("%-30s", "Crustal Abundance: ") + this.crustalAbundance + "\n";
+        displayString += String.format("%-30s", "Economic Value: ") + this.economicValue + "\n";
+        displayString += String.format("%-30s", "Cleavage: ") + this.cleavage + "\n";
+        displayString += String.format("%-30s", "Specific Gravity: ") + this.specificGravity + "\n";
         displayString += "------------------------------------------\n";
         return displayString;
     }

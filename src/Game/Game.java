@@ -140,7 +140,7 @@ public class Game {
         Random rand = new Random();
         int dealerID = rand.nextInt(numPlayers);
         this.dealer = players[dealerID];
-        this.currentPlayer = getNextPlayer();
+        this.currentPlayer = dealer;
         return dealer.getName();
     }
 
@@ -227,14 +227,7 @@ public class Game {
     }
 
     public void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
-//Used in case of mineral card OR The Geologist Trump
-//        setLastPlayedCard(cardChoice);
-        /*Need to:
-        * set last played card to the chosen card
-        * set current trump category to the chosen category
-        * increment rounds
-        * increment current player
-        * return current trump value? or just get it in play game..*/
+//Used in case of mineral card
         this.lastPlayedCard = cardChoice;
         this.lastUserToPlay = currentPlayer;
         setCurrentCategory(trumpChoiceStr);
@@ -250,20 +243,20 @@ public class Game {
 
     }
 
-    public void playFirstTurn(Card chosenCard) {
-        //Trump play first turn functionality
-        /*Need to:
-        * set last played card to the chosen card
-        * set current trump category based on card effect
-        * increment rounds
-        * increment current player
-        * return current trump cat? or just get it in play game..*/
-        this.lastPlayedCard = chosenCard;
-        this.lastUserToPlay = currentPlayer;
-        setCurrentCategory(lastPlayedCard.getInfo());
-        hasUserPlayed = true;
-        currentPlayer = getNextPlayer();
-    }
+//    public void playFirstTurn(Card chosenCard) {
+//        //Trump play first turn functionality
+//        /*Need to:
+//        * set last played card to the chosen card
+//        * set current trump category based on card effect
+//        * increment rounds
+//        * increment current player
+//        * return current trump cat? or just get it in play game..*/
+//        this.lastPlayedCard = chosenCard;
+//        this.lastUserToPlay = currentPlayer;
+//        setCurrentCategory(lastPlayedCard.getInfo());
+//        hasUserPlayed = true;
+//        currentPlayer = getNextPlayer();
+//    }
 
     public Trump.TrumpCategories getCurrentCategory() {
         return currentCategory;

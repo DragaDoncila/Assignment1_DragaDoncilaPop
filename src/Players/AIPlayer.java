@@ -56,6 +56,11 @@ public class AIPlayer extends Player{
     @Override
     public Card playFirstCard(int cardChoice) {
         cardChoice = new Random().nextInt(currentHand.size());
+        Card potentialCard = currentHand.get(cardChoice);
+        while (potentialCard.isTrump()){
+            cardChoice = new Random().nextInt(currentHand.size());
+            potentialCard = currentHand.get(cardChoice);
+        }
         return currentHand.remove(cardChoice);
     }
 }
