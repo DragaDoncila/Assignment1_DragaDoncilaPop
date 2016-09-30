@@ -59,7 +59,6 @@ public class AIPlayer extends Player{
         Card potentialCard = currentHand.get(cardChoice);
         if (isStartofGame){
             while (potentialCard.isTrump()){
-                System.out.println("TRIED TO PLAY TRUMP NO GO");
                 cardChoice = new Random().nextInt(currentHand.size());
                 potentialCard = currentHand.get(cardChoice);
             }

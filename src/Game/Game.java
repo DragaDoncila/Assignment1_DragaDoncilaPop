@@ -85,6 +85,12 @@ public class Game {
     private boolean isNewRound;
     private boolean hasUserPlayed;
     private String roundWinner;
+    private ArrayList<Player> winners;
+
+    public Player getLastUserToPlay() {
+        return lastUserToPlay;
+    }
+
     private Player lastUserToPlay;
     private boolean comboWasPlayed;
 
@@ -105,7 +111,7 @@ public class Game {
     }
 
     public boolean isNewRound() {
-        if (this.numPasses == this.numPlayers - 1 || comboWasPlayed) {
+        if (this.numPasses == (this.numPlayers - 1 - winners.size()) || comboWasPlayed) {
             ++this.countRounds;
             isNewRound = true;
             comboWasPlayed = false;
@@ -133,6 +139,7 @@ public class Game {
         for (int i = 1; i < players.length; ++i) {
             players[i] = new AIPlayer(i);
         }
+        winners = new ArrayList<>();
         countRounds = 0;
         numPasses = 0;
 
@@ -240,21 +247,6 @@ public class Game {
         currentPlayer = getNextPlayer();
 
     }
-
-//    public void playFirstTurn(Card chosenCard) {
-//        //Trump play first turn functionality
-//        /*Need to:
-//        * set last played card to the chosen card
-//        * set current trump category based on card effect
-//        * increment rounds
-//        * increment current player
-//        * return current trump cat? or just get it in play game..*/
-//        this.lastPlayedCard = chosenCard;
-//        this.lastUserToPlay = currentPlayer;
-//        setCurrentCategory(lastPlayedCard.getInfo());
-//        hasUserPlayed = true;
-//        currentPlayer = getNextPlayer();
-//    }
 
     public Trump.TrumpCategories getCurrentCategory() {
         return currentCategory;
@@ -384,11 +376,39 @@ public class Game {
         return roundWinner;
     }
 
-    public void skipPlayer(Player playerUp) {
+    public void skipPlayer() {
         currentPlayer = getNextPlayer();
     }
 
     public boolean comboWasPlayed() {
         return comboWasPlayed;
+    }
+
+    public boolean isOver(){
+        int numWinners = 0;
+        for (Player player :
+                players) {
+            int currentHandSize = player.getCurrentHand().size();
+            if (currentHandSize == 0){
+                ++numWinners;
+            }
+        }
+        return numWinners == numPlayers - 1;
+
+    }
+
+    public ArrayList<Player> getWinners() {
+        return winners;
+    }
+
+    public boolean hasWon(Player playerUp) {
+        int currentHandSize = playerUp.getCurrentHand().size();
+        if (currentHandSize == 0) {
+            winners.add(playerUp);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
