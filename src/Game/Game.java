@@ -161,6 +161,17 @@ public class Game {
             newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
             player.setCurrentHand(newHand);
         }
+//        ArrayList<Card> userHand = new ArrayList<>();
+//        userHand.add(superTrumpsDeck.getMagnetite());
+//        userHand.add(superTrumpsDeck.getGeophys());
+//        userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
+//        players[0].setCurrentHand(userHand);
+//
+//        ArrayList<Card> newHand;
+//        for (int i = 1; i < players.length; i++) {
+//            newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
+//            players[i].setCurrentHand(newHand);
+//        }
 
     }
 
@@ -219,11 +230,7 @@ public class Game {
 
 
     boolean userIsUp() {
-        if (currentPlayer.getType() == Player.PlayerTypes.USER) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentPlayer.getType() == Player.PlayerTypes.USER;
     }
 
     public String selectDealer(Player allPlayer) {
@@ -357,11 +364,7 @@ public class Game {
     }
 
     public boolean hasRoundWinner() {
-        if (roundWinner != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return roundWinner != null;
     }
 
     public void resetUserPlayed() {

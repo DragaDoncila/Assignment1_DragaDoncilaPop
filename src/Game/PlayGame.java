@@ -148,13 +148,15 @@ public class PlayGame {
                                     waitForUser();
                                 }
                             }
-                            if (superTrumpsGame.hasWon(playerUp)){
+                            Player lastToPlay = superTrumpsGame.getLastUserToPlay();
+                            if (superTrumpsGame.hasWon(lastToPlay)){
                                 System.out.println("That was the last card in " + superTrumpsGame.getLastUserToPlay().getName() + "'s hand!");
-                                System.out.println(superTrumpsGame.getLastUserToPlay().getName().toUpperCase() + " WON!");
+                                System.out.println(lastToPlay.getName().toUpperCase() + " WON!\n");
+                                waitForUser();
                             }
                         }
                     }
-                    System.out.println("That's the end of the game. Thanks for playing!");
+                    System.out.println("That's the end of the game. Thanks for playing!\n");
                     break;
                 default:
                     System.out.println("Invalid menu choice.");
