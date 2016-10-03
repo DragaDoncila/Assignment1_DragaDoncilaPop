@@ -8,6 +8,11 @@ import Cards.Card;
  */
 public class HumanPlayer extends Player {
 
+    /**
+     * Constructs a human player object and assigns it a name
+     * @param id player's id
+     * @param name player's name
+     */
     public HumanPlayer(int id, String name) {
         this.type = PlayerTypes.USER;
         this.id = id;

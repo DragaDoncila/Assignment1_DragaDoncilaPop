@@ -10,36 +10,74 @@ import java.util.ArrayList;
  */
 public abstract class Player {
 
+    public enum PlayerTypes{USER, BOT}
+    int id;
+
+    PlayerTypes type;
+    ArrayList<Card> currentHand;
+    ArrayList<Card> playableCards;
+    String name;
+    boolean isOut;
+
     public PlayerTypes getType() {
         return type;
     }
 
-    public StringBuilder getCurrentHandTitles() {
-        StringBuilder titlesStr = new StringBuilder();
-        for (Card card:
-             currentHand) {
-            titlesStr.append(card.getTitle() + "\n");
-        }
-        return titlesStr;
-    }
-
-    public abstract String chooseCategory();
-
-    public void addCard(Card drawnCard){
-        currentHand.add(drawnCard);
+    public String getName() {
+        return name;
     }
 
     public Card getCard(int cardChoice) {
         return currentHand.get(cardChoice);
     }
 
-    public abstract Card playCard(int cardChoice);
-
-    public boolean hasPlayableCards() {
-        if ((playableCards.size() != 0)) return true;
-        else return false;
+    public ArrayList<Card> getPlayableCards() {
+        return playableCards;
     }
 
+    public ArrayList<Card> getCurrentHand() {
+        return currentHand;
+    }
+
+    public void setCurrentHand(ArrayList<Card> currentHand) {
+        this.currentHand = currentHand;
+    }
+
+    public void setIsOut(boolean isOut) {
+        this.isOut = isOut;
+    }
+
+    public boolean isOut() {
+        return isOut;
+    }
+
+    /**
+     * Builds a variable array and adds cards to it if the card can play on the previously played card and trump category
+     *
+     * @param lastPlayedCard the card played last in game
+     * @param currentCategory the current category in game
+     */
+    public void setPlayableCards(Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
+        ArrayList<Card> playableCards = new ArrayList<>();
+        for (Card card:
+                currentHand) {
+            if ((lastPlayedCard == null || currentCategory == null) || card.canPlayOn(lastPlayedCard, currentCategory)){
+                playableCards.add(card);
+            }
+
+        }
+        this.playableCards = playableCards;
+    }
+
+    public boolean hasPlayableCards() {
+        return (playableCards.size() != 0);
+    }
+
+    /**
+     * Iterates through user's hand and returns true if they have the combo
+     *
+     * @return hasCombo true if they have the combo
+     */
     public boolean hasCombo() {
         boolean hasCombo = false;
         int countComboCards = 0;
@@ -55,6 +93,15 @@ public abstract class Player {
         return hasCombo;
     }
 
+    public void addCard(Card drawnCard){
+        currentHand.add(drawnCard);
+    }
+
+    /**
+     * Removes both combo cards from the hand and returns magnetite for playing
+     *
+     * @return magnetite
+     */
     public Card playCombo() {
         int magnetiteIndex = -1;
         int geophysIndex = -1;
@@ -72,55 +119,35 @@ public abstract class Player {
         return currentHand.remove(magnetiteIndex);
     }
 
-    public void setIsOut(boolean isOut) {
-        this.isOut = isOut;
-    }
+    /**
+     * Chooses a trump category to be set for the game
+     *
+     * @return trumpCategory
+     */
+    public abstract String chooseCategory();
 
-    public boolean isOut() {
-        return isOut;
-    }
-
+    /**
+     * Returns true if this player is the user
+     *
+     * @return boolean
+     */
     public abstract boolean isUser();
 
+    /**
+     * Returns the chosen card
+     *
+     * @param cardChoice the chosen card
+     * @return the card
+     */
+    public abstract Card playCard(int cardChoice);
 
-    public enum PlayerTypes{USER, BOT};
-    int id;
-
-    PlayerTypes type;
-    ArrayList<Card> currentHand;
-    ArrayList<Card> playableCards;
-    String name;
-    boolean isOut;
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setCurrentHand(ArrayList<Card> currentHand) {
-        this.currentHand = currentHand;
-    }
-
-    public ArrayList<Card> getCurrentHand() {
-        return currentHand;
-    }
-
-    public void setPlayableCards(Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
-        ArrayList<Card> playableCards = new ArrayList<>();
-        for (Card card:
-                currentHand) {
-            if ((lastPlayedCard == null || currentCategory == null) || card.canPlayOn(lastPlayedCard, currentCategory)){
-                playableCards.add(card);
-            }
-
-        }
-        this.playableCards = playableCards;
-    }
-
-    public ArrayList<Card> getPlayableCards() {
-        return playableCards;
-    }
-
+    /**
+     * Checks whether it's the first turn of the game and returns an appropriate card
+     *
+     * @param cardChoice the chosen card
+     * @param b true if it's the first turn of the game
+     * @return the chosen card
+     */
     public abstract Card playFirstCard(int cardChoice, boolean b);
 
 
