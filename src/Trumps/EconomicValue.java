@@ -9,12 +9,22 @@ public class EconomicValue extends Trump{
     private EconomicScale economicVal;
     private String economicValStr;
 
+    /**
+     * Constructs a trump object of category economic value and sets its value
+     *
+     * @param economicValStr the given value string
+     */
     public EconomicValue(String economicValStr){
         this.category = TrumpCategories.ECONOMIC_VALUE;
         this.economicValStr = economicValStr;
         setEconomicVal(economicValStr);
     }
 
+    /**
+     * Converts the given string into the equivalent enum value for comparison
+     *
+     * @param economicValStr the given value string
+     */
     private void setEconomicVal(String economicValStr) {
         economicValStr = economicValStr.replaceAll("\\s+", "");
         switch(economicValStr){
@@ -48,8 +58,13 @@ public class EconomicValue extends Trump{
         return this.economicVal;
     }
 
+    /**
+     * Returns true if this economic value is higher than the other, otherwise false
+     *
+     * @param otherEconomicValue the other economic value
+     * @return boolean of comparison
+     */
     public boolean isHigherThan(EconomicValue otherEconomicValue){
-        //TODO: pull othereconomic val directly.
         return this.economicVal.compareTo(otherEconomicValue.getEconomicVal()) > 0;
     }
 

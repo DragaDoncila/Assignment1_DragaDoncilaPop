@@ -1,6 +1,6 @@
 package Trumps;
 
-/**Interface defines attributes every trump category must have as well as methods for display and comparison.
+/**Interface defines attributes every trump category must have
  * Created by Draga on 13/09/2016.
  */
 public class Trump {

@@ -15,11 +15,21 @@ public class Cleavage extends Trump {
     private CleavageScale cleavage;
     private String cleavageStr;
 
+    /**
+     * Constructs a Trump object of category cleavage, and sets its value to the given string
+     *
+     * @param cleavage the cleavage value as string
+     */
     public Cleavage(String cleavage) {
         this.category = TrumpCategories.CLEAVAGE;
         setCleavage(cleavage);
     }
 
+    /**
+     * Converts the given cleavage value string into an enum for comparison
+     *
+     * @param cleavage the cleavage value as string
+     */
     private void setCleavage(String cleavage) {
         this.cleavageStr = cleavage;
         cleavage = cleavage.replaceAll("\\s+", "");
@@ -73,7 +83,7 @@ public class Cleavage extends Trump {
         }
     }
 
-    private CleavageScale getCleavageVal(){
+    private CleavageScale getCleavageVal() {
         return cleavage;
     }
 
@@ -86,7 +96,13 @@ public class Cleavage extends Trump {
         return this.toString();
     }
 
-    public boolean isHigherThan(Cleavage otherCleavage){
+    /**
+     * Returns true if the passed cleavage is lower than this value
+     *
+     * @param otherCleavage the other cleavage to compare
+     * @return boolean of comparison
+     */
+    public boolean isHigherThan(Cleavage otherCleavage) {
         return this.cleavage.compareTo(otherCleavage.getCleavageVal()) > 0;
     }
 }
