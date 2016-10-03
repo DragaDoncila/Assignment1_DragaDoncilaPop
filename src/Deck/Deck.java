@@ -5,7 +5,8 @@ import Cards.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**Class holds all fields and methods necessary to use this Deck to play a game of Mineral Supertrumps
+/**
+ * Class holds all fields and methods necessary to use this Deck to play a game of Mineral Supertrumps
  * Created by Draga on 6/09/2016.
  */
 public class Deck {
@@ -15,8 +16,8 @@ public class Deck {
     /**
      * Constructor initializes the cards array as empty variable array
      */
-    Deck(){
-        cards =  new ArrayList<>();
+    Deck() {
+        cards = new ArrayList<>();
     }
 
     public ArrayList<Card> getCards() {
@@ -28,7 +29,7 @@ public class Deck {
      *
      * @param newCard Card object to add to deck
      */
-    void addCard(Card newCard){
+    void addCard(Card newCard) {
         cards.add(newCard);
     }
 
@@ -41,12 +42,13 @@ public class Deck {
 
     /**
      * Removes the passed number of cards from the top of the deck and adds them to a hand
+     *
      * @param cards_to_a_hand the number of cards to deal
      * @return hand the array of dealt cards
      */
     public ArrayList<Card> dealHand(int cards_to_a_hand) {
         ArrayList<Card> hand = new ArrayList<>(cards_to_a_hand);
-        for (int i = 0; i < cards_to_a_hand; ++i){
+        for (int i = 0; i < cards_to_a_hand; ++i) {
             hand.add(cards.remove(i));
         }
         return hand;

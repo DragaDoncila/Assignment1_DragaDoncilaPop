@@ -5,7 +5,8 @@ import Cards.MineralCard;
 import Deck.Deck;
 import Deck.DeckBuilder;
 
-/**Class used to test instantiation and comparison methods of trump category classes
+/**
+ * Class used to test instantiation and comparison methods of trump category classes
  * Created by Draga on 12/09/2016.
  */
 public class ComparisonTests {
@@ -18,7 +19,7 @@ public class ComparisonTests {
         int i = 1;
         for (Card card :
                 myDeck.getCards()) {
-            if (card instanceof MineralCard){
+            if (card instanceof MineralCard) {
 //                Trumps.Hardness yourHardness = ((Cards.MineralCard) card).getHardness();
 //                System.out.println(yourHardness);
 //                System.out.println(i + ": " + ((Cards.MineralCard) card).getHardness().isHigherThan(myHardness));

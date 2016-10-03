@@ -5,12 +5,14 @@ import Trumps.Trump;
 
 import java.util.ArrayList;
 
-/**Abstract class outlays behaviours of Players for MineralSupertrumps games.
+/**
+ * Abstract class outlays behaviours of Players for MineralSupertrumps games.
  * Created by Draga on 17/09/2016.
  */
 public abstract class Player {
 
-    public enum PlayerTypes{USER, BOT}
+    public enum PlayerTypes {USER, BOT}
+
     int id;
 
     PlayerTypes type;
@@ -54,14 +56,14 @@ public abstract class Player {
     /**
      * Builds a variable array and adds cards to it if the card can play on the previously played card and trump category
      *
-     * @param lastPlayedCard the card played last in game
+     * @param lastPlayedCard  the card played last in game
      * @param currentCategory the current category in game
      */
     public void setPlayableCards(Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
         ArrayList<Card> playableCards = new ArrayList<>();
-        for (Card card:
+        for (Card card :
                 currentHand) {
-            if ((lastPlayedCard == null || currentCategory == null) || card.canPlayOn(lastPlayedCard, currentCategory)){
+            if ((lastPlayedCard == null || currentCategory == null) || card.canPlayOn(lastPlayedCard, currentCategory)) {
                 playableCards.add(card);
             }
 
@@ -83,7 +85,7 @@ public abstract class Player {
         int countComboCards = 0;
         for (Card card :
                 currentHand) {
-            if (card.isComboCard()){
+            if (card.isComboCard()) {
                 ++countComboCards;
             }
         }
@@ -93,7 +95,7 @@ public abstract class Player {
         return hasCombo;
     }
 
-    public void addCard(Card drawnCard){
+    public void addCard(Card drawnCard) {
         currentHand.add(drawnCard);
     }
 
@@ -108,10 +110,9 @@ public abstract class Player {
 
         for (int i = 0; i < currentHand.size(); i++) {
             Card currentCard = currentHand.get(i);
-            if (currentCard.getTitle().equals("Magnetite")){
+            if (currentCard.getTitle().equals("Magnetite")) {
                 magnetiteIndex = i;
-            }
-            else if (currentCard.getTitle().equals("The Geophysicist")){
+            } else if (currentCard.getTitle().equals("The Geophysicist")) {
                 geophysIndex = i;
             }
         }
@@ -145,7 +146,7 @@ public abstract class Player {
      * Checks whether it's the first turn of the game and returns an appropriate card
      *
      * @param cardChoice the chosen card
-     * @param b true if it's the first turn of the game
+     * @param b          true if it's the first turn of the game
      * @return the chosen card
      */
     public abstract Card playFirstCard(int cardChoice, boolean b);

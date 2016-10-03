@@ -51,10 +51,9 @@ public class PlayGame {
                         Player playerUp = superTrumpsGame.getCurrentPlayer();
                         ArrayList<Player> gameWinners = superTrumpsGame.getWinners();
                         //if the current player has already won they are skipped
-                        if (gameWinners.contains(playerUp)){
+                        if (gameWinners.contains(playerUp)) {
                             superTrumpsGame.skipPlayer();
-                        }
-                        else {
+                        } else {
                             //If a supertrump was played everybody is back in
                             checkForSuperTrump(superTrumpsGame);
                             isNewRound = checkForNewRound(superTrumpsGame);
@@ -155,7 +154,7 @@ public class PlayGame {
                             }
                             Player lastToPlay = superTrumpsGame.getLastUserToPlay();
                             //if somebody has won alert the user
-                            if (superTrumpsGame.hasWon(lastToPlay)){
+                            if (superTrumpsGame.hasWon(lastToPlay)) {
                                 System.out.println("That was the last card in " + superTrumpsGame.getLastUserToPlay().getName() + "'s hand!");
                                 System.out.println(lastToPlay.getName().toUpperCase() + " WON!\n");
                                 waitForUser();
@@ -208,18 +207,16 @@ public class PlayGame {
         while (!isValidNum) {
             try {
                 numPlayers = Integer.parseInt(userEntry);
-                if (!Game.isValidNumPlayers(numPlayers)){
+                if (!Game.isValidNumPlayers(numPlayers)) {
                     System.out.println("That is not a valid number of players.");
                     System.out.println("This is a game for " + Game.MIN_PLAYERS + " to " + Game.MAX_PLAYERS + " people.");
                     System.out.printf("Please enter the number of players today>>> ");
                     userEntry = input.nextLine();
-                }
-                else {
+                } else {
                     isValidNum = true;
                 }
 
-            }
-            catch (NumberFormatException error){
+            } catch (NumberFormatException error) {
                 System.out.println("That is not a valid number of players.");
                 System.out.println("This is a game for " + Game.MIN_PLAYERS + " to " + Game.MAX_PLAYERS + " people.");
                 System.out.printf("Please enter the number of players today>>> ");
@@ -311,7 +308,7 @@ public class PlayGame {
     private static int getUserCardChoice(Player playerUp) {
         System.out.println("Choose the number of your desired card: ");
         displayCardChoices(playerUp);
-        return getValidNumInRange(playerUp.getCurrentHand().size()-1);
+        return getValidNumInRange(playerUp.getCurrentHand().size() - 1);
     }
 
     /**
@@ -333,7 +330,7 @@ public class PlayGame {
      * Gets a valid card choice and trump category from the user and plays it
      *
      * @param superTrumpsGame the current game
-     * @param playerUp the current player
+     * @param playerUp        the current player
      */
     static void userPlayFirstTurn(Game superTrumpsGame, Player playerUp) {
         int cardChoice = getUserCardChoice(playerUp);
@@ -342,7 +339,7 @@ public class PlayGame {
             while (potentialCard.isTrump() && superTrumpsGame.isFirstTurn()) {
                 System.out.println("Cannot play Supertrump on first turn.\n");
                 cardChoice = getUserCardChoice(playerUp);
-                if (cardChoice != BACK_VALUE){
+                if (cardChoice != BACK_VALUE) {
                     potentialCard = playerUp.getCard(cardChoice);
                 }
                 //user wants to go back to main menu
@@ -353,7 +350,7 @@ public class PlayGame {
             Card chosenCard = playerUp.getCard(cardChoice);
             System.out.println("You chose " + chosenCard.getTitle() + "\n");
             String trumpChoice = getTrumpStr();
-            if (!trumpChoice.equals(BACK_STRING)){
+            if (!trumpChoice.equals(BACK_STRING)) {
                 chosenCard = playerUp.playCard(cardChoice);
                 superTrumpsGame.playFirstTurn(chosenCard, trumpChoice);
                 displayTurnResults(superTrumpsGame, playerUp);
@@ -367,7 +364,7 @@ public class PlayGame {
      * and play the turn
      *
      * @param superTrumpsGame the current game
-     * @param playerUp the current player
+     * @param playerUp        the current player
      */
     static void userPlayTurn(Game superTrumpsGame, Player playerUp) {
         int cardChoice = getUserCardChoice(playerUp);
@@ -408,7 +405,7 @@ public class PlayGame {
      * Displays the details of the last played card and its relevant trump value
      *
      * @param superTrumpsGame the current game
-     * @param playerUp the current player
+     * @param playerUp        the current player
      */
     static void displayTurnResults(Game superTrumpsGame, Player playerUp) {
         System.out.println("Turn Complete! Let's see what happened...");
@@ -421,6 +418,7 @@ public class PlayGame {
 
     /**
      * Checks whether it's a new round in the game and displays the relevant messages to the user
+     *
      * @param superTrumpsGame the current game
      * @return is new round
      */
@@ -434,8 +432,7 @@ public class PlayGame {
             }
             waitForUser();
             return true;
-        }
-        else {
+        } else {
 
             return false;
         }
@@ -473,7 +470,7 @@ public class PlayGame {
     /**
      * Gets a card choice from the user and, if valid, displays the details of that card.
      *
-     * @param playerUp the current player
+     * @param playerUp        the current player
      * @param superTrumpsGame the current game
      */
     private static void viewCardDetails(Player playerUp, Game superTrumpsGame) {

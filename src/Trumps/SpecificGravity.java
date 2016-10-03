@@ -1,14 +1,15 @@
 package Trumps;
 
-/**Class handles Trumps.Trump objects of the Specific Gravity category. Provides methods for parsing string to appropriate value type
+/**
+ * Class handles Trumps.Trump objects of the Specific Gravity category. Provides methods for parsing string to appropriate value type
  * for comparison, as well as methods for comparison and display.
  * Created by Draga on 14/09/2016.
  */
-public class SpecificGravity extends Trump{
+public class SpecificGravity extends Trump {
     private double gravityVal;
     private String gravityStr;
 
-    public SpecificGravity(String gravityStr){
+    public SpecificGravity(String gravityStr) {
         this.category = TrumpCategories.SPECIFIC_GRAVITY;
         setSpecificGravity(gravityStr);
     }
@@ -26,22 +27,22 @@ public class SpecificGravity extends Trump{
         for (int i = 0; i < specificGravity.length(); i++) {
             char currentChar = specificGravity.charAt(i);
             //if the string contains two values split at the '-'
-            if(currentChar == '-'){
+            if (currentChar == '-') {
                 //get the highest value (value to the right of the '-')
-                String highValStr = specificGravity.substring(i+1);
+                String highValStr = specificGravity.substring(i + 1);
                 gravity = Double.parseDouble(highValStr);
                 hasRange = true;
             }
         }
         //if it's just one single value
-        if (!hasRange){
+        if (!hasRange) {
             gravity = Double.parseDouble(specificGravity);
         }
         this.gravityVal = gravity;
         this.gravityStr = specificGravity;
     }
 
-    private double getGravity(){
+    private double getGravity() {
         return this.gravityVal;
     }
 
@@ -56,7 +57,7 @@ public class SpecificGravity extends Trump{
      * @param otherGravity the other value for comparison
      * @return boolean of comparison
      */
-    public boolean isHigherThan(SpecificGravity otherGravity){
+    public boolean isHigherThan(SpecificGravity otherGravity) {
         return this.getGravity() > otherGravity.getGravity();
     }
 

@@ -89,8 +89,9 @@ class Game {
 
     /**
      * Builds a Game object with the passed number of players and username. Initializes player array and relevant fields
+     *
      * @param numPlayers the number of players in the game
-     * @param userName the name of the human player
+     * @param userName   the name of the human player
      */
     Game(int numPlayers, String userName) {
         superTrumpsDeck = DeckBuilder.buildDeckFromPlist();
@@ -220,6 +221,7 @@ class Game {
 
     /**
      * Returns true if the card a user has chosen is a playable card, otherwise false
+     *
      * @param userChoice the card choice of the user
      * @return isPlayable true if the card can be played
      */
@@ -241,12 +243,12 @@ class Game {
      *
      * @return isOver result of comparison
      */
-    boolean isOver(){
+    boolean isOver() {
         int numWinners = 0;
         for (Player player :
                 players) {
             int currentHandSize = player.getCurrentHand().size();
-            if (currentHandSize == 0){
+            if (currentHandSize == 0) {
                 ++numWinners;
             }
         }
@@ -265,8 +267,7 @@ class Game {
         if (currentHandSize == 0) {
             winners.add(playerUp);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -330,7 +331,7 @@ class Game {
             player.setCurrentHand(newHand);
         }
 
-            //Used for hard dealing Combo to players
+        //Used for hard dealing Combo to players
         //ArrayList<Card> userHand = new ArrayList<>();
         //userHand.add(superTrumpsDeck.getMagnetite());
         //userHand.add(superTrumpsDeck.getGeophys());
@@ -347,7 +348,8 @@ class Game {
 
     /**
      * Takes a card choice and trump category choice and sets the appropriate attributes for the first turn
-     * @param cardChoice the card to play
+     *
+     * @param cardChoice     the card to play
      * @param trumpChoiceStr the trump category that will lead out the round
      */
     void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
@@ -379,11 +381,10 @@ class Game {
      */
     void playTurn() {
         //For AI functionality
-        if (currentPlayer.hasCombo()){
+        if (currentPlayer.hasCombo()) {
             this.lastPlayedCard = currentPlayer.playCombo();
             comboWasPlayed = true;
-        }
-        else {
+        } else {
             this.lastPlayedCard = currentPlayer.playCard(0);
             this.lastUserToPlay = currentPlayer;
             //if it's a trump card the trump category also needs changing
@@ -398,6 +399,7 @@ class Game {
 
     /**
      * Plays the current card on top of the last played card and, if it's a trump, also changes the trump category
+     *
      * @param chosenCard the card chosen by the player
      */
     void playTurn(Card chosenCard) {
@@ -414,8 +416,9 @@ class Game {
 
     /**
      * Takes a card and trump choice from the user and sets the appropriate attributes
+     *
      * @param chosenCard the card chosen by the player
-     * @param trumpStr the trump category chosen by the player
+     * @param trumpStr   the trump category chosen by the player
      */
     void playTurn(Card chosenCard, String trumpStr) {
         this.lastPlayedCard = chosenCard;
@@ -458,6 +461,7 @@ class Game {
 
     /**
      * Sets the current trump category based on the passed string
+     *
      * @param currentCategory category string
      */
     private void setCurrentCategory(String currentCategory) {

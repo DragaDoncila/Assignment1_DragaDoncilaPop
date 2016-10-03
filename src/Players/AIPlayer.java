@@ -4,22 +4,24 @@ import Cards.Card;
 
 import java.util.Random;
 
-/**Class handles behaviours for bots involved in MineralSupertrumpts games.
+/**
+ * Class handles behaviours for bots involved in MineralSupertrumpts games.
  * Created by Draga on 17/09/2016.
  */
-public class AIPlayer extends Player{
+public class AIPlayer extends Player {
 
     private final String[] trumpCats = {"hardness", "cleavage", "crustalabundance", "economicvalue", "specificgravity"};
 
     /**
      * Constructs a player object of the BOT type and gives it a name
+     *
      * @param id the player's id
      */
     public AIPlayer(int id) {
         this.type = PlayerTypes.BOT;
         this.id = id;
         String[] BOTNAMES = {"Terminator", "Geodude", "Rocker", "Colminer"};
-        this.name = BOTNAMES[id-1];
+        this.name = BOTNAMES[id - 1];
         this.isOut = false;
 
     }
@@ -50,7 +52,7 @@ public class AIPlayer extends Player{
         int handIndex = -1;
         for (int i = 0; i < currentHand.size(); i++) {
             Card currentCard = currentHand.get(i);
-            if (currentCard.getTitle().equals(chosenCard.getTitle())){
+            if (currentCard.getTitle().equals(chosenCard.getTitle())) {
                 handIndex = i;
             }
         }
@@ -72,7 +74,7 @@ public class AIPlayer extends Player{
     /**
      * Chooses a card based on it being either a new round or the start of the game and removes it from hand
      *
-     * @param cardChoice the chosen card
+     * @param cardChoice    the chosen card
      * @param isStartofGame true when it's the very first turn of a game
      * @return the card choice
      */
@@ -80,14 +82,13 @@ public class AIPlayer extends Player{
     public Card playFirstCard(int cardChoice, boolean isStartofGame) {
         cardChoice = new Random().nextInt(currentHand.size());
         Card potentialCard = currentHand.get(cardChoice);
-        if (isStartofGame){
-            while (potentialCard.isTrump()){
+        if (isStartofGame) {
+            while (potentialCard.isTrump()) {
                 cardChoice = new Random().nextInt(currentHand.size());
                 potentialCard = currentHand.get(cardChoice);
             }
             return currentHand.remove(cardChoice);
-        }
-        else {
+        } else {
             return currentHand.remove(cardChoice);
         }
     }

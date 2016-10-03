@@ -1,10 +1,11 @@
 package Trumps;
 
-/**Class handles enumerating, display and comparison of economic value trump category.
+/**
+ * Class handles enumerating, display and comparison of economic value trump category.
  * Created by Draga on 14/09/2016.
  */
-public class EconomicValue extends Trump{
-    private enum EconomicScale{TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
+public class EconomicValue extends Trump {
+    private enum EconomicScale {TRIVIAL, LOW, MODERATE, HIGH, VERY_HIGH, IM_RICH}
 
     private EconomicScale economicVal;
     private String economicValStr;
@@ -14,7 +15,7 @@ public class EconomicValue extends Trump{
      *
      * @param economicValStr the given value string
      */
-    public EconomicValue(String economicValStr){
+    public EconomicValue(String economicValStr) {
         this.category = TrumpCategories.ECONOMIC_VALUE;
         this.economicValStr = economicValStr;
         setEconomicVal(economicValStr);
@@ -27,7 +28,7 @@ public class EconomicValue extends Trump{
      */
     private void setEconomicVal(String economicValStr) {
         economicValStr = economicValStr.replaceAll("\\s+", "");
-        switch(economicValStr){
+        switch (economicValStr) {
             case "trivial":
                 this.economicVal = EconomicScale.TRIVIAL;
                 break;
@@ -46,15 +47,15 @@ public class EconomicValue extends Trump{
             case "I'mrich!":
                 this.economicVal = EconomicScale.IM_RICH;
                 break;
-            }
         }
+    }
 
     @Override
     public String toString() {
         return economicValStr;
     }
 
-    private EconomicScale getEconomicVal(){
+    private EconomicScale getEconomicVal() {
         return this.economicVal;
     }
 
@@ -64,7 +65,7 @@ public class EconomicValue extends Trump{
      * @param otherEconomicValue the other economic value
      * @return boolean of comparison
      */
-    public boolean isHigherThan(EconomicValue otherEconomicValue){
+    public boolean isHigherThan(EconomicValue otherEconomicValue) {
         return this.economicVal.compareTo(otherEconomicValue.getEconomicVal()) > 0;
     }
 

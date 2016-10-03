@@ -66,6 +66,7 @@ public class SupertrumpCard extends Card {
 
     /**
      * Returns true if the title this card is The Geologist, otherwise false
+     *
      * @return boolean of comparison
      */
     @Override

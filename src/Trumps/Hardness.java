@@ -1,10 +1,11 @@
 package Trumps;
 
-/**Class handles Trumps.Trump objects of the Trumps.Hardness category. Provides methods for parsing string to appropriate value type
+/**
+ * Class handles Trumps.Trump objects of the Trumps.Hardness category. Provides methods for parsing string to appropriate value type
  * for comparison, as well as methods for comparison and display.
  * Created by Draga on 13/09/2016.
  */
-public class Hardness extends Trump{
+public class Hardness extends Trump {
 
     private double hardnessVal;
     private String hardnessStr;
@@ -14,7 +15,7 @@ public class Hardness extends Trump{
      *
      * @param hardnessStr the given hardness value
      */
-    public Hardness(String hardnessStr){
+    public Hardness(String hardnessStr) {
         this.category = TrumpCategories.HARDNESS;
         setHardness(hardnessStr);
     }
@@ -32,15 +33,15 @@ public class Hardness extends Trump{
         for (int i = 0; i < hardnessStr.length(); i++) {
             char currentChar = hardnessStr.charAt(i);
             //if the string contains two values split at the '-'
-            if(currentChar == '-'){
+            if (currentChar == '-') {
                 //get the highest value (value to the right of the '-')
-                String highValStr = hardnessStr.substring(i+1);
+                String highValStr = hardnessStr.substring(i + 1);
                 hardness = Double.parseDouble(highValStr);
                 hasRange = true;
             }
         }
         //if it doesn't have a range of values
-        if (!hasRange){
+        if (!hasRange) {
             hardness = Double.parseDouble(hardnessStr);
         }
         this.hardnessStr = hardnessStr;

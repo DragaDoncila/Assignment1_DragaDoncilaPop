@@ -1,16 +1,18 @@
 package Trumps;
 
-/**Class handles enumeration, comparison and display of Crustal Abundance trump category.
+/**
+ * Class handles enumeration, comparison and display of Crustal Abundance trump category.
  * Created by Draga on 14/09/2016.
  */
-public class CrustalAbundance extends Trump{
-    private enum AbundanceScale{ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
+public class CrustalAbundance extends Trump {
+    private enum AbundanceScale {ULTRATRACE, TRACE, LOW, MODERATE, HIGH, VERY_HIGH}
 
     private AbundanceScale abundanceVal;
     private String abundanceStr;
 
     /**
      * Constructs a trump object of category crustal abundance and sets its value
+     *
      * @param crustalAbundance the given value
      */
     public CrustalAbundance(String crustalAbundance) {
@@ -26,7 +28,7 @@ public class CrustalAbundance extends Trump{
     private void setCrustalAbundance(String crustalAbundance) {
         this.abundanceStr = crustalAbundance;
         crustalAbundance = crustalAbundance.replaceAll("\\s+", "");
-        switch (crustalAbundance){
+        switch (crustalAbundance) {
             case "ultratrace":
                 this.abundanceVal = AbundanceScale.ULTRATRACE;
                 break;
@@ -59,6 +61,7 @@ public class CrustalAbundance extends Trump{
 
     /**
      * Returns true if this abundance value is higher than the other, otherwise false
+     *
      * @param otherAbundance the other abundance value
      * @return boolean of comparison
      */
