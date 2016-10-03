@@ -1,90 +1,90 @@
 package Cards;
 
 import java.util.ArrayList;
+
 import Trumps.Trump;
 
-/**Class designed to handle generic card objects.
+/**
+ * Abstract class holds basic attributes and methods for Mineral Supertrumps cards. It is extended by the two types of
+ * cards available- MineralCard and SupertrumpCard.
  * Created by Draga on 6/09/2016.
  */
 public abstract class Card {
 
-    public abstract boolean isGeologist();
-
-    public boolean isComboCard() {
-        return (this.title.equals("The Geophysicist") || this.title.equals("Magnetite"));
-    }
-
     private enum CardTypes {PLAY, TRUMP}
-    private String filename;
-    private String imagename;
+
     private CardTypes cardType;
     private String title;
 
-    public CardTypes getCardType() {
-        return cardType;
-    }
-
-    Card(ArrayList<String> attributes){
-        this.filename = attributes.get(0);
-        this.imagename = attributes.get(1);
+    /**
+     * Constructor takes an array of attributes and parses this array into the relevant fields
+     *
+     * @param attributes a variable array of String attributes
+     */
+    Card(ArrayList<String> attributes) {
         String cardTypeStr = attributes.get(2);
-        if (cardTypeStr.equals("play")){
+        if (cardTypeStr.equals("play")) {
             this.cardType = CardTypes.PLAY;
-        }
-        else{
+        } else {
             this.cardType = CardTypes.TRUMP;
         }
         this.title = attributes.get(3);
 
     }
 
-    private String getFilename() {
-        return filename;
-    }
-
-    private void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getImagename() {
-        return imagename;
-    }
-
-    public void setImagename(String imagename) {
-        this.imagename = imagename;
-    }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public abstract String getInfo();
+
+    /**
+     * Returns the value of the passed trump category
+     *
+     * @param category the trump category in question
+     * @return value the value of the specified category
+     */
+    public abstract String getTrumpVal(Trump.TrumpCategories category);
+
+    /**
+     * Returns true if the card is a trump card, otherwise false
+     *
+     * @return bool the result of comparison
+     */
+    public boolean isTrump() {
+        return this.cardType == CardTypes.TRUMP;
     }
 
-    public boolean isTrump(){
-        if (this.cardType == CardTypes.TRUMP){
-            return true;
-        }
-        else return false;
+    /**
+     * Returns true if the card is The Geophysicist or Magnetite, otherwise false
+     *
+     * @return bool the result of the comparison
+     */
+    public boolean isComboCard() {
+        return (this.title.equals("The Geophysicist") || this.title.equals("Magnetite"));
     }
 
-    public boolean isMineral(){
-        if (this.cardType == CardTypes.PLAY){
-            return true;
-        }
-        else return false;
-    }
+    /**
+     * Returns true if the card is The Geologist, otherwise false;
+     *
+     * @return bool the result of the comparison
+     */
+    public abstract boolean isGeologist();
+
+    /**
+     * Returns the current card's ability to be played on top of the previously played card and category.
+     *
+     * @param lastPlayedCard  the card last played in the game
+     * @param currentCategory the category currently in play
+     * @return bool true if the card can play, otherwise false
+     */
+    public abstract boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory);
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%-30s", "Title: ") + title + "\n------------------------------------------\n";
     }
 
-    public abstract boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory);
-
-    public abstract String getInfo();
-
-    public abstract String getTrumpVal(Trump.TrumpCategories category);
 
 }

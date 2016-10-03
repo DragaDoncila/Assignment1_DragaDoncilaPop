@@ -1,31 +1,47 @@
 package Cards;
 
 import java.util.ArrayList;
+
 import Trumps.Trump;
 
-/**Class extends Cards.MineralCard and handles supertrump objects.
+/**
+ * Class extends Card and implements all fields and methods necessary for a Mineral Supertrumps Supertrump card
  * Created by Draga on 6/09/2016.
  */
-public class SupertrumpCard extends Card{
+public class SupertrumpCard extends Card {
 
-    String cardEffect;
-    String cardInfo;
+    private String cardEffect;
+    private String cardInfo;
 
-
-    @Override
-    public boolean isGeologist() {
-        return this.getTitle().equals("The Geologist");
-    }
-
-    public SupertrumpCard(ArrayList<String> attributes){
+    /**
+     * Constructor takes an array of attributes and parses this array into the relevant fields
+     *
+     * @param attributes variable string array
+     */
+    public SupertrumpCard(ArrayList<String> attributes) {
         super(attributes);
         setCardEffect(attributes.get(4));
     }
 
-    public void setCardEffect(String cardEffect) {
+    @Override
+    public String getTrumpVal(Trump.TrumpCategories category) {
+        return null;
+    }
+
+    @Override
+    public String getInfo() {
+        return cardInfo;
+    }
+
+    /**
+     * Sets the effect the card will have when played based on the info string
+     *
+     * @param cardEffect the information string
+     */
+    private void setCardEffect(String cardEffect) {
         cardEffect = cardEffect.replaceAll("\\s+", "").toLowerCase();
         this.cardInfo = cardEffect;
-        switch (cardEffect){
+        switch (cardEffect) {
             case "cleavage":
                 this.cardEffect = "Set to Cleavage";
                 break;
@@ -48,23 +64,31 @@ public class SupertrumpCard extends Card{
         }
     }
 
+    /**
+     * Returns true if the title this card is The Geologist, otherwise false
+     * @return boolean of comparison
+     */
     @Override
-    public boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory){
+    public boolean isGeologist() {
+        return this.getTitle().equals("The Geologist");
+    }
+
+    /**
+     * Returns true as Supertrump cards can play on anything
+     *
+     * @param lastPlayedCard  the card last played in the game
+     * @param currentCategory the category currently in play
+     * @return true
+     */
+    @Override
+    public boolean canPlayOn(Card lastPlayedCard, Trump.TrumpCategories currentCategory) {
         return true;
     }
 
-    @Override
-    public String getInfo() {
-        return cardInfo;
-    }
-
-    public String toString(){
+    public String toString() {
         return super.toString() + String.format("%-30s", "Card Effect: ") + cardEffect + "\n------------------------------------------\n";
 
     }
 
-    @Override
-    public String getTrumpVal(Trump.TrumpCategories category) {
-        return null;
-    }
+
 }
