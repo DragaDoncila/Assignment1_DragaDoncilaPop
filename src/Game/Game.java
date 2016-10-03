@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Class handles the attributes and associated methods required for the playing of a Mineral Supertrumps game.
+ * Class handles the attributes and associated methods & logic required for the playing of a Mineral Supertrumps game.
  * Created by Draga on 6/09/2016.
  */
-public class Game {
+class Game {
     final static String INSTRUCTIONS1 =
             "1. This is a game for 3-5 people. The game begins with 8 cards being randomly \n" +
                     "dealt to each player by a randomly assigned dealer.\n";
@@ -68,51 +68,131 @@ public class Game {
     final static String INSTRUCTIONS12 =
             "Economic value: is ranked from lowest to highest as: \n" +
                     "[trivial - low - moderate - high - very high - I’m rich!]\n";
-    public final static int MIN_PLAYERS = 3;
-    public final static int MAX_PLAYERS = 5;
+    final static int MIN_PLAYERS = 3;
+    final static int MAX_PLAYERS = 5;
 
-    private final int CARDS_TO_A_HAND = 8;
     private int numPlayers;
     private Player[] players;
     private Player dealer;
-    private HumanPlayer user;
     private Player currentPlayer;
+
     private Deck superTrumpsDeck;
     private Trump.TrumpCategories currentCategory;
     private Card lastPlayedCard;
-    private int countRounds;
+
     private int numPasses;
-    private boolean isNewRound;
-    private boolean hasUserPlayed;
     private String roundWinner;
     private ArrayList<Player> winners;
-
-    public Player getLastUserToPlay() {
-        return lastUserToPlay;
-    }
 
     private Player lastUserToPlay;
     private boolean comboWasPlayed;
 
+    /**
+     * Builds a Game object with the passed number of players and username. Initializes player array and relevant fields
+     * @param numPlayers the number of players in the game
+     * @param userName the name of the human player
+     */
+    Game(int numPlayers, String userName) {
+        superTrumpsDeck = DeckBuilder.buildDeckFromPlist();
+        this.numPlayers = numPlayers;
 
-//    void incrementCountRounds() {
-//        if (this.numPasses == this.numPlayers - 1){
-//            ++this.countRounds;
-//            resetNumPasses();
-//        }
-//    }
+        players = new Player[numPlayers];
+        HumanPlayer user = new HumanPlayer(0, userName);
+        players[0] = user;
+        for (int i = 1; i < players.length; ++i) {
+            players[i] = new AIPlayer(i);
+        }
 
-    public int getNumPasses() {
-        return numPasses;
+        winners = new ArrayList<>();
+        numPasses = 0;
+
     }
 
-    public void incrementNumPasses() {
+    Player[] getPlayers() {
+        return players;
+    }
+
+    Player getLastUserToPlay() {
+        return lastUserToPlay;
+    }
+
+    Card getLastPlayedCard() {
+        return lastPlayedCard;
+    }
+
+    Trump.TrumpCategories getCurrentCategory() {
+        return currentCategory;
+    }
+
+    Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    String getRoundWinner() {
+        return roundWinner;
+    }
+
+    ArrayList<Player> getWinners() {
+        return winners;
+    }
+
+    private void incrementNumPasses() {
         ++this.numPasses;
     }
 
-    public boolean isNewRound() {
+    /**
+     * Returns which player is currrently up for a turn
+     *
+     * @return player who is up next
+     */
+    Player getNextPlayer() {
+        int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
+        //if the id of the current player is last in the list
+        if (currentPlayerID == players.length - 1) {
+            //start at the beginning again
+            currentPlayer = players[0];
+        }
+        //otherwise, next player is next index in list
+        else {
+            currentPlayer = players[currentPlayerID + 1];
+        }
+        return currentPlayer;
+    }
+
+    boolean userIsUp() {
+        return currentPlayer.getType() == Player.PlayerTypes.USER;
+    }
+
+    boolean hasRoundWinner() {
+        return roundWinner != null;
+    }
+
+    boolean comboWasPlayed() {
+        return comboWasPlayed;
+    }
+
+    static boolean isValidNumPlayers(int numPlayers) {
+        return (numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS);
+    }
+
+    /**
+     * Returns true if no card has been played (and therefore it's the beginning of the game), otherwise false.
+     *
+     * @return boolean of comparison
+     */
+    boolean isFirstTurn() {
+        return this.lastPlayedCard == null;
+    }
+
+    /**
+     * Returns true if all but one person currently playing have skipped or the combo was played, otherwise false
+     *
+     * @return isNewRound boolean of comparison
+     */
+    boolean isNewRound() {
+        boolean isNewRound;
+        //if the number of people who have passed (excepting winners) is one less than the number of players
         if (this.numPasses == (this.numPlayers - 1 - winners.size()) || comboWasPlayed) {
-            ++this.countRounds;
             isNewRound = true;
             comboWasPlayed = false;
         } else {
@@ -121,82 +201,16 @@ public class Game {
         return isNewRound;
     }
 
-
-    public boolean isFirstTurn() {
-        if (this.lastPlayedCard == null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public Game(int numPlayers, String userName) {
-        superTrumpsDeck = DeckBuilder.buildDeck();
-        this.numPlayers = numPlayers;
-        players = new Player[numPlayers];
-        this.user = new HumanPlayer(0, userName);
-        players[0] = this.user;
-        for (int i = 1; i < players.length; ++i) {
-            players[i] = new AIPlayer(i);
-        }
-        winners = new ArrayList<>();
-        countRounds = 0;
-        numPasses = 0;
-
-    }
-
-    String selectDealer() {
-        Random rand = new Random();
-        int dealerID = rand.nextInt(numPlayers);
-        this.dealer = players[dealerID];
-        this.currentPlayer = dealer;
-        return dealer.getName();
-    }
-
-    void dealInitialHands() {
-        superTrumpsDeck.shuffle();
-        ArrayList<Card> newHand;
-        for (Player player :
-                players) {
-            newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
-            player.setCurrentHand(newHand);
-        }
-//        ArrayList<Card> userHand = new ArrayList<>();
-//        userHand.add(superTrumpsDeck.getMagnetite());
-//        userHand.add(superTrumpsDeck.getGeophys());
-//        userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
-//        players[0].setCurrentHand(userHand);
-//
-//        ArrayList<Card> newHand;
-//        for (int i = 1; i < players.length; i++) {
-//            newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
-//            players[i].setCurrentHand(newHand);
-//        }
-
-    }
-
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    Player getNextPlayer() {
-        int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
-//        if the id of the current player is last in the list
-        if (currentPlayerID == players.length - 1) {
-//            start at the beginning again
-            currentPlayer = players[0];
-        }
-//        otherwise, next player is the next in the list
-        else {
-            currentPlayer = players[currentPlayerID + 1];
-        }
-        return currentPlayer;
-    }
-
+    /**
+     * Returns true if any player has won the game, otherwise false
+     *
+     * @return isWon boolean of comparison
+     */
     boolean isWon() {
         boolean isWon = false;
         for (Player player :
                 players) {
+            //if any player has no cards left
             if (player.getCurrentHand().size() == 0) {
                 isWon = true;
             }
@@ -204,11 +218,17 @@ public class Game {
         return isWon;
     }
 
+    /**
+     * Returns true if the card a user has chosen is a playable card, otherwise false
+     * @param userChoice the card choice of the user
+     * @return isPlayable true if the card can be played
+     */
     boolean isPlayable(Card userChoice) {
         boolean isPlayable = false;
         String userCardTitle = userChoice.getTitle();
         for (Card card :
                 currentPlayer.getPlayableCards()) {
+            //if the card is also in playable cards
             if (card.getTitle().equals(userCardTitle)) {
                 isPlayable = true;
             }
@@ -216,38 +236,136 @@ public class Game {
         return isPlayable;
     }
 
-    private int getCountRounds() {
-        return countRounds;
+    /**
+     * Returns true if all but one player in the game have no cards left, otherwise false
+     *
+     * @return isOver result of comparison
+     */
+    boolean isOver(){
+        int numWinners = 0;
+        for (Player player :
+                players) {
+            int currentHandSize = player.getCurrentHand().size();
+            if (currentHandSize == 0){
+                ++numWinners;
+            }
+        }
+        return numWinners == numPlayers - 1;
+
     }
 
-    public Card getLastPlayedCard() {
-        return lastPlayedCard;
+    /**
+     * Returns true if the passed player has won the game and was added to winners, otherwise false
+     *
+     * @param playerUp the player whose hand will be checked
+     * @return boolean of comparison
+     */
+    boolean hasWon(Player playerUp) {
+        int currentHandSize = playerUp.getCurrentHand().size();
+        if (currentHandSize == 0) {
+            winners.add(playerUp);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-//    public void setLastPlayedCard(int cardIndex) {
-//        this.lastPlayedCard = currentPlayer.getCurrentHand().get(cardIndex);
-//    }
-
-
-    boolean userIsUp() {
-        return currentPlayer.getType() == Player.PlayerTypes.USER;
+    /**
+     * Completely skips player's turn- used when that user is out of the round
+     */
+    void skipPlayer() {
+        currentPlayer = getNextPlayer();
     }
 
-    public String selectDealer(Player allPlayer) {
-        this.dealer = allPlayer;
-        return allPlayer.getName();
+    void resetNumPasses() {
+        this.numPasses = 0;
     }
 
-    public void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
-//Used in case of mineral card
+    /**
+     * Allows all previously passed players back in the game
+     */
+    void setAllPlayersIn() {
+        for (Player player :
+                players) {
+            player.setIsOut(false);
+        }
+    }
+
+    /**
+     * Selects a random dealer from the number of players and also assigns them to current player
+     *
+     * @return string the name of the dealer
+     */
+    String selectDealer() {
+        Random rand = new Random();
+        int dealerID = rand.nextInt(numPlayers);
+        this.dealer = players[dealerID];
+
+        this.currentPlayer = dealer;
+        return dealer.getName();
+    }
+
+    /**
+     * Sets the dealer for the game to the passed player.
+     *
+     * @param player the player who will deal
+     * @return the player's name
+     */
+    String selectDealer(Player player) {
+        this.dealer = player;
+        return player.getName();
+    }
+
+    /**
+     * Deals cards from the deck to each player based on the number of cards required in the hand
+     */
+    void dealInitialHands() {
+        superTrumpsDeck.shuffle();
+        ArrayList<Card> newHand;
+        for (Player player :
+                players) {
+            int CARDS_TO_A_HAND = 8;
+            newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
+            player.setCurrentHand(newHand);
+        }
+
+            //Used for hard dealing Combo to players
+        //ArrayList<Card> userHand = new ArrayList<>();
+        //userHand.add(superTrumpsDeck.getMagnetite());
+        //userHand.add(superTrumpsDeck.getGeophys());
+        //userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
+        //players[0].setCurrentHand(userHand);
+        //
+        //ArrayList<Card> newHand;
+        //for (int i = 1; i < players.length; i++) {
+        //  newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
+        //  players[i].setCurrentHand(newHand);
+        //}
+
+    }
+
+    /**
+     * Takes a card choice and trump category choice and sets the appropriate attributes for the first turn
+     * @param cardChoice the card to play
+     * @param trumpChoiceStr the trump category that will lead out the round
+     */
+    void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
+        //Used in case of mineral card or the Geologist
         this.lastPlayedCard = cardChoice;
         this.lastUserToPlay = currentPlayer;
         setCurrentCategory(trumpChoiceStr);
         currentPlayer = getNextPlayer();
     }
 
-    public void playFirstTurn(boolean isStartOfGame) {
-//        AI Play First Turn
+    /**
+     * Takes a boolean to decide whether it's the first turn of the game or just a new round, gets the relevant
+     * attributes from the player and sets them
+     *
+     * @param isStartOfGame true when it's the very first turn of the game
+     */
+    void playFirstTurn(boolean isStartOfGame) {
+        //AI Play First Turn
         this.lastPlayedCard = currentPlayer.playFirstCard(0, isStartOfGame);
         this.lastUserToPlay = currentPlayer;
         setCurrentCategory(currentPlayer.chooseCategory());
@@ -255,11 +373,94 @@ public class Game {
 
     }
 
-    public Trump.TrumpCategories getCurrentCategory() {
-        return currentCategory;
+    /**
+     * Gets a playable card choice (and potentially a trump category) from the current player and
+     * sets the appropriate attributes
+     */
+    void playTurn() {
+        //For AI functionality
+        if (currentPlayer.hasCombo()){
+            this.lastPlayedCard = currentPlayer.playCombo();
+            comboWasPlayed = true;
+        }
+        else {
+            this.lastPlayedCard = currentPlayer.playCard(0);
+            this.lastUserToPlay = currentPlayer;
+            //if it's a trump card the trump category also needs changing
+            if (lastPlayedCard.isGeologist()) {
+                setCurrentCategory(currentPlayer.chooseCategory());
+            } else if (lastPlayedCard.isTrump()) {
+                setCurrentCategory(lastPlayedCard.getInfo());
+            }
+            currentPlayer = getNextPlayer();
+        }
     }
 
-    public void setCurrentCategory(String currentCategory) {
+    /**
+     * Plays the current card on top of the last played card and, if it's a trump, also changes the trump category
+     * @param chosenCard the card chosen by the player
+     */
+    void playTurn(Card chosenCard) {
+        //    For all cards which don't require a trump category from user
+        this.lastPlayedCard = chosenCard;
+        this.lastUserToPlay = currentPlayer;
+        //If Supertrump card was chosen, category is reset
+        if (chosenCard.isTrump()) {
+            setCurrentCategory(lastPlayedCard.getInfo());
+        }
+        currentPlayer = getNextPlayer();
+
+    }
+
+    /**
+     * Takes a card and trump choice from the user and sets the appropriate attributes
+     * @param chosenCard the card chosen by the player
+     * @param trumpStr the trump category chosen by the player
+     */
+    void playTurn(Card chosenCard, String trumpStr) {
+        this.lastPlayedCard = chosenCard;
+        this.lastUserToPlay = currentPlayer;
+        setCurrentCategory(trumpStr);
+        currentPlayer = getNextPlayer();
+    }
+
+    /**
+     * Sets the appropriate attributes for a player's choosing to pass and checks for a round winner
+     */
+    void pass() {
+        //draw a card if the deck is not empty
+        int numCardsLeft = superTrumpsDeck.getCards().size();
+        if (numCardsLeft != 0) {
+            Card drawnCard = superTrumpsDeck.drawCard();
+            currentPlayer.addCard(drawnCard);
+        }
+        //set the player out of the current round
+        currentPlayer.setIsOut(true);
+        incrementNumPasses();
+        currentPlayer = getNextPlayer();
+        //if passing resulted in a new round, get that player's name and make them the current player
+        if (isNewRound()) {
+            roundWinner = lastUserToPlay.getName();
+            currentPlayer = lastUserToPlay;
+        }
+    }
+
+    /**
+     * Plays the combo from the player's hand and sets the attribute to start a new round
+     *
+     * @return the player who played the combo
+     */
+    Player playCombo() {
+        this.lastPlayedCard = currentPlayer.playCombo();
+        comboWasPlayed = true;
+        return currentPlayer;
+    }
+
+    /**
+     * Sets the current trump category based on the passed string
+     * @param currentCategory category string
+     */
+    private void setCurrentCategory(String currentCategory) {
         switch (currentCategory) {
             case "cleavage":
                 this.currentCategory = Trump.TrumpCategories.CLEAVAGE;
@@ -279,139 +480,4 @@ public class Game {
         }
     }
 
-    public void playTurn() {
-//        For AI only
-        if (currentPlayer.hasCombo()){
-            this.lastPlayedCard = currentPlayer.playCombo();
-            comboWasPlayed = true;
-        }
-        else {
-            this.lastPlayedCard = currentPlayer.playCard(0);
-            this.lastUserToPlay = currentPlayer;
-            if (lastPlayedCard.isGeologist()) {
-                setCurrentCategory(currentPlayer.chooseCategory());
-            } else if (lastPlayedCard.isTrump()) {
-                setCurrentCategory(lastPlayedCard.getInfo());
-            }
-            currentPlayer = getNextPlayer();
-        }
-    }
-
-    public void playTurn(Card chosenCard) {
-        //    For all but Geologist cards.
-        this.lastPlayedCard = chosenCard;
-        this.lastUserToPlay = currentPlayer;
-        //If Supertrump card was chosen, category is reset
-        if (chosenCard.isTrump()) {
-            setCurrentCategory(lastPlayedCard.getInfo());
-        }
-        currentPlayer = getNextPlayer();
-
-    }
-
-    public void playTurn(Card chosenCard, String trumpStr) {
-//        For Geologist playing
-        this.lastPlayedCard = chosenCard;
-        this.lastUserToPlay = currentPlayer;
-        setCurrentCategory(trumpStr);
-        currentPlayer = getNextPlayer();
-    }
-
-    public boolean playableCardChosen(Card chosenCard) {
-        return chosenCard.canPlayOn(lastPlayedCard, currentCategory);
-    }
-
-
-    public void pass() {
-        int numCardsLeft = superTrumpsDeck.getCards().size();
-        if (numCardsLeft != 0) {
-            Card drawnCard = superTrumpsDeck.drawCard();
-            currentPlayer.addCard(drawnCard);
-        }
-        currentPlayer.setIsOut(true);
-        incrementNumPasses();
-        currentPlayer = getNextPlayer();
-        if (isNewRound()) {
-            roundWinner = lastUserToPlay.getName();
-            currentPlayer = lastUserToPlay;
-        }
-    }
-
-    public void setAllPlayersIn() {
-        for (Player player :
-                players) {
-            player.setIsOut(false);
-        }
-    }
-
-    public void resetNumPasses() {
-        this.numPasses = 0;
-    }
-
-    public Player playCombo() {
-        this.lastPlayedCard = currentPlayer.playCombo();
-        comboWasPlayed = true;
-        ++this.countRounds;
-        return currentPlayer;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public boolean hasUserPlayed() {
-        return this.hasUserPlayed;
-    }
-
-    public boolean hasRoundWinner() {
-        return roundWinner != null;
-    }
-
-    public void resetUserPlayed() {
-        this.hasUserPlayed = false;
-    }
-
-    public static boolean isValidNumPlayers(int numPlayers) {
-        return (numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS);
-    }
-
-    public String getRoundWinner() {
-        return roundWinner;
-    }
-
-    public void skipPlayer() {
-        currentPlayer = getNextPlayer();
-    }
-
-    public boolean comboWasPlayed() {
-        return comboWasPlayed;
-    }
-
-    public boolean isOver(){
-        int numWinners = 0;
-        for (Player player :
-                players) {
-            int currentHandSize = player.getCurrentHand().size();
-            if (currentHandSize == 0){
-                ++numWinners;
-            }
-        }
-        return numWinners == numPlayers - 1;
-
-    }
-
-    public ArrayList<Player> getWinners() {
-        return winners;
-    }
-
-    public boolean hasWon(Player playerUp) {
-        int currentHandSize = playerUp.getCurrentHand().size();
-        if (currentHandSize == 0) {
-            winners.add(playerUp);
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 }

@@ -10,7 +10,7 @@ import Deck.DeckBuilder;
  */
 public class ComparisonTests {
     public static void main(String[] args) {
-        Deck myDeck = DeckBuilder.buildDeck();
+        Deck myDeck = DeckBuilder.buildDeckFromPlist();
 //        Trumps.Hardness myHardness = new Trumps.Hardness("6.5-5");
 //        Trumps.SpecificGravity myGravity = new Trumps.SpecificGravity("3-4");
 //        Trumps.CrustalAbundance myCrustal = new Trumps.CrustalAbundance("low");

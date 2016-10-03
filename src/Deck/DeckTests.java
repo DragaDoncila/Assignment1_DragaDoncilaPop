@@ -7,7 +7,7 @@ import Cards.Card;
  */
 public class DeckTests {
     public static void main(String[] args) {
-        Deck myDeck = DeckBuilder.buildDeck();
+        Deck myDeck = DeckBuilder.buildDeckFromPlist();
         for (Card card :
                 myDeck.getCards()) {
             if (card.isTrump()){
