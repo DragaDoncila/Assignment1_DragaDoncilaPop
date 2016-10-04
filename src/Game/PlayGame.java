@@ -157,6 +157,8 @@ public class PlayGame {
                             if (superTrumpsGame.hasWon(lastToPlay)) {
                                 System.out.println("That was the last card in " + superTrumpsGame.getLastUserToPlay().getName() + "'s hand!");
                                 System.out.println(lastToPlay.getName().toUpperCase() + " WON!\n");
+                                superTrumpsGame.setAllPlayersIn();
+                                superTrumpsGame.resetNumPasses();
                                 waitForUser();
                             }
                         }
