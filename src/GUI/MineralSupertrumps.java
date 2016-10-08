@@ -21,6 +21,23 @@ public class MineralSupertrumps {
     private JButton instructionsButton;
     private JPanel instructionsCard;
     private JPanel instructions1;
+    private JPanel rulePanel;
+    private JPanel titlePanel;
+    private JPanel imagePanel;
+    private JPanel navPanel;
+    private JLabel ruleLabel;
+    private JLabel cardLabel;
+    private JButton backButton;
+    private JButton nextButton;
+    private JPanel instructions2;
+    private JPanel titlePanel1;
+    private JLabel rule2;
+    private JPanel rulePanel2;
+    private JPanel imagePanel2;
+    private JPanel navPanel2;
+    private JLabel supertrump;
+    private JButton back1;
+    private JButton next1;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
@@ -39,11 +56,18 @@ public class MineralSupertrumps {
                 myLayout.show(parentContainer, "instructionsCard");
             }
         });
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout instructionsLayout = (CardLayout) (instructionsCard.getLayout());
+                instructionsLayout.next(instructionsCard);
+            }
+        });
     }
 
     public static void main(String[] args) {
         JFrame newFrame = new JFrame("Mineral Supertrumps");
-        newFrame.setBounds(100, 100, 650, 485);
+        newFrame.setBounds(100, 100, 850, 600);
         newFrame.setContentPane(new MineralSupertrumps().parentContainer);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setVisible(true);
