@@ -1,27 +1,28 @@
 package GUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Draga on 7/10/2016.
+ * Created by Draga on 8/10/2016.
  */
-public class mainScreen extends JFrame{
-    private JPanel mainPanel;
-    private JPanel welcomePanel;
-    private JPanel menuPanel;
+public class MineralSupertrumps {
+    private JPanel parentContainer;
+    private JPanel mainCard;
+    private JPanel titleLabel;
     private JPanel usernamePanel;
-    private JLabel welcomeLabel;
+    private JPanel buttonPanel;
     private JTextField usernameField;
     private JLabel usernameLabel;
     private JButton playButton;
-    private JButton instructionsButton;
     private JButton quitButton;
+    private JButton instructionsButton;
+    private JPanel instructionsCard;
+    private JPanel instructions1;
 
-    public mainScreen() {
-        super("Mineral Supertrumps");
-        this.setContentPane(mainPanel);
+    public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,18 +35,17 @@ public class mainScreen extends JFrame{
         instructionsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainPanel.setVisible(false);
+                CardLayout myLayout = (CardLayout) (parentContainer.getLayout());
+                myLayout.show(parentContainer, "instructionsCard");
             }
         });
     }
 
     public static void main(String[] args) {
-        mainScreen newFrame = new mainScreen();
+        JFrame newFrame = new JFrame("Mineral Supertrumps");
         newFrame.setBounds(100, 100, 650, 485);
+        newFrame.setContentPane(new MineralSupertrumps().parentContainer);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setVisible(true);
-
-
     }
-
 }
