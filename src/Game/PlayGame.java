@@ -45,9 +45,9 @@ public class PlayGame {
           boolean isNewRound;
           while (!superTrumpsGame.isOver()) {
             Player playerUp = superTrumpsGame.getCurrentPlayer();
-            ArrayList<Player> gameWinners = superTrumpsGame.getWinners();
             //if the current player has already won they are skipped
-            if (gameWinners.contains(playerUp)) {
+            ArrayList<Player> winnerList = superTrumpsGame.getWinners();
+            if (winnerList.contains(playerUp)) {
               superTrumpsGame.skipPlayer();
             } else {
               //If a supertrump was played everybody is back in
@@ -115,6 +115,17 @@ public class PlayGame {
                     superTrumpsGame.skipPlayer();
                     waitForUser();
                   }
+                  //if user won, alert them
+                  if (superTrumpsGame.hasWon(playerUp)) {
+                    System.out.println(
+                        "That was the last card in "
+                            + superTrumpsGame.getLastUserToPlay().getName()
+                            + "'s hand!");
+                    System.out.println(playerUp.getName().toUpperCase() + " WON!\n");
+                    //                    superTrumpsGame.setAllPlayersIn();
+                    //                    superTrumpsGame.resetNumPasses();
+                    waitForUser();
+                  }
                   playerUp = superTrumpsGame.getCurrentPlayer();
                 }
                 //user is not up
@@ -154,18 +165,18 @@ public class PlayGame {
                   superTrumpsGame.skipPlayer();
                   waitForUser();
                 }
-              }
-              Player lastToPlay = superTrumpsGame.getLastUserToPlay();
-              //if somebody has won alert the user
-              if (superTrumpsGame.hasWon(lastToPlay)) {
-                System.out.println(
-                    "That was the last card in "
-                        + superTrumpsGame.getLastUserToPlay().getName()
-                        + "'s hand!");
-                System.out.println(lastToPlay.getName().toUpperCase() + " WON!\n");
-                superTrumpsGame.setAllPlayersIn();
-                superTrumpsGame.resetNumPasses();
-                waitForUser();
+                //if somebody has won alert the user
+                if (superTrumpsGame.hasWon(playerUp)) {
+                  System.out.println(
+                      "That was the last card in "
+                          + superTrumpsGame.getLastUserToPlay().getName()
+                          + "'s hand!");
+                  System.out.println(playerUp.getName().toUpperCase() + " WON!\n");
+                  //                  We dont set all players in because ypu can place your last card down and someone can still play on it.
+                  //                  superTrumpsGame.setAllPlayersIn();
+                  //                  superTrumpsGame.resetNumPasses();
+                  waitForUser();
+                }
               }
             }
           }

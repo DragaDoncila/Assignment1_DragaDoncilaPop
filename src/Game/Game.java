@@ -432,7 +432,10 @@ class Game {
     incrementNumPasses();
     currentPlayer = getNextPlayer();
     //if passing resulted in a new round, get that player's name and make them the current player
-    if (isNewRound()) {
+    //if passing resulted in a new round, and the user hadn't already passed
+    if (isNewRound() && !currentPlayer.isOut() && !winners.contains(currentPlayer)) {
+      roundWinner = currentPlayer.getName();
+    } else if (isNewRound()) {
       roundWinner = lastUserToPlay.getName();
       currentPlayer = lastUserToPlay;
     }
