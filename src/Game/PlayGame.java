@@ -419,7 +419,13 @@ public class PlayGame {
           System.out.println(
               "That card cannot play on " + superTrumpsGame.getLastPlayedCard().getTitle());
           cardChoice = getUserCardChoice(playerUp);
-          chosenCard = playerUp.getCard(cardChoice);
+          if (cardChoice != BACK_VALUE) {
+            chosenCard = playerUp.getCard(cardChoice);
+          }
+          //user wants to go back to turn menu
+          else {
+            return;
+          }
         }
       }
     }
