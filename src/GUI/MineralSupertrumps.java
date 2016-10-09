@@ -21,30 +21,41 @@ public class MineralSupertrumps {
     private JButton instructionsButton;
     private JPanel instructionsCard;
     private JPanel instructions1;
-    private JPanel rulePanel;
+    private JPanel rulePanel1;
     private JPanel titlePanel;
     private JPanel imagePanel;
-    private JPanel navPanel;
+    private JPanel navPanel1;
     private JLabel ruleLabel;
     private JLabel cardLabel;
-    private JButton backButton;
-    private JButton nextButton;
+    private JButton next1;
     private JPanel instructions2;
-    private JPanel titlePanel1;
+    private JPanel titlePanel2;
     private JLabel rule2;
     private JPanel rulePanel2;
     private JPanel imagePanel2;
     private JPanel navPanel2;
     private JLabel supertrump;
-    private JButton back1;
-    private JButton next1;
+    private JButton back2;
+    private JButton next2;
+    private JPanel instructions3;
+    private JPanel title3;
+    private JLabel instructionsLabel;
+    private JLabel instructionsLabel2;
+    private JLabel instructionsLabel3;
+    private JPanel navPanel3;
+    private JPanel rulePanel3;
+    private JPanel cardPanel3;
+    private JLabel rule3;
+    private JLabel goodLuck;
+    private JButton back3;
+    private JButton mainMenu;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int quitOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Quit Confirm", JOptionPane.YES_NO_OPTION);
-                if (quitOption == JOptionPane.YES_OPTION){
+                if (quitOption == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
             }
@@ -56,13 +67,13 @@ public class MineralSupertrumps {
                 myLayout.show(parentContainer, "instructionsCard");
             }
         });
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CardLayout instructionsLayout = (CardLayout) (instructionsCard.getLayout());
-                instructionsLayout.next(instructionsCard);
-            }
-        });
+
+        next1.addActionListener(new NextInstructions(instructionsCard));
+        next2.addActionListener(new NextInstructions(instructionsCard));
+        mainMenu.addActionListener(new GoToMain(parentContainer));
+
+        back2.addActionListener(new BackInstructions(instructionsCard));
+        back3.addActionListener(new BackInstructions(instructionsCard));
     }
 
     public static void main(String[] args) {
