@@ -49,6 +49,7 @@ public class MineralSupertrumps {
     private JLabel goodLuck;
     private JButton back3;
     private JButton mainMenu;
+    private JPanel playCard;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
@@ -74,6 +75,7 @@ public class MineralSupertrumps {
 
         back2.addActionListener(new BackInstructions(instructionsCard));
         back3.addActionListener(new BackInstructions(instructionsCard));
+        playButton.addActionListener(new StartNewGame(mainCard));
     }
 
     public static void main(String[] args) {

@@ -371,6 +371,14 @@
           </grid>
         </children>
       </grid>
+      <grid id="f479f" binding="playCard" layout-manager="CardLayout" hgap="0" vgap="0">
+        <constraints>
+          <card name="playCard"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
     </children>
   </grid>
 </form>

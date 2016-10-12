@@ -16,7 +16,7 @@ import java.util.Random;
  * Class handles the attributes and associated methods & logic required for the playing of a Mineral
  * Supertrumps game. Created by Draga on 6/09/2016.
  */
-class Game {
+public class Game {
   static final String INSTRUCTIONS1 =
       "1. This is a game for 3-5 people. The game begins with 8 cards being randomly \n"
           + "dealt to each player by a randomly assigned dealer.\n";
@@ -172,7 +172,7 @@ class Game {
     return comboWasPlayed;
   }
 
-  static boolean isValidNumPlayers(int numPlayers) {
+  public static boolean isValidNumPlayers(int numPlayers) {
     return (numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS);
   }
 
