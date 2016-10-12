@@ -38,8 +38,8 @@ public class StartNewGame implements ActionListener {
         boolean isValid = false;
         int numPlayers = 0;
         String numPlayerStr = JOptionPane.showInputDialog(parentContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
-        if (numPlayerStr != null) {
-            while (!isValid) {
+        while (!isValid) {
+            if (numPlayerStr != null) {
                 try {
                     numPlayers = Integer.parseInt(numPlayerStr);
                     if (!Game.isValidNumPlayers(numPlayers)) {
@@ -54,6 +54,10 @@ public class StartNewGame implements ActionListener {
                     JOptionPane.showMessageDialog(parentContainer, "That is not a valid number", "Error Message", JOptionPane.ERROR_MESSAGE);
                     numPlayerStr = JOptionPane.showInputDialog(parentContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
                 }
+            }
+            else {
+                //cancel option
+                isValid = true;
             }
         }
         return numPlayers;
