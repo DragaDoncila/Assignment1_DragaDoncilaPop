@@ -12,9 +12,11 @@ import java.awt.event.PaintEvent;
  */
 public class StartNewGame implements ActionListener {
     private final JPanel parentContainer;
+    private final JTextField usernameField;
 
-    public StartNewGame(JPanel mainCard) {
+    public StartNewGame(JPanel mainCard, JTextField usernameField) {
         this.parentContainer = mainCard;
+        this.usernameField = usernameField;
     }
 
     @Override
@@ -23,15 +25,24 @@ public class StartNewGame implements ActionListener {
     }
 
     private void startNewGame() {
-        //get valid number of players
-        int numPlayers = getValidNumPlayers();
-        //create new game
+        //check for a username
+        String userName = usernameField.getText();
+        String strippedName = userName.replaceAll("\\s+", "");
+        if (strippedName.length() >= 1){
+            //get valid number of players
+            int numPlayers = getValidNumPlayers();
+            //create new game
 
-        //select a dealer
+            //select a dealer
 
-        //deal cards
+            //deal cards
 
-        //show new card in MST frame with the setup completed and information displayed.
+            //show new card in MST frame with the setup completed and information displayed.
+        }
+        else {
+            JOptionPane.showMessageDialog(parentContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     private int getValidNumPlayers() {

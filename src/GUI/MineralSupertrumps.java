@@ -75,7 +75,7 @@ public class MineralSupertrumps {
 
         back2.addActionListener(new BackInstructions(instructionsCard));
         back3.addActionListener(new BackInstructions(instructionsCard));
-        playButton.addActionListener(new StartNewGame(mainCard));
+        playButton.addActionListener(new StartNewGame(mainCard, usernameField));
     }
 
     public static void main(String[] args) {
