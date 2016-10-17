@@ -71,6 +71,8 @@ public class Game {
   static final int MIN_PLAYERS = 3;
   static final int MAX_PLAYERS = 5;
 
+  static Game currentGame;
+
   private int numPlayers;
   private Player[] players;
   private Player dealer;
@@ -94,7 +96,8 @@ public class Game {
    * @param numPlayers the number of players in the game
    * @param userName the name of the human player
    */
-  Game(int numPlayers, String userName) {
+  public Game(int numPlayers, String userName) {
+    currentGame = this;
     superTrumpsDeck = DeckBuilder.buildDeckFromPlist();
     this.numPlayers = numPlayers;
 
@@ -109,7 +112,7 @@ public class Game {
     numPasses = 0;
   }
 
-  Player[] getPlayers() {
+  public Player[] getPlayers() {
     return players;
   }
 
@@ -291,7 +294,7 @@ public class Game {
    *
    * @return string the name of the dealer
    */
-  String selectDealer() {
+  public String selectDealer() {
     Random rand = new Random();
     int dealerID = rand.nextInt(numPlayers);
     this.dealer = players[dealerID];
@@ -312,7 +315,7 @@ public class Game {
   }
 
   /** Deals cards from the deck to each player based on the number of cards required in the hand */
-  void dealInitialHands() {
+  public void dealInitialHands() {
     superTrumpsDeck.shuffle();
     ArrayList<Card> newHand;
     for (Player player : players) {

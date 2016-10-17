@@ -50,6 +50,23 @@ public class MineralSupertrumps {
     private JButton back3;
     private JButton mainMenu;
     private JPanel playCard;
+    private JPanel initialPlayScreen;
+    private JPanel playerPanel;
+    private JPanel cardtwo;
+    private JPanel navPanel;
+    private JPanel detailsPanel;
+    private JPanel playPanel;
+    private JButton previousButton;
+    private JButton nextButton;
+    private JButton playCardButton;
+    private JButton passTurnButton;
+    private JButton playComboButton;
+    private JButton pauseButton;
+    private JLabel blankCardLabel;
+    private JLabel detailsLabel;
+    private JPanel cardImgPanel;
+    private JPanel cardDetailsPanel;
+    private JLabel cardImgLabel;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
@@ -75,12 +92,12 @@ public class MineralSupertrumps {
 
         back2.addActionListener(new BackInstructions(instructionsCard));
         back3.addActionListener(new BackInstructions(instructionsCard));
-        playButton.addActionListener(new StartNewGame(mainCard, usernameField));
+        playButton.addActionListener(new StartNewGame(parentContainer, playerPanel, usernameField));
     }
 
     public static void main(String[] args) {
         JFrame newFrame = new JFrame("Mineral Supertrumps");
-        newFrame.setBounds(100, 100, 850, 600);
+        newFrame.setBounds(50, 50, 850, 600);
         newFrame.setContentPane(new MineralSupertrumps().parentContainer);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setVisible(true);

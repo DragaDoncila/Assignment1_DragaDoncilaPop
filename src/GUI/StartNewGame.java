@@ -1,21 +1,26 @@
 package GUI;
 
 import Game.Game;
+import Players.Player;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.PaintEvent;
 
 /**
  * Created by Draga on 12/10/2016.
  */
 public class StartNewGame implements ActionListener {
-    private final JPanel parentContainer;
+    private final JPanel mainContainer;
     private final JTextField usernameField;
+    private final CardLayout parentLayout;
+    private final JPanel playerContainer;
 
-    public StartNewGame(JPanel mainCard, JTextField usernameField) {
-        this.parentContainer = mainCard;
+    public StartNewGame(JPanel mainCard, JPanel playerPanel, JTextField usernameField) {
+        this.mainContainer = mainCard;
+        this.playerContainer = playerPanel;
+        this.parentLayout = (CardLayout) mainCard.getLayout();
         this.usernameField = usernameField;
     }
 
@@ -32,38 +37,61 @@ public class StartNewGame implements ActionListener {
             //get valid number of players
             int numPlayers = getValidNumPlayers();
             //create new game
-
+            Game newGame = new Game(numPlayers, userName);
             //select a dealer
-
+            String dealerName = newGame.selectDealer();
             //deal cards
+            newGame.dealInitialHands();
+            //show new card in MST frame with the setup completed and information displayed
+            showPlayers(newGame);
+            parentLayout.show(mainContainer, "playCard");
 
-            //show new card in MST frame with the setup completed and information displayed.
         }
         else {
-            JOptionPane.showMessageDialog(parentContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    private void showPlayers(Game newGame) {
+        int countPics = 0;
+        for (Player player :
+                newGame.getPlayers()) {
+            Icon playerPic = new ImageIcon("src/GUI/images/playerIcon" + countPics + ".png");
+            JLabel playerLabel = new JLabel(playerPic);
+            playerLabel.setText(player.getName());
+
+            playerLabel.setHorizontalTextPosition(JLabel.CENTER);
+            playerLabel.setVerticalTextPosition(JLabel.BOTTOM);
+
+            playerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 10));
+            playerContainer.add(playerLabel);
+
+            playerContainer.revalidate();
+            playerContainer.repaint();
+            ++countPics;
+        }
     }
 
     private int getValidNumPlayers() {
         boolean isValid = false;
         int numPlayers = 0;
-        String numPlayerStr = JOptionPane.showInputDialog(parentContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
+        String numPlayerStr = JOptionPane.showInputDialog(mainContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
         while (!isValid) {
             if (numPlayerStr != null) {
                 try {
                     numPlayers = Integer.parseInt(numPlayerStr);
                     if (!Game.isValidNumPlayers(numPlayers)) {
-                        JOptionPane.showMessageDialog(parentContainer, "That is not a valid number of players", "Error Message", JOptionPane.ERROR_MESSAGE);
-                        numPlayerStr = JOptionPane.showInputDialog(parentContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
+                        JOptionPane.showMessageDialog(mainContainer, "That is not a valid number of players", "Error Message", JOptionPane.ERROR_MESSAGE);
+                        numPlayerStr = JOptionPane.showInputDialog(mainContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
 
                     }
                     else {
                         isValid = true;
                     }
                 } catch (NumberFormatException formatError) {
-                    JOptionPane.showMessageDialog(parentContainer, "That is not a valid number", "Error Message", JOptionPane.ERROR_MESSAGE);
-                    numPlayerStr = JOptionPane.showInputDialog(parentContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showMessageDialog(mainContainer, "That is not a valid number", "Error Message", JOptionPane.ERROR_MESSAGE);
+                    numPlayerStr = JOptionPane.showInputDialog(mainContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
                 }
             }
             else {
