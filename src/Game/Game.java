@@ -71,7 +71,7 @@ public class Game {
   static final int MIN_PLAYERS = 3;
   static final int MAX_PLAYERS = 5;
 
-  static Game currentGame;
+  public static Game currentGame;
 
   private int numPlayers;
   private Player[] players;
@@ -120,7 +120,7 @@ public class Game {
     return lastUserToPlay;
   }
 
-  Card getLastPlayedCard() {
+  public Card getLastPlayedCard() {
     return lastPlayedCard;
   }
 
@@ -136,7 +136,7 @@ public class Game {
     return roundWinner;
   }
 
-  ArrayList<Player> getWinners() {
+  public ArrayList<Player> getWinners() {
     return winners;
   }
 
@@ -185,7 +185,7 @@ public class Game {
    *
    * @return boolean of comparison
    */
-  boolean isFirstTurn() {
+  public boolean isFirstTurn() {
     return this.lastPlayedCard == null;
   }
 
@@ -274,7 +274,7 @@ public class Game {
   }
 
   /** Completely skips player's turn- used when that user is out of the round */
-  void skipPlayer() {
+  public void skipPlayer() {
     currentPlayer = getNextPlayer();
   }
 
@@ -360,7 +360,7 @@ public class Game {
    *
    * @param isStartOfGame true when it's the very first turn of the game
    */
-  void playFirstTurn(boolean isStartOfGame) {
+  public void playFirstTurn(boolean isStartOfGame) {
     //AI Play First Turn
     this.lastPlayedCard = currentPlayer.playFirstCard(0, isStartOfGame);
     this.lastUserToPlay = currentPlayer;

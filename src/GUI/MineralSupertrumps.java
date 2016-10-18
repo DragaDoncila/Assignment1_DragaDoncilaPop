@@ -54,9 +54,7 @@ public class MineralSupertrumps {
     private JPanel playCard;
     private JPanel initialPlayScreen;
     JPanel playerPanel;
-    private JPanel cardtwo;
     private JPanel navPanel;
-    private JPanel detailsPanel;
     private JPanel playPanel;
     private JButton previousButton;
     private JButton nextButton;
@@ -66,8 +64,8 @@ public class MineralSupertrumps {
     private JButton pauseButton;
     JLabel playCardLabel;
     JPanel cardImgPanel;
-    private JPanel gameControlPanel;
     JButton viewTurnButton;
+    private JPanel handPanel;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
@@ -113,6 +111,7 @@ public class MineralSupertrumps {
                 cards.previous(cardImgPanel);
             }
         });
+
         viewTurnButton.addActionListener(new PlayRobotTurn(this));
     }
 
