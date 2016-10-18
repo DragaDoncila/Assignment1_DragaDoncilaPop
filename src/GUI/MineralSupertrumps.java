@@ -11,12 +11,12 @@ import java.awt.event.ActionListener;
  * Created by Draga on 8/10/2016.
  */
 public class MineralSupertrumps {
-    private JPanel parentContainer;
-    private JPanel mainCard;
+    JPanel parentContainer;
+    JPanel mainCard;
     private JPanel titleLabel;
     private JPanel usernamePanel;
     private JPanel buttonPanel;
-    private JTextField usernameField;
+    JTextField usernameField;
     private JLabel usernameLabel;
     private JButton playButton;
     private JButton quitButton;
@@ -53,21 +53,21 @@ public class MineralSupertrumps {
     private JButton mainMenu;
     private JPanel playCard;
     private JPanel initialPlayScreen;
-    private JPanel playerPanel;
+    JPanel playerPanel;
     private JPanel cardtwo;
     private JPanel navPanel;
     private JPanel detailsPanel;
     private JPanel playPanel;
     private JButton previousButton;
     private JButton nextButton;
-    private JButton playCardButton;
-    private JButton passTurnButton;
-    private JButton playComboButton;
+    JButton playCardButton;
+    JButton passTurnButton;
+    JButton playComboButton;
     private JButton pauseButton;
-    private JLabel blankCardLabel;
-    private JLabel detailsLabel;
-    private JPanel cardImgPanel;
-    private JPanel cardDetailsPanel;
+    JLabel playCardLabel;
+    JPanel cardImgPanel;
+    private JPanel gameControlPanel;
+    JButton viewTurnButton;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
@@ -89,11 +89,12 @@ public class MineralSupertrumps {
 
         next1.addActionListener(new NextInstructions(instructionsCard));
         next2.addActionListener(new NextInstructions(instructionsCard));
-        mainMenu.addActionListener(new GoToMain(parentContainer));
 
         back2.addActionListener(new BackInstructions(instructionsCard));
         back3.addActionListener(new BackInstructions(instructionsCard));
-        playButton.addActionListener(new StartNewGame(parentContainer, playerPanel, cardImgPanel, usernameField));
+
+        mainMenu.addActionListener(new GoToMain(parentContainer));
+        playButton.addActionListener(new StartNewGame(this));
 
         nextButton.addActionListener(new ActionListener() {
             @Override
@@ -103,6 +104,7 @@ public class MineralSupertrumps {
                 cards.next(cardImgPanel);
             }
         });
+
         previousButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -111,6 +113,7 @@ public class MineralSupertrumps {
                 cards.previous(cardImgPanel);
             }
         });
+        viewTurnButton.addActionListener(new PlayRobotTurn(this));
     }
 
     public static void main(String[] args) {

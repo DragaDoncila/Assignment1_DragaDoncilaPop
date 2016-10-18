@@ -19,13 +19,19 @@ public class StartNewGame implements ActionListener {
     private final CardLayout parentLayout;
     private final JPanel playerContainer;
     private final JPanel cardContainer;
+    private final JLabel infoLabel;
+    private final JButton viewTurnButton;
+    private JButton[] controlButtons;
 
-    public StartNewGame(JPanel mainCard, JPanel playerPanel, JPanel cardImgPanel, JTextField usernameField) {
-        this.mainContainer = mainCard;
-        this.playerContainer = playerPanel;
-        this.cardContainer = cardImgPanel;
-        this.parentLayout = (CardLayout) mainCard.getLayout();
-        this.usernameField = usernameField;
+    public StartNewGame(MineralSupertrumps mineralSupertrumps) {
+        this.mainContainer = mineralSupertrumps.parentContainer;
+        this.playerContainer = mineralSupertrumps.playerPanel;
+        this.cardContainer = mineralSupertrumps.cardImgPanel;
+        this.parentLayout = (CardLayout) mainContainer.getLayout();
+        this.usernameField = mineralSupertrumps.usernameField;
+        this.infoLabel = mineralSupertrumps.playCardLabel;
+        this.viewTurnButton = mineralSupertrumps.viewTurnButton;
+        controlButtons = new JButton[]{mineralSupertrumps.playCardButton, mineralSupertrumps.passTurnButton, mineralSupertrumps.playComboButton};
     }
 
     @Override
@@ -49,6 +55,9 @@ public class StartNewGame implements ActionListener {
             //show new card in MST frame with the setup completed and information displayed
             showPlayers(newGame);
             showCards(newGame);
+            Player playerUp = newGame.getCurrentPlayer();
+            setActiveButtons(playerUp);
+            infoLabel.setText("Let's go! It's " + playerUp.getName() + "'s turn");
 
             parentLayout.show(mainContainer, "playCard");
 
@@ -57,6 +66,23 @@ public class StartNewGame implements ActionListener {
             JOptionPane.showMessageDialog(mainContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    private void setActiveButtons(Player playerUp) {
+        if (playerUp.isUser()){
+            this.viewTurnButton.setEnabled(false);
+            for (JButton button :
+                    controlButtons) {
+                button.setEnabled(true);
+            }
+        }
+        else {
+            this.viewTurnButton.setEnabled(true);
+            for (JButton button :
+                    controlButtons) {
+                button.setEnabled(false);
+            }
+        }
     }
 
     private void showCards(Game newGame) {

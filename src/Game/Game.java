@@ -128,7 +128,7 @@ public class Game {
     return currentCategory;
   }
 
-  Player getCurrentPlayer() {
+  public Player getCurrentPlayer() {
     return currentPlayer;
   }
 
