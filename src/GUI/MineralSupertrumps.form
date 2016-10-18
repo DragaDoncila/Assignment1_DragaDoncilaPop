@@ -492,10 +492,7 @@
                   </grid>
                   <component id="f07a8" class="javax.swing.JButton" binding="nextButton" default-binding="true">
                     <constraints>
-                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="80" height="-1"/>
-                        <preferred-size width="80" height="-1"/>
-                      </grid>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Next"/>

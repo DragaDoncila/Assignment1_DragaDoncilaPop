@@ -124,7 +124,7 @@ public class Game {
     return lastPlayedCard;
   }
 
-  Trump.TrumpCategories getCurrentCategory() {
+  public Trump.TrumpCategories getCurrentCategory() {
     return currentCategory;
   }
 
@@ -195,7 +195,7 @@ public class Game {
    *
    * @return isNewRound boolean of comparison
    */
-  boolean isNewRound() {
+  public boolean isNewRound() {
     boolean isNewRound;
     //if the number of people who have passed (excepting winners) is one less than the number of players
     if (this.numPasses == (this.numPlayers - 1 - winners.size()) || comboWasPlayed) {
@@ -246,7 +246,7 @@ public class Game {
    *
    * @return isOver result of comparison
    */
-  boolean isOver() {
+  public boolean isOver() {
     int numWinners = 0;
     for (Player player : players) {
       int currentHandSize = player.getCurrentHand().size();
@@ -263,7 +263,7 @@ public class Game {
    * @param playerUp the player whose hand will be checked
    * @return boolean of comparison
    */
-  boolean hasWon(Player playerUp) {
+  public boolean hasWon(Player playerUp) {
     int currentHandSize = playerUp.getCurrentHand().size();
     if (currentHandSize == 0) {
       winners.add(playerUp);
@@ -278,12 +278,12 @@ public class Game {
     currentPlayer = getNextPlayer();
   }
 
-  void resetNumPasses() {
+  public void resetNumPasses() {
     this.numPasses = 0;
   }
 
   /** Allows all previously passed players back in the game */
-  void setAllPlayersIn() {
+  public void setAllPlayersIn() {
     for (Player player : players) {
       player.setIsOut(false);
     }
@@ -372,7 +372,7 @@ public class Game {
    * Gets a playable card choice (and potentially a trump category) from the current player and sets
    * the appropriate attributes
    */
-  void playTurn() {
+  public void playTurn() {
     //For AI functionality
     if (currentPlayer.hasCombo()) {
       this.lastPlayedCard = currentPlayer.playCombo();
@@ -423,7 +423,7 @@ public class Game {
   /**
    * Sets the appropriate attributes for a player's choosing to pass and checks for a round winner
    */
-  void pass() {
+  public void pass() {
     //draw a card if the deck is not empty
     int numCardsLeft = superTrumpsDeck.getCards().size();
     if (numCardsLeft != 0) {

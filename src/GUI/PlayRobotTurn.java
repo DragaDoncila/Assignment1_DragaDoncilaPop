@@ -15,9 +15,13 @@ import java.util.ArrayList;
  */
 public class PlayRobotTurn implements ActionListener {
     private final JLabel infoLabel;
+    private final JPanel parentContainer;
+    private final JButton viewTurnButton;
 
     public PlayRobotTurn(MineralSupertrumps mineralSupertrumps) {
         this.infoLabel = mineralSupertrumps.playCardLabel;
+        this.parentContainer = mineralSupertrumps.parentContainer;
+        this.viewTurnButton = mineralSupertrumps.viewTurnButton;
     }
 
     @Override
@@ -39,26 +43,64 @@ public class PlayRobotTurn implements ActionListener {
                     ImageIcon cardImage = new ImageIcon("src/GUI/images/cards/"+ lastPlayedCard.getFileName());
                     infoLabel.setIcon(cardImage);
                     //update card label
-                    infoLabel.setText(playerName + " played " + lastPlayedCard.getTitle());
+                    String detailString = playerName + " played " + lastPlayedCard.getTitle() +
+                            "\nCurrent Trump Category: " + game.getCurrentCategory().toString();
+                    infoLabel.setText(detailString);
                 }
                 //else if it is a new round
+                else if (game.isNewRound()) {
                     //alert player won round
+                    JOptionPane.showMessageDialog(null, playerName + " won the round!");
+                    game.setAllPlayersIn();
+                    game.resetNumPasses();
                     //game.playFirstTurn()
+                    game.playFirstTurn(false);
                     //set last played card image
+                    Card lastPlayedCard = game.getLastPlayedCard();
+                    ImageIcon cardImage = new ImageIcon("src/GUI/images/cards/"+ lastPlayedCard.getFileName());
+                    infoLabel.setIcon(cardImage);
+                    //update card label
+                    String detailString = playerName + " played " + lastPlayedCard.getTitle() +
+                            "\nCurrent Trump Category: " + game.getCurrentCategory().toString();
+                    infoLabel.setText(detailString);
+                }
                 //else if the player has playable cards
-                    //game.playTurn()
-                    //######if Combo?????
-                    //set last played card image
-                //else (not new round, no playable cards)
-                    //game.pass()
-                    //set player label to red
-                    //update card label: player passed OR player played
-
+                else {
+                    playerUp.setPlayableCards(game.getLastPlayedCard(), game.getCurrentCategory());
+                    if (playerUp.hasPlayableCards()) {
+                        //game.playTurn()
+                        game.playTurn();
+                        //######if Combo?????
+                        //set last played card image
+                        Card lastPlayedCard = game.getLastPlayedCard();
+                        ImageIcon cardImage = new ImageIcon("src/GUI/images/cards/"+ lastPlayedCard.getFileName());
+                        infoLabel.setIcon(cardImage);
+                        //update card label
+                        String detailString = playerName + " played " + lastPlayedCard.getTitle() +
+                                "\nCurrent Trump Category: " + game.getCurrentCategory().toString();
+                        infoLabel.setText(detailString);
+                    }
+                    //else (not new round, no playable cards)
+                    else {
+                        //game.pass()
+                        game.pass();
+                        //TODO: set player label to red
+                        //update card label: player passed OR player played
+                        infoLabel.setText(playerName + " chose to pass and is out for the round");
+                    }
+                }
                 //if player won (as a result of playing this turn)
+                if (game.hasWon(playerUp)) {
                     //alert: player won
+                    JOptionPane.showMessageDialog(null, playerName + " has won!");
                     //if game over:
+                    if (game.isOver()) {
                         //alert
+                        JOptionPane.showMessageDialog(null, "That's the end of the game! Thank you for playing.");
                         //back to main
+                        new GoToMain(parentContainer);
+                    }
+                }
             }
             //else (player is out)
             else {
@@ -74,6 +116,10 @@ public class PlayRobotTurn implements ActionListener {
             game.skipPlayer();
             //update card label: player has already won
             infoLabel.setText(playerName + " has already won!");
+        }
+
+        if (game.getCurrentPlayer().isUser()){
+            viewTurnButton.setEnabled(false);
         }
     }
 }
