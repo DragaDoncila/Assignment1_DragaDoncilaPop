@@ -1,5 +1,6 @@
 package GUI;
 
+import Cards.Card;
 import Game.Game;
 import Players.Player;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by Draga on 12/10/2016.
@@ -16,10 +18,12 @@ public class StartNewGame implements ActionListener {
     private final JTextField usernameField;
     private final CardLayout parentLayout;
     private final JPanel playerContainer;
+    private final JPanel cardContainer;
 
-    public StartNewGame(JPanel mainCard, JPanel playerPanel, JTextField usernameField) {
+    public StartNewGame(JPanel mainCard, JPanel playerPanel, JPanel cardImgPanel, JTextField usernameField) {
         this.mainContainer = mainCard;
         this.playerContainer = playerPanel;
+        this.cardContainer = cardImgPanel;
         this.parentLayout = (CardLayout) mainCard.getLayout();
         this.usernameField = usernameField;
     }
@@ -44,6 +48,8 @@ public class StartNewGame implements ActionListener {
             newGame.dealInitialHands();
             //show new card in MST frame with the setup completed and information displayed
             showPlayers(newGame);
+            showCards(newGame);
+
             parentLayout.show(mainContainer, "playCard");
 
         }
@@ -51,6 +57,22 @@ public class StartNewGame implements ActionListener {
             JOptionPane.showMessageDialog(mainContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    private void showCards(Game newGame) {
+        ArrayList<Card> userHand = newGame.getPlayers()[0].getCurrentHand();
+        for (Card card :
+                userHand) {
+            //make a new card (JPanel) in cardContainer with a label
+            JPanel newCard = new JPanel();
+            //find the image associated with the card and display it as an icon for the label
+            ImageIcon cardImg = new ImageIcon("src/GUI/images/cards/"+ card.getFileName());
+            JLabel imgLabel = new JLabel(cardImg);
+
+            newCard.add(imgLabel);
+            cardContainer.add(newCard, card.getTitle());
+
+        }
     }
 
     private void showPlayers(Game newGame) {

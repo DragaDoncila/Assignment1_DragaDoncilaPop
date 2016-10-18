@@ -1,5 +1,7 @@
 package GUI;
 
+import Cards.Card;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -66,7 +68,6 @@ public class MineralSupertrumps {
     private JLabel detailsLabel;
     private JPanel cardImgPanel;
     private JPanel cardDetailsPanel;
-    private JLabel cardImgLabel;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
@@ -92,12 +93,30 @@ public class MineralSupertrumps {
 
         back2.addActionListener(new BackInstructions(instructionsCard));
         back3.addActionListener(new BackInstructions(instructionsCard));
-        playButton.addActionListener(new StartNewGame(parentContainer, playerPanel, usernameField));
+        playButton.addActionListener(new StartNewGame(parentContainer, playerPanel, cardImgPanel, usernameField));
+
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //go to the next card in the hand
+                CardLayout cards = (CardLayout) cardImgPanel.getLayout();
+                cards.next(cardImgPanel);
+            }
+        });
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //go to the previous card in the hand
+                CardLayout cards = (CardLayout) cardImgPanel.getLayout();
+                cards.previous(cardImgPanel);
+            }
+        });
     }
 
     public static void main(String[] args) {
         JFrame newFrame = new JFrame("Mineral Supertrumps");
-        newFrame.setBounds(50, 50, 850, 600);
+//        newFrame.setBounds(20, 20, 1000, 700);
+        newFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         newFrame.setContentPane(new MineralSupertrumps().parentContainer);
         newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         newFrame.setVisible(true);

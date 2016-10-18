@@ -11,6 +11,10 @@ import Trumps.Trump;
  */
 public abstract class Card {
 
+  public String getFileName() {
+    return fileName;
+  }
+
   private enum CardTypes {
     PLAY,
     TRUMP
@@ -19,6 +23,7 @@ public abstract class Card {
   private CardTypes cardType;
   private String title;
 
+  private String fileName;
   /**
    * Constructor takes an array of attributes and parses this array into the relevant fields
    *
@@ -32,6 +37,7 @@ public abstract class Card {
       this.cardType = CardTypes.TRUMP;
     }
     this.title = attributes.get(3);
+    this.fileName = attributes.get(0);
   }
 
   public String getTitle() {
