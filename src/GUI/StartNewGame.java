@@ -54,7 +54,7 @@ public class StartNewGame implements ActionListener {
             newGame.dealInitialHands();
             //show new card in MST frame with the setup completed and information displayed
             showPlayers(newGame);
-            showCards(newGame);
+            new HandView(cardContainer).showCards();
             Player playerUp = newGame.getCurrentPlayer();
             setActiveButtons(playerUp);
             logTextPane.setText("Let's go! It's " + playerUp.getName() + "'s turn\n");
@@ -82,22 +82,6 @@ public class StartNewGame implements ActionListener {
                     controlButtons) {
                 button.setEnabled(false);
             }
-        }
-    }
-
-    private void showCards(Game newGame) {
-        ArrayList<Card> userHand = newGame.getPlayers()[0].getCurrentHand();
-        for (Card card :
-                userHand) {
-            //make a new card (JPanel) in cardContainer with a label
-            JPanel newCard = new JPanel();
-            //find the image associated with the card and display it as an icon for the label
-            ImageIcon cardImg = new ImageIcon("src/GUI/images/cards/"+ card.getFileName());
-            JLabel imgLabel = new JLabel(cardImg);
-
-            newCard.add(imgLabel);
-            cardContainer.add(newCard, card.getTitle());
-
         }
     }
 

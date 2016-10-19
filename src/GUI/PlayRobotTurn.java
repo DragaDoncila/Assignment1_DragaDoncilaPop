@@ -118,6 +118,12 @@ public class PlayRobotTurn implements ActionListener {
             //update card label: player has already won
             updateLog(playerName + " has already won!");
         }
+        Card lastPlayed = game.getLastPlayedCard();
+        if (lastPlayed.isTrump()){
+            updateLog("Supertrump Played! All players in");
+            game.resetNumPasses();
+            game.setAllPlayersIn();
+        }
         updateLog("############################");
         updateLog("Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
 
