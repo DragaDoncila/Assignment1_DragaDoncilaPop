@@ -71,6 +71,8 @@ public class MineralSupertrumps {
     private JScrollPane logScrollPane;
     JTextPane gameLogPane;
 
+    JButton[] playerControlButtons = {playCardButton, playComboButton, passTurnButton};
+
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
             @Override

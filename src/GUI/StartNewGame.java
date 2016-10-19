@@ -31,7 +31,7 @@ public class StartNewGame implements ActionListener {
         this.usernameField = mineralSupertrumps.usernameField;
         this.logTextPane = mineralSupertrumps.gameLogPane;
         this.viewTurnButton = mineralSupertrumps.viewTurnButton;
-        controlButtons = new JButton[]{mineralSupertrumps.playCardButton, mineralSupertrumps.passTurnButton, mineralSupertrumps.playComboButton};
+        controlButtons = mineralSupertrumps.playerControlButtons;
     }
 
     @Override
@@ -55,8 +55,11 @@ public class StartNewGame implements ActionListener {
             //show new card in MST frame with the setup completed and information displayed
             showPlayers(newGame);
             new HandView(cardContainer).showCards();
+
             Player playerUp = newGame.getCurrentPlayer();
-            setActiveButtons(playerUp);
+            new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(playerUp);
+//            setActiveButtons(playerUp);
+
             logTextPane.setText("Let's go! It's " + playerUp.getName() + "'s turn\n");
 
             parentLayout.show(mainContainer, "playCard");
@@ -66,23 +69,6 @@ public class StartNewGame implements ActionListener {
             JOptionPane.showMessageDialog(mainContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
         }
 
-    }
-
-    private void setActiveButtons(Player playerUp) {
-        if (playerUp.isUser()){
-            this.viewTurnButton.setEnabled(false);
-            for (JButton button :
-                    controlButtons) {
-                button.setEnabled(true);
-            }
-        }
-        else {
-            this.viewTurnButton.setEnabled(true);
-            for (JButton button :
-                    controlButtons) {
-                button.setEnabled(false);
-            }
-        }
     }
 
     private void showPlayers(Game newGame) {

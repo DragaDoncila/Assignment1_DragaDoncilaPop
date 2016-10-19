@@ -17,12 +17,14 @@ public class PlayRobotTurn implements ActionListener {
     private final JPanel parentContainer;
     private final JButton viewTurnButton;
     private final JTextPane logTextPane;
+    private final JButton[] controlButtons;
 
     public PlayRobotTurn(MineralSupertrumps mineralSupertrumps) {
         this.categoryLabel = mineralSupertrumps.playCardLabel;
         this.parentContainer = mineralSupertrumps.parentContainer;
         this.viewTurnButton = mineralSupertrumps.viewTurnButton;
         this.logTextPane = mineralSupertrumps.gameLogPane;
+        this.controlButtons = mineralSupertrumps.playerControlButtons;
     }
 
     @Override
@@ -126,6 +128,7 @@ public class PlayRobotTurn implements ActionListener {
         }
         updateLog("############################");
         updateLog("Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
+        new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(game.getCurrentPlayer());
 
     }
 
