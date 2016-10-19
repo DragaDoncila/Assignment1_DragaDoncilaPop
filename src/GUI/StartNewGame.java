@@ -19,8 +19,8 @@ public class StartNewGame implements ActionListener {
     private final CardLayout parentLayout;
     private final JPanel playerContainer;
     private final JPanel cardContainer;
-    private final JLabel infoLabel;
     private final JButton viewTurnButton;
+    private final JTextPane logTextPane;
     private JButton[] controlButtons;
 
     public StartNewGame(MineralSupertrumps mineralSupertrumps) {
@@ -29,7 +29,7 @@ public class StartNewGame implements ActionListener {
         this.cardContainer = mineralSupertrumps.cardImgPanel;
         this.parentLayout = (CardLayout) mainContainer.getLayout();
         this.usernameField = mineralSupertrumps.usernameField;
-        this.infoLabel = mineralSupertrumps.playCardLabel;
+        this.logTextPane = mineralSupertrumps.gameLogPane;
         this.viewTurnButton = mineralSupertrumps.viewTurnButton;
         controlButtons = new JButton[]{mineralSupertrumps.playCardButton, mineralSupertrumps.passTurnButton, mineralSupertrumps.playComboButton};
     }
@@ -57,7 +57,7 @@ public class StartNewGame implements ActionListener {
             showCards(newGame);
             Player playerUp = newGame.getCurrentPlayer();
             setActiveButtons(playerUp);
-            infoLabel.setText("Let's go! It's " + playerUp.getName() + "'s turn");
+            logTextPane.setText("Let's go! It's " + playerUp.getName() + "'s turn\n");
 
             parentLayout.show(mainContainer, "playCard");
 

@@ -157,7 +157,7 @@ public class PlayGame {
               }
               Player lastToPlay = superTrumpsGame.getLastUserToPlay();
               //if somebody has won alert the user
-              if (superTrumpsGame.hasWon(lastToPlay) && lastToPlay.getName().equals(playerUp)) {
+              if (superTrumpsGame.hasWon(lastToPlay) && lastToPlay.getName().equals(playerUp.getName())) {
                 System.out.println(
                     "That was the last card in "
                         + superTrumpsGame.getLastUserToPlay().getName()

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
  * Created by Draga on 8/10/2016.
  */
 public class MineralSupertrumps {
+    public static final String CATEGORY_STRING = "Current Category: ";
     JPanel parentContainer;
     JPanel mainCard;
     private JPanel titleLabel;
@@ -66,6 +67,9 @@ public class MineralSupertrumps {
     JPanel cardImgPanel;
     JButton viewTurnButton;
     private JPanel handPanel;
+    private JPanel gameLogPanel;
+    private JScrollPane logScrollPane;
+    JTextPane gameLogPane;
 
     public MineralSupertrumps() {
         quitButton.addActionListener(new ActionListener() {
