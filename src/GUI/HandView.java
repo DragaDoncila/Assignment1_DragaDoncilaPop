@@ -28,9 +28,9 @@ public class HandView {
             //find the image associated with the card and display it as an icon for the label
             ImageIcon cardImg = new ImageIcon("src/GUI/images/cards/"+ card.getFileName());
             JLabel imgLabel = new JLabel(cardImg);
-
             newCard.add(imgLabel);
-            cardContainer.add(newCard, card.getTitle());
+            newCard.setName(card.getTitle());
+            cardContainer.add(newCard);
 
         }
     }

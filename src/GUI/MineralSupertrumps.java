@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Created by Draga on 8/10/2016.
  */
 public class MineralSupertrumps {
-    public static final String CATEGORY_STRING = "Current Category: ";
+    public static final String CATEGORY_STRING = "Current Category:\n";
     JPanel parentContainer;
     JPanel mainCard;
     private JPanel titleLabel;
@@ -119,6 +119,7 @@ public class MineralSupertrumps {
         });
 
         viewTurnButton.addActionListener(new PlayRobotTurn(this));
+        playCardButton.addActionListener(new PlayHumanTurn(this));
     }
 
     public static void main(String[] args) {

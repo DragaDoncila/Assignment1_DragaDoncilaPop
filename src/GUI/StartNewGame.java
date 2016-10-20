@@ -49,7 +49,7 @@ public class StartNewGame implements ActionListener {
             //create new game
             Game newGame = new Game(numPlayers, userName);
             //select a dealer
-            String dealerName = newGame.selectDealer();
+            newGame.selectDealer();
             //deal cards
             newGame.dealInitialHands();
             //show new card in MST frame with the setup completed and information displayed

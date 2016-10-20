@@ -229,7 +229,7 @@ public class Game {
    * @param userChoice the card choice of the user
    * @return isPlayable true if the card can be played
    */
-  boolean isPlayable(Card userChoice) {
+  public boolean isPlayable(Card userChoice) {
     boolean isPlayable = false;
     String userCardTitle = userChoice.getTitle();
     for (Card card : currentPlayer.getPlayableCards()) {
@@ -309,7 +309,7 @@ public class Game {
    * @param player the player who will deal
    * @return the player's name
    */
-  String selectDealer(Player player) {
+  public String selectDealer(Player player) {
     this.dealer = player;
     return player.getName();
   }
@@ -346,7 +346,7 @@ public class Game {
    * @param cardChoice the card to play
    * @param trumpChoiceStr the trump category that will lead out the round
    */
-  void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
+  public void playFirstTurn(Card cardChoice, String trumpChoiceStr) {
     //Used in case of mineral card or the Geologist
     this.lastPlayedCard = cardChoice;
     this.lastUserToPlay = currentPlayer;
@@ -396,7 +396,7 @@ public class Game {
    *
    * @param chosenCard the card chosen by the player
    */
-  void playTurn(Card chosenCard) {
+  public void playTurn(Card chosenCard) {
     //    For all cards which don't require a trump category from user
     this.lastPlayedCard = chosenCard;
     this.lastUserToPlay = currentPlayer;
@@ -413,7 +413,7 @@ public class Game {
    * @param chosenCard the card chosen by the player
    * @param trumpStr the trump category chosen by the player
    */
-  void playTurn(Card chosenCard, String trumpStr) {
+  public void playTurn(Card chosenCard, String trumpStr) {
     this.lastPlayedCard = chosenCard;
     this.lastUserToPlay = currentPlayer;
     setCurrentCategory(trumpStr);

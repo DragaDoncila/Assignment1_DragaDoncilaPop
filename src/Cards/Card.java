@@ -22,7 +22,6 @@ public abstract class Card {
 
   private CardTypes cardType;
   private String title;
-
   private String fileName;
   /**
    * Constructor takes an array of attributes and parses this array into the relevant fields

@@ -11,6 +11,35 @@ import java.util.ArrayList;
  */
 public abstract class Player {
 
+  /**
+   * Returns the card with the passed title in the user's hand. Does not remove it from the hand.
+   *
+   * @param passedCardTitle the string title of the card to return
+   * @return chosenCard the card in the hand whose title matches the passed title
+   */
+  public Card getCardByTitle(String passedCardTitle) {
+    Card chosenCard = null;
+    for (Card card : currentHand) {
+      String cardTitle = card.getTitle();
+      if (cardTitle.equals(passedCardTitle)) {
+        chosenCard = card;
+      }
+    }
+    return chosenCard;
+  }
+
+  public int getCardIndex(Card potentialCard) {
+    int cardIndex = -1;
+    String potentialCardTitle = potentialCard.getTitle();
+    for (int i = 0; i < currentHand.size(); i++) {
+      String cardTitle = currentHand.get(i).getTitle();
+      if (cardTitle.equals(potentialCardTitle)){
+        cardIndex = i;
+      }
+    }
+    return cardIndex;
+  }
+
   public enum PlayerTypes {
     USER,
     BOT
