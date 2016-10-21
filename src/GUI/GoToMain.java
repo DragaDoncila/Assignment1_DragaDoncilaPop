@@ -20,6 +20,10 @@ public class GoToMain implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        showMainScreen();
+    }
+
+    void showMainScreen() {
         layout.show(parentContainer, "mainCard");
     }
 }

@@ -18,13 +18,17 @@ public class PlayRobotTurn implements ActionListener {
     private final JButton viewTurnButton;
     private final JTextPane logTextPane;
     private final JButton[] controlButtons;
+    private final JPanel cardContainer;
+    private final MineralSupertrumps gui;
 
     public PlayRobotTurn(MineralSupertrumps mineralSupertrumps) {
+        this.gui = mineralSupertrumps;
         this.categoryLabel = mineralSupertrumps.playCardLabel;
         this.parentContainer = mineralSupertrumps.parentContainer;
         this.viewTurnButton = mineralSupertrumps.viewTurnButton;
         this.logTextPane = mineralSupertrumps.gameLogPane;
         this.controlButtons = mineralSupertrumps.playerControlButtons;
+        this.cardContainer = mineralSupertrumps.cardImgPanel;
     }
 
     @Override
@@ -85,12 +89,14 @@ public class PlayRobotTurn implements ActionListener {
                 if (game.hasWon(playerUp)) {
                     //alert: player won
                     JOptionPane.showMessageDialog(null, playerName + " has won!");
+                    game.resetNumPasses();
+                    game.setAllPlayersIn();
                     //if game over:
                     if (game.isOver()) {
                         //alert
                         JOptionPane.showMessageDialog(null, "That's the end of the game! Thank you for playing.");
                         //back to main
-                        new GoToMain(parentContainer);
+                        new GoToMain(parentContainer).showMainScreen();
                     }
                 }
                 Card lastPlayed = game.getLastPlayedCard();
@@ -115,9 +121,12 @@ public class PlayRobotTurn implements ActionListener {
             //update card label: player has already won
             new TurnUpdate().updateLog(logTextPane, playerName + " has already won!");
         }
+        Player currentPlayer = game.getCurrentPlayer();
         new TurnUpdate().updateLog(logTextPane, "############################");
-        new TurnUpdate().updateLog(logTextPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
-        new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(game.getCurrentPlayer());
-
+        new TurnUpdate().updateLog(logTextPane, "Let's Go! It's " + currentPlayer.getName() + "'s turn!");
+        new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(currentPlayer);
+        if (currentPlayer.isUser()){
+            new AlertChecks(gui).checkUserAlerts();
+        }
     }
 }

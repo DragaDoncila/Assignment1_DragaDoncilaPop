@@ -20,6 +20,7 @@ public class PlayHumanTurn implements ActionListener {
     private final JPanel cardContainer;
     private final JButton viewTurnButton;
     private final JButton[] controlButtons;
+    private final JPanel parentContainer;
     private Card currentCard;
 
     public PlayHumanTurn(MineralSupertrumps mineralSupertrumps) {
@@ -29,6 +30,7 @@ public class PlayHumanTurn implements ActionListener {
         this.cardContainer = mineralSupertrumps.cardImgPanel;
         this.viewTurnButton = mineralSupertrumps.viewTurnButton;
         this.controlButtons = mineralSupertrumps.playerControlButtons;
+        this.parentContainer = mineralSupertrumps.parentContainer;
     }
 
     @Override
@@ -70,10 +72,8 @@ public class PlayHumanTurn implements ActionListener {
                 }
                 //else if new round
                 else if (game.isNewRound()) {
-                    //alert winner
                     //reset players in
                     //reset passes
-                    JOptionPane.showMessageDialog(null, userName + " won the round!");
                     game.setAllPlayersIn();
                     game.resetNumPasses();
                     //user.play card (removes from user's hand)
@@ -131,34 +131,33 @@ public class PlayHumanTurn implements ActionListener {
                             //else (chosen card not playable)
                             else {
                                 //alert as such
-                                JOptionPane.showMessageDialog(null, potentialCard.getTitle() + " can't play on " );
+                                JOptionPane.showMessageDialog(null, potentialCard.getTitle() + " can't play on that card.");
                             }
                         }
                     //else (has no playable)
-                    else {
-                            //alert no playable
-                            JOptionPane.showMessageDialog(null, "You have no playable cards and must pass. You are out for the round." );
-                            //skip
-                            game.skipPlayer();
-                        }
                 }
                 //if player has won (as a result of this turn)
-                //alert user
-                //if game is over
-                //alert user
-                //main menu
+                if (game.hasWon(user)) {
+                    //alert user
+                    JOptionPane.showMessageDialog(null, userName + " has won!");
+                    //if game is over
+                    if (game.isOver()) {
+                        //alert user
+                        JOptionPane.showMessageDialog(null, "That's the end of the game! Thank you for playing.");
+                        //back to main
+                        new GoToMain(parentContainer).showMainScreen();
+                    }
+                }
                 //if trump was played
-                //update log
-                //players back in
-                //reset passes
+                Card lastPlayed = game.getLastPlayedCard();
+                if (lastPlayed.isTrump()){
+                    new TurnUpdate().updateLog(logPane, "Supertrump Played! All players in");
+                    game.resetNumPasses();
+                    game.setAllPlayersIn();
+                }
             }
             //else (user is out)
-            //alert user is out
-            //skip
         }
-        //else (user has already won)
-            //alert user has already won
-            //skip
         //update log with asterisks
         new TurnUpdate().updateLog(logPane, "############################");
         new TurnUpdate().updateLog(logPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
