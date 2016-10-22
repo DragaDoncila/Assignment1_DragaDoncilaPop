@@ -326,15 +326,13 @@ public class Game {
 
     //Used for hard dealing Combo to players
 //    ArrayList<Card> userHand = new ArrayList<>();
-//    Card mag = superTrumpsDeck.getMagnetite();
-//    Card geo = superTrumpsDeck.getGeophys();
 //    userHand.add(superTrumpsDeck.getMagnetite());
 //    userHand.add(superTrumpsDeck.getGeophys());
 //    userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
 //    players[0].setCurrentHand(userHand);
-
+//
 //    ArrayList<Card> newHand;
-//    for (int i = 0; i < players.length; i++) {
+//    for (int i = 1; i < players.length; i++) {
 //      newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
 //      players[i].setCurrentHand(newHand);
 //    }
@@ -450,7 +448,7 @@ public class Game {
    *
    * @return the player who played the combo
    */
-  Player playCombo() {
+  public Player playCombo() {
     this.lastPlayedCard = currentPlayer.playCombo();
     comboWasPlayed = true;
     return currentPlayer;

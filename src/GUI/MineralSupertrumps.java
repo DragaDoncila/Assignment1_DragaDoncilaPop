@@ -130,6 +130,7 @@ public class MineralSupertrumps {
                 }
             }
         });
+        playComboButton.addActionListener(new PlayerCombo(cardImgPanel, gameLogPane, playCardLabel, playerControlButtons, viewTurnButton));
     }
 
     public static void main(String[] args) {
