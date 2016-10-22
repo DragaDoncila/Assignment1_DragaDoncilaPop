@@ -62,7 +62,7 @@ public class MineralSupertrumps {
     JButton playCardButton;
     JButton passTurnButton;
     JButton playComboButton;
-    private JButton pauseButton;
+    private JButton backToMainButton;
     JLabel playCardLabel;
     JPanel cardImgPanel;
     JButton viewTurnButton;
@@ -120,6 +120,16 @@ public class MineralSupertrumps {
 
         viewTurnButton.addActionListener(new PlayRobotTurn(this));
         playCardButton.addActionListener(new PlayHumanTurn(this));
+        passTurnButton.addActionListener(new PlayerPass(cardImgPanel, gameLogPane, playerControlButtons, viewTurnButton));
+        backToMainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int quitOption = JOptionPane.showConfirmDialog(null, "Going back to main menu will end your game. \nAre you sure?", "Quit Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (quitOption == JOptionPane.YES_OPTION) {
+                    new GoToMain(parentContainer).showMainScreen();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {

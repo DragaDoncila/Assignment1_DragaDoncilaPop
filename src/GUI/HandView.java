@@ -31,8 +31,9 @@ public class HandView {
             newCard.add(imgLabel);
             newCard.setName(card.getTitle());
             cardContainer.add(newCard);
-
         }
+        cardContainer.revalidate();
+        cardContainer.repaint();
     }
 
     private void emptyContainer() {

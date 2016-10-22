@@ -47,8 +47,8 @@ public class PlayRobotTurn implements ActionListener {
                     game.playFirstTurn(true);
                     //update card image
                     Card lastPlayedCard = game.getLastPlayedCard();
-                    new TurnUpdate().updateCard(categoryLabel, lastPlayedCard);
-                    new TurnUpdate().updateLog(logTextPane, playerName + " played " + lastPlayedCard.getTitle());
+                    TurnUpdate.updateCard(categoryLabel, lastPlayedCard);
+                    TurnUpdate.updateLog(logTextPane, playerName + " played " + lastPlayedCard.getTitle());
                 }
                 //else if it is a new round
                 else if (game.isNewRound()) {
@@ -60,8 +60,8 @@ public class PlayRobotTurn implements ActionListener {
                     game.playFirstTurn(false);
                     //set last played card image
                     Card lastPlayedCard = game.getLastPlayedCard();
-                    new TurnUpdate().updateCard(categoryLabel, lastPlayedCard);
-                    new TurnUpdate().updateLog(logTextPane, playerName + " played " + lastPlayedCard.getTitle());
+                    TurnUpdate.updateCard(categoryLabel, lastPlayedCard);
+                    TurnUpdate.updateLog(logTextPane, playerName + " played " + lastPlayedCard.getTitle());
                 }
                 //else if the player has playable cards
                 else {
@@ -72,8 +72,8 @@ public class PlayRobotTurn implements ActionListener {
                         //######if Combo?????
                         //update details
                         Card lastPlayedCard = game.getLastPlayedCard();
-                        new TurnUpdate().updateCard(categoryLabel, lastPlayedCard);
-                        new TurnUpdate().updateLog(logTextPane, playerName + " played " + lastPlayedCard.getTitle());
+                        TurnUpdate.updateCard(categoryLabel, lastPlayedCard);
+                        TurnUpdate.updateLog(logTextPane, playerName + " played " + lastPlayedCard.getTitle());
 
                     }
                     //else (not new round, no playable cards)
@@ -82,7 +82,7 @@ public class PlayRobotTurn implements ActionListener {
                         game.pass();
                         //TODO: set player label to red
                         //update card label: player passed OR player played
-                        new TurnUpdate().updateLog(logTextPane, playerName + " chose to pass and is out for the round");
+                        TurnUpdate.updateLog(logTextPane, playerName + " chose to pass and is out for the round");
                     }
                 }
                 //if player won (as a result of playing this turn)
@@ -101,7 +101,7 @@ public class PlayRobotTurn implements ActionListener {
                 }
                 Card lastPlayed = game.getLastPlayedCard();
                 if (lastPlayed.isTrump()){
-                    new TurnUpdate().updateLog(logTextPane, "Supertrump Played! All players in");
+                    TurnUpdate.updateLog(logTextPane, "Supertrump Played! All players in");
                     game.resetNumPasses();
                     game.setAllPlayersIn();
                 }
@@ -111,7 +111,7 @@ public class PlayRobotTurn implements ActionListener {
                 //skip
                 game.skipPlayer();
                 //update card label
-                new TurnUpdate().updateLog(logTextPane, playerName + " is out for the round.");
+                TurnUpdate.updateLog(logTextPane, playerName + " is out for the round.");
             }
         }
         //else (player has already won)
@@ -119,11 +119,11 @@ public class PlayRobotTurn implements ActionListener {
             //skip
             game.skipPlayer();
             //update card label: player has already won
-            new TurnUpdate().updateLog(logTextPane, playerName + " has already won!");
+            TurnUpdate.updateLog(logTextPane, playerName + " has already won!");
         }
         Player currentPlayer = game.getCurrentPlayer();
-        new TurnUpdate().updateLog(logTextPane, "############################");
-        new TurnUpdate().updateLog(logTextPane, "Let's Go! It's " + currentPlayer.getName() + "'s turn!");
+        TurnUpdate.updateLog(logTextPane, "############################");
+        TurnUpdate.updateLog(logTextPane, "Let's Go! It's " + currentPlayer.getName() + "'s turn!");
         new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(currentPlayer);
         if (currentPlayer.isUser()){
             new AlertChecks(gui).checkUserAlerts();

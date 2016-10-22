@@ -58,9 +58,9 @@ public class PlayHumanTurn implements ActionListener {
                         game.playFirstTurn(chosenCard, chosenCategory);
                         //change card label
                         Card lastPlayedCard = game.getLastPlayedCard();
-                        new TurnUpdate().updateCard(cardLabel, lastPlayedCard);
+                        TurnUpdate.updateCard(cardLabel, lastPlayedCard);
                         //update log
-                        new TurnUpdate().updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
+                        TurnUpdate.updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
                         //update hand
                         new HandView(cardContainer).showCards();
                     }
@@ -92,9 +92,9 @@ public class PlayHumanTurn implements ActionListener {
                     }
                     //change card label
                     Card lastPlayedCard = game.getLastPlayedCard();
-                    new TurnUpdate().updateCard(cardLabel, lastPlayedCard);
+                    TurnUpdate.updateCard(cardLabel, lastPlayedCard);
                     //update log
-                    new TurnUpdate().updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
+                    TurnUpdate.updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
                     //update hand
                     new HandView(cardContainer).showCards();
                 }
@@ -122,9 +122,9 @@ public class PlayHumanTurn implements ActionListener {
                                 }
                                 //change card label
                                 Card lastPlayedCard = game.getLastPlayedCard();
-                                new TurnUpdate().updateCard(cardLabel, lastPlayedCard);
+                                TurnUpdate.updateCard(cardLabel, lastPlayedCard);
                                 //update log
-                                new TurnUpdate().updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
+                                TurnUpdate.updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
                                 //update hand
                                 new HandView(cardContainer).showCards();
                             }
@@ -151,7 +151,7 @@ public class PlayHumanTurn implements ActionListener {
                 //if trump was played
                 Card lastPlayed = game.getLastPlayedCard();
                 if (lastPlayed.isTrump()){
-                    new TurnUpdate().updateLog(logPane, "Supertrump Played! All players in");
+                    TurnUpdate.updateLog(logPane, "Supertrump Played! All players in");
                     game.resetNumPasses();
                     game.setAllPlayersIn();
                 }
@@ -159,8 +159,8 @@ public class PlayHumanTurn implements ActionListener {
             //else (user is out)
         }
         //update log with asterisks
-        new TurnUpdate().updateLog(logPane, "############################");
-        new TurnUpdate().updateLog(logPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
+        TurnUpdate.updateLog(logPane, "############################");
+        TurnUpdate.updateLog(logPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
         new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(game.getCurrentPlayer());
     }
 

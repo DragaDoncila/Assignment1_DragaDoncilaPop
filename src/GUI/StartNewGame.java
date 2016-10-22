@@ -21,6 +21,7 @@ public class StartNewGame implements ActionListener {
     private final JPanel cardContainer;
     private final JButton viewTurnButton;
     private final JTextPane logTextPane;
+    private final JLabel playCardLabel;
     private JButton[] controlButtons;
 
     public StartNewGame(MineralSupertrumps mineralSupertrumps) {
@@ -31,6 +32,7 @@ public class StartNewGame implements ActionListener {
         this.usernameField = mineralSupertrumps.usernameField;
         this.logTextPane = mineralSupertrumps.gameLogPane;
         this.viewTurnButton = mineralSupertrumps.viewTurnButton;
+        this.playCardLabel = mineralSupertrumps.playCardLabel;
         controlButtons = mineralSupertrumps.playerControlButtons;
     }
 
@@ -40,6 +42,8 @@ public class StartNewGame implements ActionListener {
     }
 
     private void startNewGame() {
+        //empty existing containers
+        new EmptyGui(playerContainer, logTextPane, playCardLabel);
         //check for a username
         String userName = usernameField.getText();
         String strippedName = userName.replaceAll("\\s+", "");
