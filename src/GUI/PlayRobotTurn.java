@@ -70,6 +70,9 @@ public class PlayRobotTurn implements ActionListener {
                         //game.playTurn()
                         game.playTurn();
                         //######if Combo?????
+                        if (game.comboWasPlayed()){
+                            JOptionPane.showMessageDialog(null, playerName + " played the Combo!");
+                        }
                         //update details
                         Card lastPlayedCard = game.getLastPlayedCard();
                         TurnUpdate.updateCard(categoryLabel, lastPlayedCard);

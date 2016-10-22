@@ -34,6 +34,16 @@ public class AlertChecks {
             alertMessage = userName + " won the round!\n";
         }
 
+        if (user.isOut()){
+            alertMessage = "You are out of the round.\n";
+            //skip
+            game.skipPlayer();
+            TurnUpdate.updateLog(logPane, userName + " is out for the round.");
+            new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(game.getCurrentPlayer());
+            TurnUpdate.updateLog(logPane, "############################");
+            TurnUpdate.updateLog(logPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
+        }
+
         else if (!game.isFirstTurn()){
             user.setPlayableCards(game.getLastPlayedCard(), game.getCurrentCategory());
             if (!user.hasPlayableCards()){
@@ -44,16 +54,6 @@ public class AlertChecks {
                 TurnUpdate.updateLog(logPane, "############################");
                 TurnUpdate.updateLog(logPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
             }
-        }
-
-        if (user.isOut()){
-            alertMessage = "You are out of the round.\n";
-            //skip
-            game.skipPlayer();
-            TurnUpdate.updateLog(logPane, userName + " is out for the round.");
-            new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(game.getCurrentPlayer());
-            TurnUpdate.updateLog(logPane, "############################");
-            TurnUpdate.updateLog(logPane, "Let's Go! It's " + game.getCurrentPlayer().getName() + "'s turn!");
         }
 
         if (winners.contains(user)){

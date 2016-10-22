@@ -171,7 +171,7 @@ public class Game {
     return roundWinner != null;
   }
 
-  boolean comboWasPlayed() {
+  public boolean comboWasPlayed() {
     return comboWasPlayed;
   }
 
@@ -325,18 +325,22 @@ public class Game {
     }
 
     //Used for hard dealing Combo to players
-    //ArrayList<Card> userHand = new ArrayList<>();
-    //userHand.add(superTrumpsDeck.getMagnetite());
-    //userHand.add(superTrumpsDeck.getGeophys());
-    //userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
-    //players[0].setCurrentHand(userHand);
-    //
-    //ArrayList<Card> newHand;
-    //for (int i = 1; i < players.length; i++) {
-    //  newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
-    //  players[i].setCurrentHand(newHand);
-    //}
+//    ArrayList<Card> userHand = new ArrayList<>();
+//    Card mag = superTrumpsDeck.getMagnetite();
+//    Card geo = superTrumpsDeck.getGeophys();
+//    userHand.add(superTrumpsDeck.getMagnetite());
+//    userHand.add(superTrumpsDeck.getGeophys());
+//    userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
+//    players[0].setCurrentHand(userHand);
 
+//    ArrayList<Card> newHand;
+//    for (int i = 0; i < players.length; i++) {
+//      newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
+//      players[i].setCurrentHand(newHand);
+//    }
+//
+//    players[1].addCard(mag);
+//    players[1].addCard(geo);
   }
 
   /**
