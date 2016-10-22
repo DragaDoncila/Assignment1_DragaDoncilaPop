@@ -146,6 +146,7 @@ public class PlayHumanTurn implements ActionListener {
                         JOptionPane.showMessageDialog(null, "That's the end of the game! Thank you for playing.");
                         //back to main
                         new GoToMain(parentContainer).showMainScreen();
+                        return;
                     }
                 }
                 //if trump was played
