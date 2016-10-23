@@ -149,7 +149,7 @@ public class Game {
    *
    * @return player who is up next
    */
-  Player getNextPlayer() {
+  public Player getNextPlayer() {
     int currentPlayerID = Arrays.asList(players).indexOf(currentPlayer);
     //if the id of the current player is last in the list
     if (currentPlayerID == players.length - 1) {

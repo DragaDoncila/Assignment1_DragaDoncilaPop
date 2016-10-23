@@ -151,7 +151,7 @@ public class PlayHumanTurn implements ActionListener {
                 }
                 //if trump was played
                 Card lastPlayed = game.getLastPlayedCard();
-                if (lastPlayed.isTrump()){
+                if (lastPlayed != null && lastPlayed.isTrump()){
                     TurnUpdate.updateLog(logPane, "Supertrump Played! All players in");
                     game.resetNumPasses();
                     game.setAllPlayersIn();

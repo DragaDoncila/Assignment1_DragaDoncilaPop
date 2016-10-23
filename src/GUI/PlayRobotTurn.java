@@ -123,11 +123,17 @@ public class PlayRobotTurn implements ActionListener {
             game.skipPlayer();
             //update card label: player has already won
             TurnUpdate.updateLog(logTextPane, playerName + " has already won!");
+            if (game.isNewRound()){
+                game.setAllPlayersIn();
+                game.resetNumPasses();
+            }
         }
         Player currentPlayer = game.getCurrentPlayer();
+
         TurnUpdate.updateLog(logTextPane, "############################");
         TurnUpdate.updateLog(logTextPane, "Let's Go! It's " + currentPlayer.getName() + "'s turn!");
         new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(currentPlayer);
+
         if (currentPlayer.isUser()){
             new AlertChecks(gui).checkUserAlerts();
         }

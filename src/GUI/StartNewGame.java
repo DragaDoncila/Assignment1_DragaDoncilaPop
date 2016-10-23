@@ -53,18 +53,20 @@ public class StartNewGame implements ActionListener {
             //create new game
             Game newGame = new Game(numPlayers, userName);
             //select a dealer
-            newGame.selectDealer();
+            String dealerName = newGame.selectDealer();
             //deal cards
             newGame.dealInitialHands();
             //show new card in MST frame with the setup completed and information displayed
             showPlayers(newGame);
             new HandView(cardContainer).showCards();
+            newGame.getNextPlayer();
 
             Player playerUp = newGame.getCurrentPlayer();
             new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(playerUp);
 //            setActiveButtons(playerUp);
 
-            logTextPane.setText("Let's go! It's " + playerUp.getName() + "'s turn\n");
+            String startingText = dealerName + " has dealt the cards!\nLet's go! It's " + playerUp.getName() + "'s turn\n";
+            logTextPane.setText(startingText);
 
             parentLayout.show(mainContainer, "playCard");
 
