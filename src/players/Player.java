@@ -33,7 +33,7 @@ public abstract class Player {
     String potentialCardTitle = potentialCard.getTitle();
     for (int i = 0; i < currentHand.size(); i++) {
       String cardTitle = currentHand.get(i).getTitle();
-      if (cardTitle.equals(potentialCardTitle)){
+      if (cardTitle.equals(potentialCardTitle)) {
         cardIndex = i;
       }
     }

@@ -325,22 +325,22 @@ public class Game {
     }
 
     //Used for hard dealing Combo to players
-//    ArrayList<Card> userHand = new ArrayList<>();
-//    userHand.add(superTrumpsDeck.getMagnetite());
-//    userHand.add(superTrumpsDeck.getGeophys());
-//    userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
-//    players[0].setCurrentHand(userHand);
-//
-//    Card mag = superTrumpsDeck.getMagnetite();
-//    Card geo = superTrumpsDeck.getGeophys();
-//    ArrayList<Card> newHand;
-//    for (int i = 0; i < players.length; i++) {
-//      newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
-//      players[i].setCurrentHand(newHand);
-//    }
-//
-//    players[1].addCard(mag);
-//    players[1].addCard(geo);
+    //    ArrayList<Card> userHand = new ArrayList<>();
+    //    userHand.add(superTrumpsDeck.getMagnetite());
+    //    userHand.add(superTrumpsDeck.getGeophys());
+    //    userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
+    //    players[0].setCurrentHand(userHand);
+    //
+    //    Card mag = superTrumpsDeck.getMagnetite();
+    //    Card geo = superTrumpsDeck.getGeophys();
+    //    ArrayList<Card> newHand;
+    //    for (int i = 0; i < players.length; i++) {
+    //      newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
+    //      players[i].setCurrentHand(newHand);
+    //    }
+    //
+    //    players[1].addCard(mag);
+    //    players[1].addCard(geo);
   }
 
   /**
