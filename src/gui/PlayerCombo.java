@@ -9,8 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class handles functionality for the user playing the Supertrumps Combo on one of their turns
- * Created by Draga on 22/10/2016.
+ * Class handles functionality and logic for the user playing the Supertrumps Combo on one of their
+ * turns by querying current game object
+ *
+ * <p>Created by Draga on 22/10/2016.
  */
 class PlayerCombo implements ActionListener {
 
@@ -24,6 +26,12 @@ class PlayerCombo implements ActionListener {
     this.playLabel = playCardLabel;
   }
 
+  /**
+   * Queries Game's current game attribute for the relevant game states to playing the combo and
+   * interacts with the GUI to display appropriate information
+   *
+   * @param e the click event
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     Game game = Game.currentGame;

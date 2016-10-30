@@ -12,7 +12,9 @@ import java.util.ArrayList;
 
 /**
  * Class handles functionality and updates required for the user clicking "play card" in a game of
- * Mineral Supertrumps Created by Draga on 20/10/2016.
+ * Mineral Supertrumps
+ *
+ * Created by Draga on 20/10/2016.
  */
 class PlayHumanTurn implements ActionListener {
   private final JPanel cards;
@@ -182,7 +184,7 @@ class PlayHumanTurn implements ActionListener {
         currentCardTitle = card.getName();
       }
     }
-    //get the Card object from the user's hand
+    //get the Card object from the user's hand and return
     Card currentCard = Game.currentGame.getCurrentPlayer().getCardByTitle(currentCardTitle);
     return currentCard;
   }

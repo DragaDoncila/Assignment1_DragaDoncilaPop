@@ -7,8 +7,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Class checks whether the previous Mineral Supertrumps turn requires dialogs for the user, and
- * displays them if so Created by Draga on 21/10/2016.
+ * Class checks whether the previous Mineral Supertrumps turn requires dialogs or log updates for the user, and
+ * if so, displays them
+ *
+ * Created by Draga on 21/10/2016.
  */
 class AlertChecks {
 

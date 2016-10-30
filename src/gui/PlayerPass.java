@@ -7,8 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class handles functionality for the player choosing to pass a turn in Mineral Supertrumps Created
- * by Draga on 22/10/2016.
+ * Class handles functionality for the player choosing to pass a turn in Mineral Supertrumps
+ *
+ * <p>Created by Draga on 22/10/2016.
  */
 class PlayerPass implements ActionListener {
   private final JPanel cardImgPanel;

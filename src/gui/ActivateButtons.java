@@ -6,7 +6,9 @@ import javax.swing.*;
 
 /**
  * Class checks the current player of a Mineral Supertrumps game and activates the correct buttons
- * as necessary Created by Draga on 19/10/2016.
+ * as necessary
+ *
+ * Created by Draga on 19/10/2016.
  */
 class ActivateButtons {
   private final JButton[] controlButtons;
@@ -18,7 +20,7 @@ class ActivateButtons {
   }
 
   /**
-   * Checks the type of player who is up and enables/disables buttons as appropriate for that
+   * Checks the type of player (user/robot) who is up and enables/disables buttons as appropriate for that
    * player's turn
    *
    * @param playerUp the player in current game who is up to play

@@ -8,8 +8,10 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Class iterates through user's hand and populates CardLayout container with multiple JPanels, each
- * representing a card Created by Draga on 19/10/2016.
+ * Class contains method to iterate through user's hand and populates CardLayout container with multiple JPanels, each
+ * representing a Mineral Supertrumps card
+ *
+ * Created by Draga on 19/10/2016.
  */
 class HandView {
   private final JPanel cardContainer;
@@ -19,8 +21,8 @@ class HandView {
   }
 
   /**
-   * Iterates through the user's current hand and constructs the hand view, one panel with
-   * appropriate image per card
+   * Iterates through the user's current hand and constructs the hand view; one panel with
+   * appropriate image and title per card
    */
   void showCards() {
     emptyContainer();

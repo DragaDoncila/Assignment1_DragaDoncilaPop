@@ -6,8 +6,10 @@ import game.Game;
 import javax.swing.*;
 
 /**
- * Class handles the upating of relevant GUI elements as a result of somebody playing a turn of
- * Mineral Supertrumps Created by Draga on 20/10/2016.
+ * Class handles the updating of relevant GUI elements as a result of somebody playing a turn of
+ * Mineral Supertrumps
+ *
+ * Created by Draga on 20/10/2016.
  */
 class TurnUpdate {
 

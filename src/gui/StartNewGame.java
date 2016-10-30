@@ -117,7 +117,7 @@ class StartNewGame implements ActionListener {
 
   /**
    * Prompts user for a valid number of players between 3 and 5 and does not return it until that is
-   * the case
+   * the case, or 0 is entered for cancel
    *
    * @return numPlayers the chosen number of players
    */

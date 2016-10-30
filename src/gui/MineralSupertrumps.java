@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class handles the building and event listeners required for playing a game of Mineral Supertrumps
+ * Class handles the building of screens and event listeners required for playing a game of Mineral Supertrumps
+ * Used in conjunction with the MineralSupertrumps form
+ *
  * Created by Draga on 8/10/2016.
  */
 public class MineralSupertrumps {
@@ -73,6 +75,9 @@ public class MineralSupertrumps {
   private JPanel gameLogPanel;
   private JScrollPane logScrollPane;
 
+  /**
+   * Constructs the GUI screens and adds appropriate action listeners to all required elements
+   */
   private MineralSupertrumps() {
 
     quitButton.addActionListener(
@@ -106,6 +111,7 @@ public class MineralSupertrumps {
     back3.addActionListener(new BackInstructions(instructionsCard));
     mainMenu.addActionListener(new GoToMain(parentContainer));
 
+    //Game preparation
     playButton.addActionListener(new StartNewGame(this));
 
     //Functionality for user viewing their hand
@@ -128,10 +134,10 @@ public class MineralSupertrumps {
           }
         });
 
-    //Functionality for game continuation button
+    //Functionality for robot turn button
     viewTurnButton.addActionListener(new PlayRobotTurn(this));
 
-    //Functionality for user's turn button
+    //Functionality for user's turn buttons
     playCardButton.addActionListener(new PlayHumanTurn(this));
     passTurnButton.addActionListener(
         new PlayerPass(cardImgPanel, gameLogPane, playerControlButtons, viewTurnButton));

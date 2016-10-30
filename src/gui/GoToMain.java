@@ -6,8 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class returns game to main menu as a result of the Main Menu button being clicked Created by
- * Draga on 8/10/2016.
+ * Class returns game to main menu as a result of the Main Menu button being clicked
+ *
+ * Created by Draga on 8/10/2016.
  */
 class GoToMain implements ActionListener {
 
@@ -24,6 +25,9 @@ class GoToMain implements ActionListener {
     showMainScreen();
   }
 
+  /**
+   * Displays the main menu card of the GUI's parent container
+   */
   void showMainScreen() {
     layout.show(parentContainer, "mainCard");
   }

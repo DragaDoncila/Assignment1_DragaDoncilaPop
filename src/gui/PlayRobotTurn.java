@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 /**
  * Class handles functionality and updates required for the user clicking "view turn" in a game of
- * Mineral Supertrumps Created by Draga on 18/10/2016.
+ * Mineral Supertrumps
+ *
+ * Created by Draga on 18/10/2016.
  */
 class PlayRobotTurn implements ActionListener {
   private final JLabel categoryLabel;
@@ -32,7 +34,7 @@ class PlayRobotTurn implements ActionListener {
 
   /**
    * Method queries game object for its current state and displays/acts upon the GUI accordingly as
-   * a result of robot playing a card
+   * a result of robot playing a turn
    *
    * @param e the click event
    */

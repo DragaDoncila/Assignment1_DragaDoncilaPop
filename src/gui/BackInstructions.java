@@ -6,8 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Class moves back through previous JPanels in instructions CardLayout Created by Draga on
- * 8/10/2016.
+ * Class moves back through previous JPanels in instructions CardLayout
+ *
+ * Created by Draga on 8/10/2016.
  */
 class BackInstructions implements ActionListener {
   private JPanel parentPanel;
