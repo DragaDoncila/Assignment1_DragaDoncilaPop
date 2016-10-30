@@ -9,120 +9,165 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Draga on 12/10/2016.
+ * Prepares the GUI screens and populates containers/Game elements to set up a new game of Mineral
+ * Supertrumps Created by Draga on 12/10/2016.
  */
-public class StartNewGame implements ActionListener {
-    private final JPanel mainContainer;
-    private final JTextField usernameField;
-    private final CardLayout parentLayout;
-    private final JPanel playerContainer;
-    private final JPanel cardContainer;
-    private final JButton viewTurnButton;
-    private final JTextPane logTextPane;
-    private final JLabel playCardLabel;
-    private JButton[] controlButtons;
+class StartNewGame implements ActionListener {
+  private final JPanel mainContainer;
+  private final JTextField usernameField;
+  private final CardLayout parentLayout;
+  private final JPanel playerContainer;
+  private final JPanel cardContainer;
+  private final JButton viewTurnButton;
+  private final JTextPane logTextPane;
+  private final JLabel playCardLabel;
+  private JButton[] controlButtons;
 
-    public StartNewGame(MineralSupertrumps mineralSupertrumps) {
-        this.mainContainer = mineralSupertrumps.parentContainer;
-        this.playerContainer = mineralSupertrumps.playerPanel;
-        this.cardContainer = mineralSupertrumps.cardImgPanel;
-        this.parentLayout = (CardLayout) mainContainer.getLayout();
-        this.usernameField = mineralSupertrumps.usernameField;
-        this.logTextPane = mineralSupertrumps.gameLogPane;
-        this.viewTurnButton = mineralSupertrumps.viewTurnButton;
-        this.playCardLabel = mineralSupertrumps.playCardLabel;
-        controlButtons = mineralSupertrumps.playerControlButtons;
+  StartNewGame(MineralSupertrumps mineralSupertrumps) {
+    this.mainContainer = mineralSupertrumps.parentContainer;
+    this.playerContainer = mineralSupertrumps.playerPanel;
+    this.cardContainer = mineralSupertrumps.cardImgPanel;
+    this.parentLayout = (CardLayout) mainContainer.getLayout();
+    this.usernameField = mineralSupertrumps.usernameField;
+    this.logTextPane = mineralSupertrumps.gameLogPane;
+    this.viewTurnButton = mineralSupertrumps.viewTurnButton;
+    this.playCardLabel = mineralSupertrumps.playCardLabel;
+    controlButtons = mineralSupertrumps.playerControlButtons;
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    startNewGame();
+  }
+
+  private void startNewGame() {
+    //empty existing containers
+    new EmptyGui(playerContainer, logTextPane, playCardLabel);
+
+    String userName = usernameField.getText();
+    String strippedName = userName.replaceAll("\\s+", "");
+    //if the user has entered a valid username
+    if (strippedName.length() >= 1) {
+      int numPlayers = getValidNumPlayers();
+      //0 is returned if user chooses to cancel
+      if (numPlayers != 0) {
+        Game newGame = new Game(numPlayers, userName);
+        String dealerName = newGame.selectDealer();
+        newGame.dealInitialHands();
+
+        //populate containers with appropriate information
+        showPlayers(newGame);
+        new HandView(cardContainer).showCards();
+        newGame.getNextPlayer();
+
+        Player playerUp = newGame.getCurrentPlayer();
+        new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(playerUp);
+
+        String startingText =
+            dealerName
+                + " has dealt the cards!\nLet's go! It's "
+                + playerUp.getName()
+                + "'s turn\n";
+        logTextPane.setText(startingText);
+
+        //once populated, display the card
+        parentLayout.show(mainContainer, "playCard");
+      }
+
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        startNewGame();
+    //user did not enter a valid username
+    else {
+      JOptionPane.showMessageDialog(
+          mainContainer,
+          "You must enter a username (not blank) to play!",
+          "Error Message",
+          JOptionPane.ERROR_MESSAGE);
     }
+  }
 
-    private void startNewGame() {
-        //empty existing containers
-        new EmptyGui(playerContainer, logTextPane, playCardLabel);
-        //check for a username
-        String userName = usernameField.getText();
-        String strippedName = userName.replaceAll("\\s+", "");
-        if (strippedName.length() >= 1){
-            //get valid number of players
-            int numPlayers = getValidNumPlayers();
-            if (numPlayers != 0) {
-                //create new game
-                Game newGame = new Game(numPlayers, userName);
-                //select a dealer
-                String dealerName = newGame.selectDealer();
-                //deal cards
-                newGame.dealInitialHands();
-                //show new card in MST frame with the setup completed and information displayed
-                showPlayers(newGame);
-                new HandView(cardContainer).showCards();
-                newGame.getNextPlayer();
+  /**
+   * Populates the player container with a number of icons equal to the number of players in the
+   * current game
+   *
+   * @param newGame the current game just initialised
+   */
+  private void showPlayers(Game newGame) {
+    int countPics = 0;
 
-                Player playerUp = newGame.getCurrentPlayer();
-                new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(playerUp);
-//            setActiveButtons(playerUp);
+    for (Player player : newGame.getPlayers()) {
+      //add the image icon to the player's label as well as their name
+      Icon playerPic = new ImageIcon("src/GUI/images/playerIcon" + countPics + ".png");
+      JLabel playerLabel = new JLabel(playerPic);
+      playerLabel.setText(player.getName());
 
-                String startingText = dealerName + " has dealt the cards!\nLet's go! It's " + playerUp.getName() + "'s turn\n";
-                logTextPane.setText(startingText);
+      //align the label below the image
+      playerLabel.setHorizontalTextPosition(JLabel.CENTER);
+      playerLabel.setVerticalTextPosition(JLabel.BOTTOM);
 
-                parentLayout.show(mainContainer, "playCard");
-            }
+      playerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 10));
+      playerContainer.add(playerLabel);
 
+      playerContainer.revalidate();
+      playerContainer.repaint();
+
+      //used to concatenate the file name
+      ++countPics;
+    }
+  }
+
+  /**
+   * Prompts user for a valid number of players between 3 and 5 and does not return it until that is
+   * the case
+   *
+   * @return numPlayers the chosen number of players
+   */
+  private int getValidNumPlayers() {
+    boolean isValid = false;
+    int numPlayers = 0;
+    String numPlayerStr =
+        JOptionPane.showInputDialog(
+            mainContainer,
+            "How many players (3-5) would you like?",
+            "Number of Players",
+            JOptionPane.QUESTION_MESSAGE);
+    while (!isValid) {
+      if (numPlayerStr != null) {
+        try {
+          numPlayers = Integer.parseInt(numPlayerStr);
+          if (!Game.isValidNumPlayers(numPlayers)) {
+            JOptionPane.showMessageDialog(
+                mainContainer,
+                "That is not a valid number of players",
+                "Error Message",
+                JOptionPane.ERROR_MESSAGE);
+            numPlayerStr =
+                JOptionPane.showInputDialog(
+                    mainContainer,
+                    "How many players (3-5) would you like?",
+                    "Number of Players",
+                    JOptionPane.QUESTION_MESSAGE);
+
+          } else {
+            isValid = true;
+          }
+        } catch (NumberFormatException formatError) {
+          JOptionPane.showMessageDialog(
+              mainContainer,
+              "That is not a valid number",
+              "Error Message",
+              JOptionPane.ERROR_MESSAGE);
+          numPlayerStr =
+              JOptionPane.showInputDialog(
+                  mainContainer,
+                  "How many players (3-5) would you like?",
+                  "Number of Players",
+                  JOptionPane.QUESTION_MESSAGE);
         }
-        else {
-            JOptionPane.showMessageDialog(mainContainer, "You must enter a username (not blank) to play!", "Error Message", JOptionPane.ERROR_MESSAGE);
-        }
-
+      } else {
+        //user chose to cancel, this is a valid choice (just not a valid number of players)
+        isValid = true;
+      }
     }
-
-    private void showPlayers(Game newGame) {
-        int countPics = 0;
-        for (Player player :
-                newGame.getPlayers()) {
-            Icon playerPic = new ImageIcon("src/GUI/images/playerIcon" + countPics + ".png");
-            JLabel playerLabel = new JLabel(playerPic);
-            playerLabel.setText(player.getName());
-
-            playerLabel.setHorizontalTextPosition(JLabel.CENTER);
-            playerLabel.setVerticalTextPosition(JLabel.BOTTOM);
-
-            playerContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 10));
-            playerContainer.add(playerLabel);
-
-            playerContainer.revalidate();
-            playerContainer.repaint();
-            ++countPics;
-        }
-    }
-
-    private int getValidNumPlayers() {
-        boolean isValid = false;
-        int numPlayers = 0;
-        String numPlayerStr = JOptionPane.showInputDialog(mainContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
-        while (!isValid) {
-            if (numPlayerStr != null) {
-                try {
-                    numPlayers = Integer.parseInt(numPlayerStr);
-                    if (!Game.isValidNumPlayers(numPlayers)) {
-                        JOptionPane.showMessageDialog(mainContainer, "That is not a valid number of players", "Error Message", JOptionPane.ERROR_MESSAGE);
-                        numPlayerStr = JOptionPane.showInputDialog(mainContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
-
-                    }
-                    else {
-                        isValid = true;
-                    }
-                } catch (NumberFormatException formatError) {
-                    JOptionPane.showMessageDialog(mainContainer, "That is not a valid number", "Error Message", JOptionPane.ERROR_MESSAGE);
-                    numPlayerStr = JOptionPane.showInputDialog(mainContainer, "How many players (3-5) would you like?", "Number of Players", JOptionPane.QUESTION_MESSAGE);
-                }
-            }
-            else {
-                //cancel option
-                isValid = true;
-            }
-        }
-        return numPlayers;
-    }
+    return numPlayers;
+  }
 }

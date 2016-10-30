@@ -7,16 +7,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-/**
+/**Class iterates through user's hand and populates CardLayout container with multiple JPanels, each representing a card
  * Created by Draga on 19/10/2016.
  */
-public class HandView {
+class HandView {
     private final JPanel cardContainer;
 
-    public HandView(JPanel cardContainer) {
+    HandView(JPanel cardContainer) {
         this.cardContainer = cardContainer;
     }
 
+
+    /**
+     * Iterates through the user's current hand and constructs the hand view, one panel with appropriate image per card
+     */
     void showCards() {
         emptyContainer();
         Game game = Game.currentGame;
@@ -35,6 +39,7 @@ public class HandView {
         cardContainer.revalidate();
         cardContainer.repaint();
     }
+
 
     private void emptyContainer() {
         try{

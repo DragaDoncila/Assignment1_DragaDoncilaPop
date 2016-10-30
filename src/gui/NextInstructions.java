@@ -5,12 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
+/**Class moves forward through next JPanels in instructions CardLayout
  * Created by Draga on 8/10/2016.
  */
-public class NextInstructions implements ActionListener {
-    CardLayout instructionsLayout;
-    JPanel parentPanel;
+class NextInstructions implements ActionListener {
+    private CardLayout instructionsLayout;
+    private JPanel parentPanel;
 
     NextInstructions(JPanel instructionsCard){
         parentPanel = instructionsCard;
