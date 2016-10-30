@@ -43,6 +43,7 @@ public class PlayerCombo implements ActionListener {
         Card lastPlayedCard = game.getLastPlayedCard();
         TurnUpdate.updateCard(playLabel, lastPlayedCard);
         TurnUpdate.updateLog(logPane, userName + " played " + lastPlayedCard.getTitle());
+        new HandView(cardImgPanel).showCards();
       }
       else {
         JOptionPane.showMessageDialog(null, "You can't play the combo on the first turn.");

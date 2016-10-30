@@ -309,7 +309,7 @@ public class Game {
    * @param player the player who will deal
    * @return the player's name
    */
-  public String selectDealer(Player player) {
+  String selectDealer(Player player) {
     this.dealer = player;
     return player.getName();
   }
@@ -331,8 +331,10 @@ public class Game {
 //    userHand.addAll(superTrumpsDeck.dealHand(CARDS_TO_A_HAND));
 //    players[0].setCurrentHand(userHand);
 //
+//    Card mag = superTrumpsDeck.getMagnetite();
+//    Card geo = superTrumpsDeck.getGeophys();
 //    ArrayList<Card> newHand;
-//    for (int i = 1; i < players.length; i++) {
+//    for (int i = 0; i < players.length; i++) {
 //      newHand = superTrumpsDeck.dealHand(CARDS_TO_A_HAND);
 //      players[i].setCurrentHand(newHand);
 //    }

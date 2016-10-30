@@ -48,25 +48,27 @@ public class StartNewGame implements ActionListener {
         if (strippedName.length() >= 1){
             //get valid number of players
             int numPlayers = getValidNumPlayers();
-            //create new game
-            Game newGame = new Game(numPlayers, userName);
-            //select a dealer
-            String dealerName = newGame.selectDealer();
-            //deal cards
-            newGame.dealInitialHands();
-            //show new card in MST frame with the setup completed and information displayed
-            showPlayers(newGame);
-            new HandView(cardContainer).showCards();
-            newGame.getNextPlayer();
+            if (numPlayers != 0) {
+                //create new game
+                Game newGame = new Game(numPlayers, userName);
+                //select a dealer
+                String dealerName = newGame.selectDealer();
+                //deal cards
+                newGame.dealInitialHands();
+                //show new card in MST frame with the setup completed and information displayed
+                showPlayers(newGame);
+                new HandView(cardContainer).showCards();
+                newGame.getNextPlayer();
 
-            Player playerUp = newGame.getCurrentPlayer();
-            new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(playerUp);
+                Player playerUp = newGame.getCurrentPlayer();
+                new ActivateButtons(controlButtons, viewTurnButton).setActiveButtons(playerUp);
 //            setActiveButtons(playerUp);
 
-            String startingText = dealerName + " has dealt the cards!\nLet's go! It's " + playerUp.getName() + "'s turn\n";
-            logTextPane.setText(startingText);
+                String startingText = dealerName + " has dealt the cards!\nLet's go! It's " + playerUp.getName() + "'s turn\n";
+                logTextPane.setText(startingText);
 
-            parentLayout.show(mainContainer, "playCard");
+                parentLayout.show(mainContainer, "playCard");
+            }
 
         }
         else {
